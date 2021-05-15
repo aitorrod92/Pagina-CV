@@ -2,6 +2,48 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 
-<div><h1>Página de CV de Aitor Rodríguez Lopezosa</h1>
+<div><h1>Página de CV de Aitor Rodríguez Lopezosa</h1></div>
 
-<app-lista-trabajos></app-lista-trabajos></div>
+
+<div class="page-wrapper">
+
+	<!-- MENU SIDEBAR-->
+	<aside class="menu-sidebar d-none d-lg-block">
+		<div class="logo">
+			<a routerLink="/products"> <img src="assets/images/logo/Ludo.jpg" width=100%
+				alt="luv2shop" class="img-responsive">
+			</a>
+		</div>
+		<!-- <app-product-category-menu></app-product-category-menu> -->
+	</aside>
+	<!-- END MENU SIDEBAR-->
+
+	<!-- PAGE CONTAINER-->
+	<div class="page-container">
+		<!-- HEADER DESKTOP-->
+		<header class="header-desktop">
+			<div class="section-content section-content-p30">
+				<div class="container-fluid">
+					<div class="header-wrap">
+					<!-- <app-search></app-search>
+					<app-cart-status></app-cart-status> -->
+					</div>
+					<div class="account-wrap"></div>
+				</div>
+			</div>
+		</header>
+		<!-- END HEADER DESKTOP-->
+
+
+		<!-- MAIN CONTENT-->
+		<app-lista-trabajos></app-lista-trabajos>
+	</div>
+</div>
+
+<footer>
+	<ul>
+		<li><a href="#">About Us</a></li>
+		<li><a href="#">Contact Us</a></li>
+		<li><a href="#">Help</a></li>
+	</ul>
+</footer>

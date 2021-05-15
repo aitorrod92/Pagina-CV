@@ -1,4 +1,62 @@
-<p *ngFor="let tempProduct of trabajo">
-	{{tempProduct.nombre}}
-</p>
+<!-- <table class="table">
+	<thead class="table-dark">
+		<tr>
+			<th>Imagen</th>
+			<th>Nombre</th>
+			<th>Periodo</th>
+			<th>Duracion</th>
+			<th>Empresa</th>
+			<th>Ciudad</th>
+			<th>Descripción</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let tempProduct of trabajo">
+			<td><img class="align-middle" alt="image not found"
+				src="{{ tempProduct.imagen }}" height="50"></td>
+			<td>{{tempProduct.nombre}}</td>
+			<td>{{tempProduct.fechaInicio | date : 'MM/yyyy'}} -
+				{{tempProduct.fechaFin | date : 'MM/yyyy'}}</td>
+			<td>{{tempProduct.duracion}}</td>
+			<td>{{tempProduct.empresa}}</td>
+			<td>{{tempProduct.ciudad}}</td>
+			<td>{{tempProduct.descripcion}}</td>
+		</tr>
+	</tbody>
+</table> -->
+<meta charset="utf-8">
 
+<div class="main-content">
+	<div class="section-content section-content-p30">
+		<div class="container-fluid">
+			<div class="row">
+
+				<!-- loop over the collection of products -->
+				<div *ngFor="let tempProduct of trabajo.slice().reverse()"
+					class="col-md-4">
+
+					<div class="product-box">
+						<h3>
+							<img class="img-responsive" alt="image not found"
+								src="{{ tempProduct.imagen }}" height="50"> <a href="#"
+								class="primary-btn">{{tempProduct.nombre}}</a>
+						</h3>
+						<div>
+							{{tempProduct.empresa}}
+							<div>
+								{{tempProduct.fechaInicio | date : 'MM/yyyy'}} -
+								{{tempProduct.fechaFin | date : 'MM/yyyy'}}
+								<div *ngIf="tempProduct.duracion<12; else masQueAnio">({{tempProduct.duracion}}
+									meses)</div>
+								<ng-template #masQueAnio>({{tempProduct.duracion/12 | number:'1.1-1' | slice:0:1}} años y {{tempProduct.duracion%12}} meses)</ng-template>
+							</div>
+							<div>
+								<div>{{tempProduct.ciudad}}</div>
+								<!-- <div>{{tempProduct.descripcion}}</div> -->
+								<!-- <a href="#" class="primary-btn">Más información</a> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
