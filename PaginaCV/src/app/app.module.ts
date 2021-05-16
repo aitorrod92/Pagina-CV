@@ -8,9 +8,19 @@ import { registerLocaleData } from '@angular/common';
 
 import localeEs from '@angular/common/locales/es';
 import localeEn from '@angular/common/locales/en';
+import { RouterModule, Routes } from '@angular/router';
 
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEs, 'es');
+
+const routes : Routes = 
+[	{path: 'category/:id', component: ListaTrabajosComponent},
+	{path: 'category', component: ListaTrabajosComponent},
+	{path: 'search/:keyword', component: ListaTrabajosComponent},
+	{path: 'jobs', component: ListaTrabajosComponent},
+	{path: '', redirectTo: '/jobs', pathMatch: 'full'},
+	{path: '**', redirectTo: '/jobs', pathMatch:'full'}];
+
 
 @NgModule({
 	declarations: [
@@ -19,7 +29,8 @@ registerLocaleData(localeEs, 'es');
 	],
 	imports: [
 		BrowserModule,
-		HttpClientModule
+		HttpClientModule,
+		RouterModule.forRoot(routes)
 	],
 	providers: [TrabajoService, { provide: LOCALE_ID, useValue: 'es' }],
 	bootstrap: [AppComponent]

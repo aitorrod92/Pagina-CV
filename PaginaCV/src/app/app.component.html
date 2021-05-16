@@ -1,8 +1,10 @@
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 
-<div><h1>Página de CV de Aitor Rodríguez Lopezosa</h1></div>
+<div>
+	<h1>Página de CV de Aitor Rodríguez Lopezosa</h1>
+</div>
 
 
 <div class="page-wrapper">
@@ -10,10 +12,16 @@
 	<!-- MENU SIDEBAR-->
 	<aside class="menu-sidebar d-none d-lg-block">
 		<div class="logo">
-			<a routerLink="/products"> <img src="assets/images/logo/Ludo.jpg" width=100%
-				alt="luv2shop" class="img-responsive">
+			<a routerLink="/products"> <img src="assets/images/logo/Ludo.jpg"
+				width=100% alt="luv2shop" class="img-responsive">
 			</a>
 		</div>
+
+		<li><a routerLink="/search/edefe" routerLinkActive="active-link">Trabajos</a></li>
+		<li><a routerLink="/search/Prácticas" routerLinkActive="active-link">Prácticas</a></li>
+		<li><a routerLink="/search/fgfh" routerLinkActive="active-link">Formación</a></li>
+		<li><a routerLink="/category/2" routerLinkActive="active-link">Idiomas</a></li>
+
 		<!-- <app-product-category-menu></app-product-category-menu> -->
 	</aside>
 	<!-- END MENU SIDEBAR-->
@@ -25,7 +33,7 @@
 			<div class="section-content section-content-p30">
 				<div class="container-fluid">
 					<div class="header-wrap">
-					<!-- <app-search></app-search>
+						<!-- <app-search></app-search>
 					<app-cart-status></app-cart-status> -->
 					</div>
 					<div class="account-wrap"></div>
@@ -36,7 +44,7 @@
 
 
 		<!-- MAIN CONTENT-->
-		<app-lista-trabajos></app-lista-trabajos>
+		<router-outlet></router-outlet>
 	</div>
 </div>
 
