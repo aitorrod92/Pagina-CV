@@ -26,10 +26,10 @@ public class Trabajo {
 		private String imagen;
 		
 	    @Column(name="Fecha_inicio")
-	    private Date fechaInicio;
+	    private String fechaInicio;
 	    
 	    @Column(name="Fecha_fin")
-	    private Date fechaFin;   
+	    private String fechaFin;   
 		
 		@Column(name="Duracion_en_meses")
 		private int duracion;
