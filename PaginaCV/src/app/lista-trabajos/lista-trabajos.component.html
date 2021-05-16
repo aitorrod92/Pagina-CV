@@ -1,29 +1,3 @@
-<!-- <table class="table">
-	<thead class="table-dark">
-		<tr>
-			<th>Imagen</th>
-			<th>Nombre</th>
-			<th>Periodo</th>
-			<th>Duracion</th>
-			<th>Empresa</th>
-			<th>Ciudad</th>
-			<th>Descripción</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let tempProduct of trabajo">
-			<td><img class="align-middle" alt="image not found"
-				src="{{ tempProduct.imagen }}" height="50"></td>
-			<td>{{tempProduct.nombre}}</td>
-			<td>{{tempProduct.fechaInicio | date : 'MM/yyyy'}} -
-				{{tempProduct.fechaFin | date : 'MM/yyyy'}}</td>
-			<td>{{tempProduct.duracion}}</td>
-			<td>{{tempProduct.empresa}}</td>
-			<td>{{tempProduct.ciudad}}</td>
-			<td>{{tempProduct.descripcion}}</td>
-		</tr>
-	</tbody>
-</table> -->
 <meta charset="utf-8">
 
 <div class="main-content">
@@ -44,16 +18,14 @@
 						<div>
 							{{tempProduct.empresa}}
 							<div>
-								{{tempProduct.fechaInicio | date : 'MM/yyyy'}} -
-								{{tempProduct.fechaFin | date : 'MM/yyyy'}}
-								<div *ngIf="tempProduct.duracion<12; else masQueAnio">({{tempProduct.duracion}}
-									meses)</div>
-								<ng-template #masQueAnio>({{tempProduct.duracion/12 | number:'1.1-1' | slice:0:1}} años y {{tempProduct.duracion%12}} meses)</ng-template>
-							</div>
+								{{tempProduct.fechaInicio | date : 'MMMM yyyy'}} -
+								{{tempProduct.fechaFin | date : 'MMMM yyyy'}}
+								<div *ngIf="tempProduct.duracion<12; then meses else anioConMeses"></div>
+								<ng-template #meses>({{tempProduct.duracion}} meses)</ng-template>
+								<ng-template #anioConMeses>({{tempProduct.duracion/12 | number:'1.1-1' | slice:0:1}} años y {{tempProduct.duracion%12}} meses)</ng-template>
+							</div> <!-- PROBLEMA CON AÑOS EXACTOS -->
 							<div>
-								<div>{{tempProduct.ciudad}}</div>
-								<!-- <div>{{tempProduct.descripcion}}</div> -->
-								<!-- <a href="#" class="primary-btn">Más información</a> -->
+								<div>{{tempProduct.ciudad}}, {{tempProduct.pais}}</div>
 							</div>
 						</div>
 					</div>

@@ -2,8 +2,8 @@ export class Trabajo {
 	id: number;
 	nombre:string;
 	imagen: string;
-	fechaInicio: Date;
-	fechaFin: Date;
+	fechaInicio: string;
+	fechaFin: string;
 	duracion: number;
 	empresa:string;
 	ciudad:string;
