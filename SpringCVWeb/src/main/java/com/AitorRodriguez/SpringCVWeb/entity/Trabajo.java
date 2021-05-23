@@ -1,11 +1,12 @@
 package com.AitorRodriguez.SpringCVWeb.entity;
 
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -17,7 +18,7 @@ public class Trabajo {
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		@Column(name="id")
-		private int id;
+		private Long id;
 			
 		@Column(name="Nombre")	
 		private String nombre;
@@ -46,9 +47,6 @@ public class Trabajo {
 		@Column(name="Descripcion")
 		private String descripcion;
 		
-		@Column(name="Practicas")
-		private boolean practicas;
-		
 		@Column(name="Rama")
 		private String rama;
 		
@@ -57,4 +55,9 @@ public class Trabajo {
 		
 		@Column(name="Tags")
 		private String tags;
+		
+		@ManyToOne
+		@JoinColumn(name="Categoria", nullable=false)
+		private Categoria categoria;
+		
 }

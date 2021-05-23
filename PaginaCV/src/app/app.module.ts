@@ -9,23 +9,25 @@ import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import localeEn from '@angular/common/locales/en';
 import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { SearchComponent } from "./components/search/search.component";
 
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEs, 'es');
 
 const routes : Routes = 
-[	{path: 'category/:id', component: ListaTrabajosComponent},
-	{path: 'category', component: ListaTrabajosComponent},
+[	{path: 'category/:categoryid', component: ListaTrabajosComponent},
 	{path: 'search/:keyword', component: ListaTrabajosComponent},
-	{path: 'jobs', component: ListaTrabajosComponent},
-	{path: '', redirectTo: '/jobs', pathMatch: 'full'},
-	{path: '**', redirectTo: '/jobs', pathMatch:'full'}];
+	{path: '', component: ListaTrabajosComponent},
+	{path: '**', component: PageNotFoundComponent}];
 
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		ListaTrabajosComponent
+		ListaTrabajosComponent,
+  PageNotFoundComponent,
+  SearchComponent
 	],
 	imports: [
 		BrowserModule,

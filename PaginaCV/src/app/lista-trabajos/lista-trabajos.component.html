@@ -5,7 +5,6 @@
 		<div class="container-fluid">
 			<div class="row">
 
-				<!-- loop over the collection of products -->
 				<div *ngFor="let tempProduct of trabajo.slice().reverse()"
 					class="col-md-4">
 
@@ -17,18 +16,47 @@
 						</h3>
 						<div>
 							{{tempProduct.empresa}}
+							<div
+								*ngIf="tempProduct.categoria!='Formacion'; then noFormacion else formacion">
+							</div>
+							
+							<ng-template #noFormacion>
 							<div>
 								{{tempProduct.fechaInicio | date : 'MMMM yyyy'}} -
 								{{tempProduct.fechaFin | date : 'MMMM yyyy'}}
-								<div *ngIf="tempProduct.duracion<12; then meses else anioConMeses"></div>
-								<ng-template #meses>({{tempProduct.duracion}} meses)</ng-template>
-								<ng-template #anioConMeses>({{tempProduct.duracion/12 | number:'1.1-1' | slice:0:1}} años y {{tempProduct.duracion%12}} meses)</ng-template>
-							</div> <!-- PROBLEMA CON AÑOS EXACTOS -->
+								<div
+									*ngIf="tempProduct.duracion<12; then meses else anioConMeses"></div>
+								<ng-template #meses>({{tempProduct.duracion}}
+								meses)</ng-template>
+								<ng-template #anioConMeses>({{tempProduct.duracion/12
+								| number:'1.1-1' | slice:0:1}} años y
+								{{tempProduct.duracion%12}} meses)</ng-template>
+							</div>
+							</ng-template>
+
+
+							<ng-template #formacion>
+							<div>
+								{{tempProduct.fechaInicio | date : 'yyyy'}} -
+								{{tempProduct.fechaFin | date : 'yyyy'}}
+								<div
+									*ngIf="tempProduct.duracion==12; then anio else anios"></div>
+								<ng-template #anio>({{tempProduct.duracion/12
+								| number:'1.1-1' | slice:0:1}} año) </ng-template>
+								<ng-template #anios>({{tempProduct.duracion/12
+								| number:'1.1-1' | slice:0:1}} años)</ng-template>
+							</div>
+							</ng-template>
+
+
+
+							<!-- PROBLEMA CON AÑOS EXACTOS -->
 							<div>
 								<div>{{tempProduct.ciudad}}, {{tempProduct.pais}}</div>
 							</div>
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
