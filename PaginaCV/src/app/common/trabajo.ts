@@ -13,5 +13,6 @@ export class Trabajo {
 	rama:string;
 	jornada:string;
 	tags:string;
-	categoria:string;
+	fechaInicioDate : Date;
+	categoria:number;
 }

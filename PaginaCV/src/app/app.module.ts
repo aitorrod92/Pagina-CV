@@ -5,12 +5,13 @@ import { AppComponent } from './app.component';
 import { ListaTrabajosComponent } from './lista-trabajos/lista-trabajos.component';
 import { TrabajoService } from './service/trabajo.service';
 import { registerLocaleData } from '@angular/common';
-
 import localeEs from '@angular/common/locales/es';
 import localeEn from '@angular/common/locales/en';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { SearchComponent } from "./components/search/search.component";
+import { ContentPageComponent } from './components/content-page/content-page.component';
+import { CategoriesMenuComponent } from './components/categories-menu/categories-menu.component';
 
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEs, 'es');
@@ -18,6 +19,7 @@ registerLocaleData(localeEs, 'es');
 const routes : Routes = 
 [	{path: 'category/:categoryid', component: ListaTrabajosComponent},
 	{path: 'search/:keyword', component: ListaTrabajosComponent},
+	{path: 'content/:content', component: ContentPageComponent },
 	{path: '', component: ListaTrabajosComponent},
 	{path: '**', component: PageNotFoundComponent}];
 
@@ -27,7 +29,9 @@ const routes : Routes =
 		AppComponent,
 		ListaTrabajosComponent,
   PageNotFoundComponent,
-  SearchComponent
+  SearchComponent,
+  ContentPageComponent,
+  CategoriesMenuComponent
 	],
 	imports: [
 		BrowserModule,

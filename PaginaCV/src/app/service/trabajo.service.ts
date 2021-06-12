@@ -9,28 +9,34 @@ import { Trabajo } from '../common/trabajo';
 })
 export class TrabajoService {
 
-	private baseUrl = 'http://localhost:8181/api/trabajos';
+	private baseUrl = 'http://localhost:8181/api';
 	trabajo: Trabajo[] = [];
 	constructor(private httpClient: HttpClient) { }
 
 	// Devuelve un observable tras mapear el JSON devuelto por Spring Data Rest a un array de productos
 	getTrabajosListbyKeyword(tags: String): Observable<Trabajo[]> {
-		const searchUrl = `${this.baseUrl}/search/findByTagsContaining?tags=${tags}`;
+		const searchUrl = `${this.baseUrl}/trabajos/search/findByTagsContaining?tags=${tags}`;
 		return this.httpClient.get<GetResponse>(searchUrl).
 			pipe(map(response => response._embedded.trabajo));
 	}
 
 	getTrabajosListbyCategory(categoria: String): Observable<Trabajo[]> {
-		const searchUrl = `http://localhost:8181/api/categorias/2/trabajos`;
+		const searchUrl = `${this.baseUrl}/categorias/${categoria}/trabajos`;
 		return this.httpClient.get<GetResponse>(searchUrl).
 			pipe(map(response => response._embedded.trabajo));
 	}
 
 	getAllTrabajos(): Observable<Trabajo[]> {
-		const searchUrl = `${this.baseUrl}`;
+		const searchUrl = `${this.baseUrl}/trabajos`;
 		return this.httpClient.get<GetResponse>(searchUrl).
 			pipe(map(response => response._embedded.trabajo));
 	}
+
+	getTrabajo(contentId: number) {
+		const searchUrl = `${this.baseUrl}/trabajos/${contentId}`	
+		return this.httpClient.get<Trabajo>(searchUrl);
+	}
+	
 }
 
 

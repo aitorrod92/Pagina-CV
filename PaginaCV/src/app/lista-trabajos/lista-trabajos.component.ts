@@ -45,20 +45,28 @@ export class ListaTrabajosComponent implements OnInit {
 		this.getCategory();
 		if (this.currentSearchingKeywords === "" && this.currentCategory === '') {
 			this.trabajoService.getAllTrabajos().subscribe(data => {
-				this.trabajo = data;
+				this.ObtenerYOrdenar(data);
+
 			})
 		} else if (this.currentCategory != '') {
 			this.trabajoService.getTrabajosListbyCategory(this.currentCategory).subscribe(
 				data => {
-					this.trabajo = data;
+					this.ObtenerYOrdenar(data);
+
 				})
 		} else {
 			this.trabajoService.getTrabajosListbyKeyword(this.currentSearchingKeywords).subscribe(
 				data => {
-					this.trabajo = data;
+					this.ObtenerYOrdenar(data);
 				})
-
 		}
+	}
+
+	ObtenerYOrdenar(data: Trabajo[]) {
+		this.trabajo = data;
+		this.trabajo.sort((a, b) => {
+			return <any>new Date(a.fechaInicioDate) - <any>new Date(b.fechaInicioDate);
+		});
 	}
 }
 

@@ -11,15 +11,28 @@
 					<div class="product-box">
 						<h3>
 							<img class="img-responsive" alt="image not found"
-								src="{{ tempProduct.imagen }}" height="50"> <a href="#"
+								src="{{ tempProduct.imagen }}" height="50"> 
+								<a href="content/{{tempProduct.id}}"
 								class="primary-btn">{{tempProduct.nombre}}</a>
 						</h3>
 						<div>
 							{{tempProduct.empresa}}
 							<div
-								*ngIf="tempProduct.categoria!='Formacion'; then noFormacion else formacion">
+								*ngIf="tempProduct.categoria>2; then formacion else noFormacion ">
+							</div> <!-- NO SE DETECTA LO DEL THEN -->
+
+							<ng-template #formacion>
+							<div>
+								{{tempProduct.fechaInicio | date : 'yyyy'}} -
+								{{tempProduct.fechaFin | date : 'yyyy'}}
+								<div *ngIf="tempProduct.duracion==12; then anio else anios"></div>
+								<ng-template #anio>({{tempProduct.duracion/12 |
+								number:'1.1-1' | slice:0:1}} año) </ng-template>
+								<ng-template #anios>({{tempProduct.duracion/12 |
+								number:'1.1-1' | slice:0:1}} años)</ng-template>
 							</div>
-							
+							</ng-template>
+
 							<ng-template #noFormacion>
 							<div>
 								{{tempProduct.fechaInicio | date : 'MMMM yyyy'}} -
@@ -35,18 +48,7 @@
 							</ng-template>
 
 
-							<ng-template #formacion>
-							<div>
-								{{tempProduct.fechaInicio | date : 'yyyy'}} -
-								{{tempProduct.fechaFin | date : 'yyyy'}}
-								<div
-									*ngIf="tempProduct.duracion==12; then anio else anios"></div>
-								<ng-template #anio>({{tempProduct.duracion/12
-								| number:'1.1-1' | slice:0:1}} año) </ng-template>
-								<ng-template #anios>({{tempProduct.duracion/12
-								| number:'1.1-1' | slice:0:1}} años)</ng-template>
-							</div>
-							</ng-template>
+
 
 
 

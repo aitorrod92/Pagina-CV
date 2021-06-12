@@ -1,5 +1,7 @@
 package com.AitorRodriguez.SpringCVWeb.entity;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,6 +57,9 @@ public class Trabajo {
 		
 		@Column(name="Tags")
 		private String tags;
+		
+		@Column(name="FechaInicioDate")
+		private Date fechaInicioDate;
 		
 		@ManyToOne
 		@JoinColumn(name="Categoria", nullable=false)
