@@ -1,0 +1,48 @@
+		<div *ngFor="let tempProduct of trabajo.slice().reverse()"
+					class="col-md-4">
+
+					<div class="product-box">
+						<h3>
+							<img class="img-responsive" alt="image not found"
+								src="{{ tempProduct.imagen }}" height="50"> <a
+								href="content/{{tempProduct.id}}" class="primary-btn">{{tempProduct.nombre}}</a>
+						</h3>
+						<div>
+							{{tempProduct.empresa}}
+							<div
+								*ngIf="tempProduct.categoria>2; then formacion else noFormacion ">
+							</div>
+							<!-- NO SE DETECTA LO DEL THEN, ES PORQUE NO ES UN NÚMERO-->
+
+							<ng-template #formacion>
+							<div>
+								{{tempProduct.fechaInicio | date : 'yyyy'}} -
+								{{tempProduct.fechaFin | date : 'yyyy'}}
+								<div *ngIf="tempProduct.duracion==12; then anio else anios"></div>
+								<ng-template #anio>({{tempProduct.duracion/12 |
+								number:'1.1-1' | slice:0:1}} año) </ng-template>
+								<ng-template #anios>({{tempProduct.duracion/12 |
+								number:'1.1-1' | slice:0:1}} años)</ng-template>
+							</div>
+							</ng-template>
+
+							<ng-template #noFormacion>
+							<div>
+								{{tempProduct.fechaInicio | date : 'MMMM yyyy'}} -
+								{{tempProduct.fechaFin | date : 'MMMM yyyy'}}
+								<div
+									*ngIf="tempProduct.duracion<12; then meses else anioConMeses"></div>
+								<ng-template #meses>({{tempProduct.duracion}}
+								meses)</ng-template>
+								<ng-template #anioConMeses>({{tempProduct.duracion/12
+								| number:'1.1-1' | slice:0:1}} años y
+								{{tempProduct.duracion%12}} meses)</ng-template>
+							</div>
+
+
+							</ng-template>
+
+
+						</div>
+					</div>
+				</div>

@@ -4,6 +4,8 @@
 	<div class="section-content section-content-p30">
 		<div class="container-fluid">
 			<div class="row">
+				<div *ngIf="currentCategory<4; then trabajos else idiomas"></div>
+				<ng-template #trabajos>
 
 				<div *ngFor="let tempProduct of trabajo.slice().reverse()"
 					class="col-md-4">
@@ -11,15 +13,15 @@
 					<div class="product-box">
 						<h3>
 							<img class="img-responsive" alt="image not found"
-								src="{{ tempProduct.imagen }}" height="50"> 
-								<a href="content/{{tempProduct.id}}"
-								class="primary-btn">{{tempProduct.nombre}}</a>
+								src="{{ tempProduct.imagen }}" height="50"> <a
+								href="content/jobs/{{tempProduct.id}}" class="primary-btn"><b>{{tempProduct.nombre}}</b></a>
 						</h3>
 						<div>
-							{{tempProduct.empresa}}
+							<b>{{tempProduct.empresa}}</b>
 							<div
 								*ngIf="tempProduct.categoria>2; then formacion else noFormacion ">
-							</div> <!-- NO SE DETECTA LO DEL THEN -->
+							</div>
+							<!-- NO SE DETECTA LO DEL THEN, ES PORQUE NO ES UN NÚMERO??-->
 
 							<ng-template #formacion>
 							<div>
@@ -46,19 +48,28 @@
 								{{tempProduct.duracion%12}} meses)</ng-template>
 							</div>
 							</ng-template>
-
-
-
-
-
-
-							<!-- PROBLEMA CON AÑOS EXACTOS -->
-							<div>
-								<div>{{tempProduct.ciudad}}, {{tempProduct.pais}}</div>
-							</div>
 						</div>
 					</div>
 				</div>
+				</ng-template>
 
+				<ng-template #idiomas>
+				<div *ngFor="let idiom of idioma.slice().reverse()" class="col-md-4">
+
+					<div class="product-box">
+						<h3>
+							<img class="img-responsive" alt="image not found"
+								src="{{ idiom.imagen }}" height="50"> 
+								<!-- MODIFICAR EL ENLACE -->
+								<a
+								href="content/languages/{{idiom.id}}" class="primary-btn">{{idiom.nombre}}</a>
+						</h3>
+						<div><b>{{idiom.institucion}}</b></div>
+						<div>{{idiom.fecha | date : 'MMMM yyyy'}}</div>
+					</div>
+				</div>
+				</ng-template>
 			</div>
 		</div>
+	</div>
+</div>

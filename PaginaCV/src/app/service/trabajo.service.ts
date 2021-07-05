@@ -9,8 +9,10 @@ import { Trabajo } from '../common/trabajo';
 })
 export class TrabajoService {
 
-	private baseUrl = 'http://localhost:8181/api';
+
 	trabajo: Trabajo[] = [];
+	private baseUrl = 'http://localhost:8181/api';
+	
 	constructor(private httpClient: HttpClient) { }
 
 	// Devuelve un observable tras mapear el JSON devuelto por Spring Data Rest a un array de productos
@@ -20,12 +22,12 @@ export class TrabajoService {
 			pipe(map(response => response._embedded.trabajo));
 	}
 
-	getTrabajosListbyCategory(categoria: String): Observable<Trabajo[]> {
+	getTrabajosListbyCategory(categoria: number): Observable<Trabajo[]> {
 		const searchUrl = `${this.baseUrl}/categorias/${categoria}/trabajos`;
 		return this.httpClient.get<GetResponse>(searchUrl).
 			pipe(map(response => response._embedded.trabajo));
 	}
-
+	
 	getAllTrabajos(): Observable<Trabajo[]> {
 		const searchUrl = `${this.baseUrl}/trabajos`;
 		return this.httpClient.get<GetResponse>(searchUrl).
@@ -36,7 +38,6 @@ export class TrabajoService {
 		const searchUrl = `${this.baseUrl}/trabajos/${contentId}`	
 		return this.httpClient.get<Trabajo>(searchUrl);
 	}
-	
 }
 
 
@@ -46,6 +47,7 @@ interface GetResponse {
 		trabajo: Trabajo[];
 	}
 }
+
 
 
 

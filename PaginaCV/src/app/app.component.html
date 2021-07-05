@@ -2,33 +2,23 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 
-<div>
-	<h1>Página de CV de Aitor Rodríguez Lopezosa</h1>
-</div>
+
 
 
 <div class="page-wrapper">
-
+	<div>
+		<h1>Página de CV de Aitor Rodríguez Lopezosa</h1>
+	</div>
 	<!-- MENU SIDEBAR-->
 	<aside class="menu-sidebar d-none d-lg-block">
 		<div class="logo">
-			<a routerLink="/products"> <img src="assets/images/logo/Ludo.jpg"
-				width=100% alt="luv2shop" class="img-responsive">
+			<a routerLink="/main"> <img src="assets/images/logo/Logo.jpg"
+				width=100% alt="AitorRodríguez" class="img-responsive">
 			</a>
 		</div>
-		
-		<app-categories-menu></app-categories-menu> 
-<!--
-		<li><a routerLink="/category/1"
-			routerLinkActive="active-link">Trabajos</a></li>
-		<li><a routerLink="/category/2"
-			routerLinkActive="active-link">Prácticas</a></li>
-		<li><a routerLink="/category/3"
-			routerLinkActive="active-link">Formación</a></li>
-		<li><a routerLink="/category/4"
-			routerLinkActive="active-link">Idiomas</a></li>-->
 
-		 
+		<app-categories-menu></app-categories-menu>
+
 	</aside>
 	<!-- END MENU SIDEBAR-->
 
@@ -40,9 +30,11 @@
 				<div class="container-fluid">
 					<div class="header-wrap">
 						<app-search></app-search>
-					<!-- <app-cart-status></app-cart-status> -->
+						<!-- <app-cart-status></app-cart-status> -->
 					</div>
 					<div class="account-wrap"></div>
+
+
 				</div>
 			</div>
 		</header>
@@ -56,8 +48,11 @@
 
 <footer>
 	<ul>
-		<li><a href="#">About Us</a></li>
-		<li><a href="#">Contact Us</a></li>
-		<li><a href="#">Help</a></li>
+		<li><a href="mailto:aitorrod@ucm.es?Subject=Asunto%20de%20prueba"><fa-icon [icon]="faMailBulk"></fa-icon>
+				Correo </a></li>
+		<li><a href='https://www.linkedin.com/in/aitor-rodr%C3%ADguez/' target="LinkedIn"><fa-icon
+					[icon]="faLinkedin"></fa-icon> LinkedIn</a></li>
+		<li><a href='https://github.com/aitorrod92' target="GitHub"><fa-icon
+					[icon]="faFacebook"></fa-icon> GitHub</a></li>
 	</ul>
 </footer>

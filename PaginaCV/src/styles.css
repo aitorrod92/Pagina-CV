@@ -47,6 +47,12 @@ img {
 	height: 20%
 }
 
+.logo img {
+	max-width: 100%;
+	height: 100%
+}
+
+
 p {
 	margin: 0
 }
@@ -316,12 +322,12 @@ input.au-input.au-input-xl {
 	left: 0;
 	top: 0;
 	bottom: 0;
-	background: #fff;
+	background: #0da8e4;
 	overflow-y: auto
 }
 
 .menu-sidebar .logo {
-	background: #fff;
+	background: rgb(0, 0, 160);
 	height: 75px;
 	padding: 0 35px;
 	display: -webkit-box;
@@ -366,16 +372,17 @@ input.au-input.au-input-xl {
 .navbar-sidebar .navbar-list li a {
 	display: block;
 	color: #555;
+	font-weight: bold;
 	font-size: 16px;
-	padding: 5px 0
+	padding: 5px 5px
 }
 
-.navbar-sidebar .navbar-list li a i {
-	margin-right: 19px
+.navbarrgb(255, 255, 255)r .navbar-list li a i {
+	margin-right: 19px;
 }
 
 .navbar-sidebar .navbar-list li a:hover {
-	color: #0da8e4
+	color: white;
 }
 
 /* 
@@ -802,6 +809,7 @@ a.primary-btn:hover {
 
 .active-link {
 	font-weight: bold;
+	background: #232324;
 }
 
 /* 
@@ -1012,7 +1020,7 @@ footer ul li {
 		height: 80px
 	}
 	a.logo img {
-		width: 110px
+		width: 190px
 	}
 	.cart-area i {
 		font-size: 22px;

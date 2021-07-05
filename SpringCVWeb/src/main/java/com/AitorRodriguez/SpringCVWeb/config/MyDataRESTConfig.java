@@ -13,32 +13,45 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
 
+import com.AitorRodriguez.SpringCVWeb.entity.Categoria;
+import com.AitorRodriguez.SpringCVWeb.entity.Idioma;
 import com.AitorRodriguez.SpringCVWeb.entity.Trabajo;
 
 @Configuration
 public class MyDataRESTConfig implements RepositoryRestConfigurer {
 
 	private EntityManager entityManager;
-	
+	private HttpMethod[] theUnsupportedActions = { HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE };
+	private Class[] clases = { Trabajo.class, Categoria.class, Idioma.class };
+
 	@Autowired
 	public MyDataRESTConfig(EntityManager theEntityManager) {
 		this.entityManager = theEntityManager;
 	}
-	
+
 	@Override
 	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-		HttpMethod[] theUnsupportedActions = { HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE };
-		config.getExposureConfiguration().forDomainType(Trabajo.class)
-				.withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
-				.withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+		disableHttpMethods(config, clases);
 		exposeIds(config);
+	}
+
+	private void disableHttpMethods(RepositoryRestConfiguration config, 
+									@SuppressWarnings("rawtypes") Class[] clases) {
+		for (@SuppressWarnings("rawtypes")Class clase : clases) {
+			config.getExposureConfiguration().forDomainType(clase)
+					.withItemExposure((metdata, httpMethods) 
+							-> httpMethods.disable(theUnsupportedActions))
+					.withCollectionExposure((metdata, httpMethods) 
+							-> httpMethods.disable(theUnsupportedActions));
+		}
 	}
 
 	private void exposeIds(RepositoryRestConfiguration config) {
 		Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
 		@SuppressWarnings("rawtypes")
 		List<Class> entityClasses = new ArrayList();
-		for (@SuppressWarnings("rawtypes") EntityType tempEntityType : entities) {
+		for (@SuppressWarnings("rawtypes")
+		EntityType tempEntityType : entities) {
 			entityClasses.add(tempEntityType.getJavaType());
 		}
 		@SuppressWarnings("rawtypes")

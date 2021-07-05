@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Idioma } from '../common/idioma';
 import { Trabajo } from '../common/trabajo';
+import { IdiomasService } from '../service/idiomas.service';
 import { TrabajoService } from '../service/trabajo.service';
+
 
 @Component({
 	selector: 'app-lista-trabajos',
@@ -10,11 +13,13 @@ import { TrabajoService } from '../service/trabajo.service';
 })
 export class ListaTrabajosComponent implements OnInit {
 	trabajo: Trabajo[];
+	idioma: Idioma [];
 	currentSearchingKeywords: String;
-	currentCategory: String;
+	currentCategory: number;
 
-	constructor(private trabajoService: TrabajoService,
-		private route: ActivatedRoute) { }
+	constructor(private trabajoService: TrabajoService, 
+				private idiomasService : IdiomasService,
+				private route: ActivatedRoute) { }
 
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(() => { this.listTrabajos() });
@@ -34,27 +39,32 @@ export class ListaTrabajosComponent implements OnInit {
 		const hasCategory: boolean = this.route.snapshot.paramMap.has('categoryid');
 		if (hasCategory) {
 			// @ts-ignore: Object is possibly 'null'.
-			this.currentCategory = this.route.snapshot.paramMap.get('categoryid');
+			this.currentCategory = +this.route.snapshot.paramMap.get('categoryid');
 		} else {
-			this.currentCategory = '';
+			this.currentCategory = +'';
 		}
 	}
 
 	listTrabajos() {
 		this.getKeyword();
 		this.getCategory();
-		if (this.currentSearchingKeywords === "" && this.currentCategory === '') {
+		if (this.currentSearchingKeywords === "" && this.currentCategory==0) {
 			this.trabajoService.getAllTrabajos().subscribe(data => {
 				this.ObtenerYOrdenar(data);
 
 			})
-		} else if (this.currentCategory != '') {
-			this.trabajoService.getTrabajosListbyCategory(this.currentCategory).subscribe(
-				data => {
-					this.ObtenerYOrdenar(data);
+		} else if (this.currentCategory!=0) {
+			if (this.currentCategory === 4) {
+				this.idiomasService.getIdiomas().subscribe(data => this.idioma = data);
+			} else {
+				this.trabajoService.getTrabajosListbyCategory(this.currentCategory).subscribe(
+					data => {
+						this.ObtenerYOrdenar(data);
 
-				})
+					})
+			}
 		} else {
+			console.log("palabra busqueda " + this.currentSearchingKeywords);
 			this.trabajoService.getTrabajosListbyKeyword(this.currentSearchingKeywords).subscribe(
 				data => {
 					this.ObtenerYOrdenar(data);

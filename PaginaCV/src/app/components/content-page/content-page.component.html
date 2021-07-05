@@ -1,9 +1,28 @@
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+<!-- Bootstrap CSS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+	crossorigin="anonymous">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
+<div *ngIf="isLanguagePage; else notLanguagePage">
+<div class="detail-section">
+	<div class="container-fluid">
+		<img src="{{idioma.imagen}}" class="detail-img">
+		<h3>{{idioma.nombre}}</h3>
+		<div class="price">{{idioma.institucion}}</div>
+		<hr>
+		<h4>Descripción</h4>
+		<p><!-- {{idioma.descripcion}} --></p>
+		<a routerLink="/" class="mt-5">Volver a la página principal</a>
+	</div>
+</div>
+</div>
 
+<ng-template #notLanguagePage>
 <div class="detail-section">
 	<div class="container-fluid">
 		<img src="{{trabajo.imagen}}" class="detail-img">
@@ -15,3 +34,6 @@
 		<a routerLink="/" class="mt-5">Volver a la página principal</a>
 	</div>
 </div>
+
+
+</ng-template>
