@@ -13,6 +13,8 @@ import { SearchComponent } from "./components/search/search.component";
 import { ContentPageComponent } from './components/content-page/content-page.component';
 import { CategoriesMenuComponent } from './components/categories-menu/categories-menu.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MainPageComponent } from './components/main-page/main-page.component';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEs, 'es');
@@ -21,6 +23,7 @@ const routes: Routes =
 	[{ path: 'category/:categoryid', component: ListaTrabajosComponent },
 	{ path: 'search/:keyword', component: ListaTrabajosComponent },
 	{ path: 'content/:table/:id', component: ContentPageComponent },
+	{path: 'index', component: MainPageComponent},
 	{ path: '', component: ListaTrabajosComponent },
 	{ path: '**', component: PageNotFoundComponent}];
 
@@ -32,13 +35,15 @@ const routes: Routes =
 		PageNotFoundComponent,
 		SearchComponent,
 		ContentPageComponent,
-		CategoriesMenuComponent
+		CategoriesMenuComponent,
+  MainPageComponent
 	],
 	imports: [
 		BrowserModule,
 		HttpClientModule,
 		RouterModule.forRoot(routes),
-		FontAwesomeModule
+		FontAwesomeModule,
+		AutocompleteLibModule		
 	],
 	providers: [TrabajoService, { provide: LOCALE_ID, useValue: 'es' }],
 	bootstrap: [AppComponent]
