@@ -12,12 +12,12 @@
 
 <div class="ng-autocomplete form-header" (keyup.enter)="doSearch()">
 	<ng-autocomplete #myInput [data]="data" [searchKeyword]="keyword"
-	class="au-input au-input-xl"
-		(selected)='selectEvent($event)'
-		(inputChanged)='onChangeSearch($event)'
-		(inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"> </ng-autocomplete>
-	<button type="submit" (click)="doSearch()"
-		class="au-btn-submit">Buscar</button>
+		class="au-input au-input-xl" (selected)="selectEvent($event)"
+		placeholder="Busca por palabras clave ..."
+		(inputChanged)="onChangeSearch($event)"
+		(inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate">
+	</ng-autocomplete>
+	<button type="submit" (click)="doSearch()" class="au-btn-submit">Buscar</button>
 
 	<ng-template #itemTemplate let-item> <a
 		[innerHTML]="item.value"></a> </ng-template>

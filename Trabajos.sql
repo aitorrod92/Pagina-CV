@@ -4,7 +4,7 @@
   PRIMARY KEY (`id`)
   );
 
-INSERT INTO datoscurriculo.categorias VALUES (1, "Trabajos"), (2, "Practicas"), (3, "Formacion"), (4, "Idiomas");
+INSERT INTO datoscurriculo.categorias VALUES (1, "Trabajos"), (2, "Prácticas"), (3, "Formación"), (4, "Idiomas");
 
 CREATE TABLE `datoscurriculo`.`trabajos` (
   `id` INT NOT NULL AUTO_INCREMENT,
