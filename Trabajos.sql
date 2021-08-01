@@ -69,7 +69,7 @@ DATE_FORMAT('2015-01-01', '%Y'),DATE_FORMAT('2016-01-01', '%Y'), '12', 'Universi
 (10, 'Consultor SAP SuccessFactors', 'assets/images/jobs/Deloitte.jpg',  DATE_FORMAT('2021-4-01','%b %Y'),  DATE_FORMAT('2021-7-31','%b %Y'), DATEDIFF('2021-5-31', '2021-4-01')/30, 'Deloitte', 'Madrid', 'España',
 '', 'IT', "Completa", 'Informática IT Trabajo Consultoría SAP SuccessFactors', '2021-4-01', 1),
 (11, 'Desarrollador .NET', 'assets/images/jobs/Sanne.jpg',  DATE_FORMAT('2021-8-01','%b %Y'),  DATE_FORMAT('2021-8-31','%b %Y'), DATEDIFF('2021-8-31', '2021-8-01')/30, 'Sanne', 'Madrid', 'España',
-'', 'IT', "Completa", 'Informática IT Trabajo .NET C#', '2021-8-01', 1);
+'', 'IT', "Completa", 'Informática IT Trabajo .NET C# Programación', '2021-8-01', 1);
 
 CREATE TABLE `datoscurriculo`.`keywords`(
   `id` INT NOT NULL AUTO_INCREMENT,

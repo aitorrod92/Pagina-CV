@@ -13,9 +13,9 @@ export class SearchComponent implements OnInit {
 	busquedaMinima: number = 2;
 	data: Keyword[];
 	searchTerm = '';
-	
+
 	constructor(private router: Router,
-		private keywordsService: KeywordsService) {	}
+		private keywordsService: KeywordsService) { }
 
 	ngOnInit(): void {
 		this.listKeywords();
@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit {
 		)
 	}
 
-	onFocused(e: any) {	}
+	onFocused(e: any) { }
 
 	onChangeSearch(val: string) {
 		console.log(val);
@@ -37,12 +37,12 @@ export class SearchComponent implements OnInit {
 		//this.selectKeyword(val);
 		this.searchTerm = val;
 	}
-	
+
 	selectEvent(item: any) {
 		this.searchTerm = item.nombre;
 	}
 
-	
+
 	selectKeyword(val: string) {
 		if (val.length < this.busquedaMinima) {
 			this.keyword = 'id';
@@ -52,16 +52,19 @@ export class SearchComponent implements OnInit {
 			console.log('mayor que ' + this.busquedaMinima);
 		}
 	}
-	
-	onKeydown(event: any){
-	if (event.key === "Enter") {
-    	this.doSearch();
-  		}
+
+	onKeydown(event: any) {
+		if (event.key === "Enter") {
+			this.doSearch();
+		}
 	}
-	
+
 	doSearch() {
-		console.log("buscando " + this.searchTerm)
-		this.router.navigateByUrl(`/search/${this.searchTerm}`);
+		if (this.searchTerm.toUpperCase() != 'C#') {
+			this.router.navigateByUrl(`/search/${this.searchTerm}`);
+		} else {
+			this.router.navigateByUrl(`/search/${'C%23'}`);
+		}
 	}
 
 

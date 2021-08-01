@@ -47,6 +47,21 @@ img {
 	height: 20%
 }
 
+.img-hoverable {
+        opacity: 0.9;
+        filter: alpha(opacity=100);
+        filter: grayscale(100%)
+}
+
+.img-hoverable:hover {
+        opacity: 1;
+        filter: alpha(opacity=100);
+        filter: grayscale(0%);
+
+        cursor: pointer;
+        transition: 2s
+}
+
 .logo img {
 	max-width: 100%;
 	height: 100%
@@ -90,7 +105,7 @@ h6 {
 
 
 a {
-	display: inline-block
+	/*display: inline-block*/
 }
 
 a:active, a:focus, a:hover {
