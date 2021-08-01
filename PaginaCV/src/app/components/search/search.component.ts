@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { KeywordsService } from 'src/app/service/keywords.service';
+import { Keyword } from 'src/app/common/keyword';
 
 @Component({
 	selector: 'app-search',
@@ -7,36 +9,27 @@ import { Router } from '@angular/router';
 	styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-	constructor(private router: Router) { 
-		this.busquedaMinima = 5;
-	}
-
-	keyword = 'value'; // Nombre de la variable de data a utilizar para el filtrado. Va en relación con el ng-template
-	busquedaMinima : number;
-
-	// OBTENER DE UNA NUEVA BASE DE DATOS Y SOLUCIONAR ACENTOS
-	data = [{ id: 1, value: 'Informatica' }, { id: 2, value: 'Biologia' }, { id: 3, value: 'Docencia' },
-	{ id: 4, value: 'Ciencia' }, { id: 5, value: 'Grado' }, { id: 6, value: 'Universidad' },
-	{ id: 7, value: 'Investigación' }, { id: 8, value: 'Prácticas' }, { id: 9, value: 'Enseñanza' },
-	{ id: 10, value: 'Máster' }, { id: 11, value: 'Venta' }, { id: 12, value: 'Cara al público' },
-	{ id: 13, value: 'Trabajo' }, { id: 14, value: 'Cocina' }, { id: 15, value: 'Hostelería' },
-	{ id: 16, value: 'Limpieza' }, { id: 17, value: 'Porteo' }, { id: 18, value: 'Formación' },
-	{ id: 19, value: 'IT' }, { id: 20, value: 'FP' }, { id: 21, value: 'Grado superior' },
-	{ id: 22, value: 'Software' }, { id: 23, value: 'Programación' }, { id: 24, value: 'Bases de datos' },
-	{ id: 25, value: 'Desarrollo' }, { id: 26, value: 'Wordpress' }, { id: 27, value: 'Java' },
-	{ id: 28, value: 'CSS' }, { id: 29, value: 'Consultoría' }, { id: 30, value: 'SAP' },
-	{ id: 31, value: 'Inglés' }, { id: 32, value: 'IELTS' }, { id: 33, value: 'British Council' },
-	{ id: 34, value: 'C1' }, { id: 35, value: 'Chino' }, { id: 36, value: 'Confucio' },
-	{ id: 37, value: 'HSK' }, { id: 38, value: 'A2' }, { id: 39, value: 'Castellano' },
-	{ id: 40, value: 'Español' }, { id: 41, value: 'Nativo' }];
-
+	keyword = 'nombre'; // Nombre de la variable de data a utilizar para el filtrado. Va en relación con el ng-template
+	busquedaMinima: number = 2;
+	data: Keyword[]; // SOLUCIONAR ACENTOS
 	searchTerm = '';
+	
+	constructor(private router: Router,
+		private keywordsService: KeywordsService) {	}
 
-	ngOnInit(): void { }
-
-	onFocused(e: any) { // PUEDE SER ÚTIL POSTERIORMENTE
-		console.log("seleccionado");
+	ngOnInit(): void {
+		this.listKeywords();
 	}
+
+	listKeywords() {
+		this.keywordsService.getKeywords().subscribe(
+			data => {
+				this.data = data;
+			}
+		)
+	}
+
+	onFocused(e: any) {	}
 
 	onChangeSearch(val: string) {
 		console.log(val);
@@ -44,24 +37,33 @@ export class SearchComponent implements OnInit {
 		//this.selectKeyword(val);
 		this.searchTerm = val;
 	}
-
-	selectKeyword(val: string) {
-		if (val.length < 6) {
-			this.keyword = 'no keyword';
-			console.log('menor que 6');
-		} else {
-			this.keyword = 'value';
-			console.log('mayor que 6');
-		}
+	
+	selectEvent(item: any) {
+		this.searchTerm = item.nombre;
 	}
 
+	
+	selectKeyword(val: string) {
+		if (val.length < this.busquedaMinima) {
+			this.keyword = 'id';
+			console.log('menor que ' + this.busquedaMinima);
+		} else {
+			this.keyword = 'nombre';
+			console.log('mayor que ' + this.busquedaMinima);
+		}
+	}
+	
+	onKeydown(event: any){
+	if (event.key === "Enter") {
+    	this.doSearch();
+  		}
+	}
+	
 	doSearch() {
 		console.log("buscando " + this.searchTerm)
 		this.router.navigateByUrl(`/search/${this.searchTerm}`);
 	}
 
-	selectEvent(item: any) {
-		this.searchTerm = item.value;
-	}
+
 
 }

@@ -1,24 +1,16 @@
 <head>
 <meta content="text/html; charset=iso-8859-1" http-equiv=Content-Type>
 </head>
-<!-- <div class="form-header">
-	<input #myInput type="text" 
-		placeholder="Busca por palabras clave ..."
-		class="au-input au-input-xl" 
-		(keyup.enter)="doSearch(myInput.value)" />
-	<button (click)="doSearch(myInput.value)" class="au-btn-submit">Buscar</button>
-</div> -->
-
 
 <div class="ng-autocomplete form-header" (keyup.enter)="doSearch()">
 	<ng-autocomplete #myInput [data]="data" [searchKeyword]="keyword"
 		class="au-input au-input-xl" (selected)="selectEvent($event)"
 		placeholder="Busca por palabras clave ..."
 		(inputChanged)="onChangeSearch($event)"
-		(inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate">
+		(inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate" [minQueryLength]="busquedaMinima">
 	</ng-autocomplete>
-	<button type="submit" (click)="doSearch()" class="au-btn-submit">Buscar</button>
+	<button type="submit" (click)="doSearch()" (keydown)="onKeydown($event)" class="au-btn-submit">Buscar</button>
 
 	<ng-template #itemTemplate let-item> <a
-		[innerHTML]="item.value"></a> </ng-template>
+		[innerHTML]="item.nombre"></a> </ng-template>
 </div>

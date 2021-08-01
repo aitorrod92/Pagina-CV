@@ -23,6 +23,7 @@ public class MyDataRESTConfig implements RepositoryRestConfigurer {
 	private EntityManager entityManager;
 	private HttpMethod[] theUnsupportedActions = { HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE };
 	private Class[] clases = { Trabajo.class, Categoria.class, Idioma.class };
+	private int pageSize = 41;
 
 	@Autowired
 	public MyDataRESTConfig(EntityManager theEntityManager) {
@@ -33,6 +34,7 @@ public class MyDataRESTConfig implements RepositoryRestConfigurer {
 	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
 		disableHttpMethods(config, clases);
 		exposeIds(config);
+		config.setDefaultPageSize(pageSize);
 	}
 
 	private void disableHttpMethods(RepositoryRestConfiguration config, 

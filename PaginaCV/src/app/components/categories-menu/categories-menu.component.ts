@@ -22,6 +22,5 @@ export class CategoriesMenuComponent implements OnInit {
 				this.categorias = data;
 			}
 		)
-		console.log('categorias ' + this.categorias);
 	}
 }

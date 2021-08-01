@@ -10,7 +10,6 @@ import { Trabajo } from '../common/trabajo';
 export class TrabajoService {
 
 
-	trabajo: Trabajo[] = [];
 	private baseUrl = 'http://localhost:8181/api';
 	
 	constructor(private httpClient: HttpClient) { }

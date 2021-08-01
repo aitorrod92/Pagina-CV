@@ -23,6 +23,7 @@ export class ListaTrabajosComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(() => { this.listTrabajos() });
+		
 	}
 
 	getKeyword() {
@@ -77,6 +78,7 @@ export class ListaTrabajosComponent implements OnInit {
 		this.trabajo.sort((a, b) => {
 			return <any>new Date(a.fechaInicioDate) - <any>new Date(b.fechaInicioDate);
 		});
+		
 	}
 }
 
