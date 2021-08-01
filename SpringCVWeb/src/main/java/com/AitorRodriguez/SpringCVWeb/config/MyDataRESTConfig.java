@@ -23,7 +23,7 @@ public class MyDataRESTConfig implements RepositoryRestConfigurer {
 	private EntityManager entityManager;
 	private HttpMethod[] theUnsupportedActions = { HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE };
 	private Class[] clases = { Trabajo.class, Categoria.class, Idioma.class };
-	private int pageSize = 41;
+	private int pageSize = 100; // A cambiar si se incluyen más palabras clave
 
 	@Autowired
 	public MyDataRESTConfig(EntityManager theEntityManager) {

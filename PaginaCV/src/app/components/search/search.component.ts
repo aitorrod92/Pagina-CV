@@ -11,7 +11,7 @@ import { Keyword } from 'src/app/common/keyword';
 export class SearchComponent implements OnInit {
 	keyword = 'nombre'; // Nombre de la variable de data a utilizar para el filtrado. Va en relación con el ng-template
 	busquedaMinima: number = 2;
-	data: Keyword[]; // SOLUCIONAR ACENTOS
+	data: Keyword[];
 	searchTerm = '';
 	
 	constructor(private router: Router,
