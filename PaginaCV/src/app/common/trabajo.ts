@@ -14,5 +14,6 @@ export class Trabajo {
 	jornada:string;
 	tags:string;
 	fechaInicioDate : Date;
+	codigoLocalizacion : string;
 	categoria:number;
 }

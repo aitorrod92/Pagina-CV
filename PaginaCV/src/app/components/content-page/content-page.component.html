@@ -8,30 +8,54 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
+
+
+
 <div *ngIf="isLanguagePage; else notLanguagePage">
-<div class="detail-section">
-	<div class="container-fluid">
-		<img src="{{idioma.imagen}}" class="detail-img">
-		<h3>{{idioma.nombre}}</h3>
-		<div class="price">{{idioma.institucion}}</div>
-		<hr>
-		<h4>Descripción</h4>
-		<p><!-- {{idioma.descripcion}} --></p>
-		<a routerLink="/" class="mt-5">Volver a la página principal</a>
+	<div class="detail-section">
+		<div class="container-fluid">
+			<div class='row'>
+				<div class='col-sm'>
+					<img src="{{idioma.imagen}}" class="detail-img">
+					<h3>{{idioma.nombre}}</h3>
+					<div class="price">{{idioma.institucion}}</div>
+				</div>
+			</div>
+			<hr>
+			<h4>Descripción</h4>
+			<p>
+				<!-- {{idioma.descripcion}} -->
+			</p>
+			<a routerLink="/" class="mt-5">Volver a la página principal</a>
+
+		</div>
 	</div>
-</div>
 </div>
 
 <ng-template #notLanguagePage>
 <div class="detail-section">
 	<div class="container-fluid">
-		<img src="{{trabajo.imagen}}" class="detail-img">
-		<h3>{{trabajo.nombre}}</h3>
-		<div class="price">{{trabajo.empresa}}</div>
+		<div class='row' style="padding-right: 50px">
+			<div class="col-md text-center align-self-center">
+				<img class="detail-img" src="{{trabajo.imagen}}">
+				<h3>{{trabajo.nombre}}</h3>
+				<div class="price">{{trabajo.empresa}}</div>
+			</div>
+			<div class="col-md">
+				<iframe width="500" height="300" style="border: 0" loading="lazy"
+					allowfullscreen [src]="this.methodToGetMapURL()"></iframe>
+			</div>
+		</div>
 		<hr>
-		<h4>Descripción</h4>
-		<p>{{trabajo.descripcion}}</p>
-		<a routerLink="/" class="mt-5">Volver a la página principal</a>
+		<div class='row'>
+			<h4>Descripción</h4>
+			<p>
+				{{trabajo.descripcion}} 
+				<br>
+				<br>
+				<a routerLink="/" class="mt-5">Volver a	la página principal</a>
+			</p>
+		</div>
 	</div>
 </div>
 

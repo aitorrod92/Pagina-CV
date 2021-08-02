@@ -58,8 +58,11 @@ public class Trabajo {
 		@Column(name="Tags")
 		private String tags;
 		
-		@Column(name="FechaInicioDate")
+		@Column(name="Fecha_inicio_date")
 		private Date fechaInicioDate;
+		
+		@Column(name="Codigo_de_localizacion")
+		private String codigoLocalizacion;
 		
 		@ManyToOne
 		@JoinColumn(name="Categoria", nullable=false)
