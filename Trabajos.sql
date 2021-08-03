@@ -1,11 +1,3 @@
-SELECT * FROM datoscurriculo.categorias;
-SELECT * FROM datoscurriculo.trabajos;
-DELETE FROM datoscurriculo.trabajos WHERE id>0;
-DROP TABLE datoscurriculo.idiomas;
-
-UPDATE datoscurriculo.trabajos SET Tags='Informática IT Trabajo .NET C# Programación' WHERE id=11;
-UPDATE datoscurriculo.trabajos SET Duracion_en_meses=DATEDIFF('2021-7-31', '2021-4-01')/30 WHERE id=10;
-
   CREATE TABLE `datoscurriculo`.`categorias`(
   `id` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(20) NOT NULL,
@@ -75,11 +67,11 @@ DATE_FORMAT('2015-01-01', '%Y'),DATE_FORMAT('2016-01-01', '%Y'), '12', 'Universi
 '- Creación, evaluación y migración de páginas web.
 - Utilización de WordPress y CSS.
 - Creación de programas auxiliares para tareas de la empresa.',
-'IT', null, 'Informática IT Prácticas Desarrollo Wordpress CSS Java', '2018-01-01', 'ChIJ5ftsegovQg0Ro8rRTArZ0Ew', 2),
+'IT', null, 'Informática IT Prácticas Desarrollo Wordpress CSS Java Programación', '2018-01-01', 'ChIJ5ftsegovQg0Ro8rRTArZ0Ew', 2),
 (10, 'Consultor SAP SuccessFactors', 'assets/images/jobs/Deloitte.jpg',  DATE_FORMAT('2021-4-01','%b %Y'),  DATE_FORMAT('2021-7-31','%b %Y'), DATEDIFF('2021-5-31', '2021-4-01')/30, 'Deloitte', 'Madrid', 'España',
-'', 'IT', "Completa", 'Informática IT Trabajo Consultoría SAP SuccessFactors', '2021-4-01', 'ChIJ947Eq2gsQg0RX8Sf25ay0nY', 1),
+'', 'IT', "Completa", 'Informática IT Trabajo Consultoría SAP SuccessFactors CSS SQL C# Programación', '2021-4-01', 'ChIJ947Eq2gsQg0RX8Sf25ay0nY', 1),
 (11, 'Desarrollador .NET', 'assets/images/jobs/Sanne.jpg',  DATE_FORMAT('2021-8-01','%b %Y'),  DATE_FORMAT('2021-8-31','%b %Y'), DATEDIFF('2021-8-31', '2021-8-01')/30, 'Sanne', 'Madrid', 'España',
-'', 'IT', "Completa", 'Informática IT Trabajo .NET C# Programación', '2021-8-01', NULL, 1);
+'', 'IT', "Completa", 'Informática IT Trabajo .NET C# CSS SQL Programación', '2021-8-01', NULL, 1);
 
  
   CREATE TABLE `datoscurriculo`.`certificaciones` (
