@@ -141,6 +141,11 @@ a, a:hover {
 	min-height: 84vh
 }
 
+.main-content-main-page {
+	padding-top: 50px;
+	min-height: 84vh
+}
+
 aside.menu-sidebar.d-none.d-lg-block.clr {
 	background: 0 0;
 	z-index: 99999999;
@@ -230,6 +235,10 @@ section {
 }
 
 .section-content-p30 {
+	padding: 0 30px
+}
+
+.section-content-main-page {
 	padding: 0 30px
 }
 
@@ -991,6 +1000,7 @@ footer ul li {
 	.section-content.section-content-p30.e-spc {
 		padding-top: 100px
 	}
+		
 	header.header-desktop.extra {
 		top: 93px !important
 	}
