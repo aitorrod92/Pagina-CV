@@ -8,18 +8,24 @@ import { Categoria } from '../common/categoria';
 	providedIn: 'root'
 })
 export class CategoriasService {
-	private categoryUrl = 'http://localhost:8181/api/categorias';
+	private baseUrl = 'http://localhost:8181/api';
 
 	constructor(private httpClient: HttpClient) { }
 
-	getCategories() : Observable<Categoria[]>  {
-		return this.httpClient.get<GetResponseCategory>(this.categoryUrl).
+	getCategories(): Observable<Categoria[]> {
+		let categoryUrl = this.baseUrl + "/categorias";
+		return this.httpClient.get<GetResponseCategory>(categoryUrl).
 			pipe(map(response => response._embedded.categoria));
 	}
+
+	getCategoryOfJobByJobId(jobId:number): Observable<Categoria> {
+		let categoryUrl = `${this.baseUrl}/trabajos/${jobId}/categoria`;
+		return this.httpClient.get<Categoria>(categoryUrl);
+	}
 }
-	interface GetResponseCategory {
+
+interface GetResponseCategory {
 	_embedded: {
 		categoria: Categoria[];
 	},
-
 }

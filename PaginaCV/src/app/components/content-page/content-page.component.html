@@ -26,7 +26,7 @@
 			<p>
 				<!-- {{idioma.descripcion}} -->
 			</p>
-			<a routerLink="/" class="mt-5">Volver a la página principal</a>
+			<a routerLink="/" class="mt-5">Volver a la página de {{categoria.nombre}}</a>
 
 		</div>
 	</div>
@@ -51,8 +51,7 @@
 			<h4>Descripción</h4>
 			<div>
 				<div class="trabajoDesc"></div>
-				<br> <a routerLink="/" class="mt-5">Volver a la página
-					principal</a>
+				<br> <a [routerLink]="['/category', this.categoria.id]" class="mt-5">Volver a la página de {{categoria.nombre}}</a>
 			</div>
 		</div>
 	</div>

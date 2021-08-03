@@ -65,7 +65,6 @@ export class ListaTrabajosComponent implements OnInit {
 					})
 			}
 		} else {
-			console.log("palabra busqueda " + this.currentSearchingKeywords);
 			this.trabajoService.getTrabajosListbyKeyword(this.currentSearchingKeywords).subscribe(
 				data => {
 					this.ObtenerYOrdenar(data);
