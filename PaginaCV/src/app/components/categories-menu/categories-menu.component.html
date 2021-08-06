@@ -1,29 +1,15 @@
+<meta charset="utf-8">
 <div class="menu-sidebar-content js-scrollbar1">
 	<nav class="navbar-sidebar">
 		<ul class="list-unstyled navbar-list">
-			<li *ngFor="let tempCategory of categorias"><a
-				routerLink="/category/{{tempCategory.id}}"
-				routerLinkActive="active-link"> {{tempCategory.nombre}} </a></li>
+			<li *ngFor="let tempCategory of categorias">
+				<a	routerLink="/category/{{tempCategory.id}}" routerLinkActive="active-link">
+					<fa-icon [icon]="this.getIcon(tempCategory.nombre)"></fa-icon>					
+					{{tempCategory.nombre}} </a></li>
 		</ul>
 	</nav>
 </div>
 
-<!-- 
-<div class="sidenav">
-  <a href="#about">About</a>
-  <a href="#services">Services</a>
-  <a href="#clients">Clients</a>
-  <a href="#contact">Contact</a>
-  <button class="dropdown-btn">Dropdown 
-    <i class="fa fa-caret-down"></i>
-  </button>
-  <div class="dropdown-container">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
-  </div>
-  <a href="#contact">Search</a>
-</div>
- -->
+
 
 

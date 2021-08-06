@@ -15,6 +15,7 @@ import { CategoriesMenuComponent } from './components/categories-menu/categories
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEs, 'es');
@@ -43,7 +44,8 @@ const routes: Routes =
 		HttpClientModule,
 		RouterModule.forRoot(routes),
 		FontAwesomeModule,
-		AutocompleteLibModule		
+		AutocompleteLibModule,
+		NgApexchartsModule	
 	],
 	providers: [TrabajoService, { provide: LOCALE_ID, useValue: 'es' }],
 	bootstrap: [AppComponent]

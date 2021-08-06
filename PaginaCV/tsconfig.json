@@ -10,6 +10,7 @@
 		"noFallthroughCasesInSwitch": true,
 		"strictPropertyInitialization": false,
 		"sourceMap": true,
+		"charset": "utf8",
 		"declaration": false,
 		"downlevelIteration": true,
 		"experimentalDecorators": true,

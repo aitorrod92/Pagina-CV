@@ -32,8 +32,6 @@ export class SearchComponent implements OnInit {
 	onFocused(e: any) { }
 
 	onChangeSearch(val: string) {
-		console.log(val);
-		console.log(val.length);
 		//this.selectKeyword(val);
 		this.searchTerm = val;
 	}
@@ -42,7 +40,7 @@ export class SearchComponent implements OnInit {
 		this.searchTerm = item.nombre;
 	}
 
-
+	// NO USADO DE MOMENTO
 	selectKeyword(val: string) {
 		if (val.length < this.busquedaMinima) {
 			this.keyword = 'id';
