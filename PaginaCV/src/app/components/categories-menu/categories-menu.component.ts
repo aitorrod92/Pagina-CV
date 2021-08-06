@@ -16,11 +16,11 @@ export class CategoriesMenuComponent implements OnInit {
 	faBriefcase = faBriefcase;
 	faMicroscope = faMicroscope;
 	faLanguage = faLanguage;
-	faQuestion= faQuestion;
+	faQuestion = faQuestion;
 
 	map = new Map<string, IconDefinition>();
 
-	constructor(private categoriesService: CategoriasService) {	}
+	constructor(private categoriesService: CategoriasService) { }
 
 	ngOnInit(): void {
 		this.listCategories();
@@ -32,9 +32,8 @@ export class CategoriesMenuComponent implements OnInit {
 		let iconProp = this.map.get(iconNameiconWithoutAccents) as IconProp;
 		if (iconProp != null) {
 			return iconProp;
-		} else {
-			return this.faQuestion;
 		}
+		return this.faQuestion;
 	}
 
 	listCategories() {
@@ -44,8 +43,8 @@ export class CategoriesMenuComponent implements OnInit {
 			}
 		)
 	}
-	
-	defineIconNamesMap(){
+
+	defineIconNamesMap() {
 		this.map.set("Trabajos", this.faBriefcase);
 		this.map.set("Formacion", this.faGraduationCap);
 		this.map.set("Practicas", this.faMicroscope);
