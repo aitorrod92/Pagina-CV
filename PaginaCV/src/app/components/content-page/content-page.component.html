@@ -26,7 +26,7 @@
 			<p>
 				<!-- {{idioma.descripcion}} -->
 			</p>
-			<a routerLink="/category/4" class="mt-5">Volver a la página de idiomas</a>
+			<a routerLink="/category/4" class="mt-5">Volver a la página de {{categoria.nombre}}</a>
 
 		</div>
 	</div>
@@ -40,6 +40,7 @@
 				<img class="detail-img animated-beat" src="{{trabajo.imagen}}">
 				<h3>{{trabajo.nombre}}</h3>
 				<div class="price">{{trabajo.empresa}}</div>
+				<div>{{trabajo.fechaInicio}} - {{trabajo.fechaFin}}</div>
 			</div>
 			<div class="col-md">
 				<iframe width="500" height="300" style="border: 0" loading="lazy"
@@ -56,6 +57,4 @@
 		</div>
 	</div>
 </div>
-
-
 </ng-template>
