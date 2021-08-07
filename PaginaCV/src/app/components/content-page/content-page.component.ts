@@ -48,7 +48,7 @@ export class ContentPageComponent implements OnInit {
 		this.isLanguagePage = true;
 		this.idiomaService.getIdioma(this.contentId).subscribe(data => {
 			this.idioma = data;
-			this.assignAndFormatCategory();
+			//this.assignAndFormatCategory();
 		})
 	}
 
@@ -56,7 +56,10 @@ export class ContentPageComponent implements OnInit {
 		this.isLanguagePage = false;
 		this.trabajoService.getTrabajo(this.contentId).subscribe(data => {
 			this.trabajo = data;
-			this.assignAndFormatCategory();
+			this.categoryService.getCategoryByCategoryId(this.trabajo.categoria).subscribe(data => {
+				this.categoria = data;
+			})
+			//this.assignAndFormatCategory();
 			this.buildDescription();
 		})
 	}
@@ -77,8 +80,11 @@ export class ContentPageComponent implements OnInit {
 			}
 		});
 	}
-
+	
+/*
 	assignAndFormatCategory() {
+		
+		
 		if (this.isLanguagePage) {
 			this.categoria = new Categoria();
 			this.categoria.id = 4;
@@ -90,7 +96,7 @@ export class ContentPageComponent implements OnInit {
 					this.categoria.nombre = this.categoria.nombre.toLowerCase();
 				})
 		}
-	}
+	}*/
 
 	public methodToGetMapURL(): SafeResourceUrl {
 		this.createUrl();

@@ -64,8 +64,7 @@ public class Trabajo {
 		@Column(name="Codigo_de_localizacion")
 		private String codigoLocalizacion;
 		
-		@ManyToOne
-		@JoinColumn(name="Categoria", nullable=false)
-		private Categoria categoria;
+		@Column(name="Categoria", nullable=false)
+		private int categoria;
 		
 }

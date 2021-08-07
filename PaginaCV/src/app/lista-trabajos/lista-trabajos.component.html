@@ -7,47 +7,72 @@
 				<div *ngIf="currentCategory<4; then trabajos else idiomas"></div>
 				<ng-template #trabajos>
 
-				<div *ngFor="let tempProduct of trabajo.slice().reverse()"
+				<div *ngFor="let tempItem of trabajo.slice().reverse()"
 					class="col-md-4">
 
 					<div class="product-box">
 						<h3>
 							<img class="img-responsive animated-beat" alt="image not found"
-								 src="{{ tempProduct.imagen }}" height="50"> <a
-								href="content/jobs/{{tempProduct.id}}" class="primary-btn"><b>{{tempProduct.nombre}}</b></a>
+								 src="{{ tempItem.imagen }}" height="50"> <a
+								href="content/jobs/{{tempItem.id}}" class="primary-btn"><b>{{tempItem.nombre}}</b></a>
 						</h3>
 						<div>
-							<b>{{tempProduct.empresa}}</b>
+							<b>{{tempItem.empresa}}</b>
+							<div>{{this.adaptDate(tempItem.fechaInicio, tempItem.categoria)}} -
+							{{this.adaptDate(tempItem.fechaFin, tempItem.categoria)}}
+							{{this.adaptDuration(tempItem.duracion)}}</div>
+							<!-- 
 							<div
-								*ngIf="tempProduct.categoria>2; then formacion else noFormacion ">
+								*ngIf="this.currentCategory>2; then formacion else noFormacion ">
 							</div>
-							<!-- NO SE DETECTA LO DEL THEN, ES PORQUE NO ES UN NÚMERO??-->
 
 							<ng-template #formacion>
 							<div>
-								{{tempProduct.fechaInicio | date : 'yyyy'}} -
-								{{tempProduct.fechaFin | date : 'yyyy'}}
-								<div *ngIf="tempProduct.duracion==12; then anio else anios"></div>
-								<ng-template #anio>({{tempProduct.duracion/12 |
+								{{tempItem.fechaInicio | date : 'yyyy'}} -
+								{{tempItem.fechaFin | date : 'yyyy'}}
+								<div *ngIf="tempItem.duracion==12; then anio else anios"></div>
+								<ng-template #anio>({{tempItem.duracion/12 |
 								number:'1.1-1' | slice:0:1}} año) </ng-template>
-								<ng-template #anios>({{tempProduct.duracion/12 |
+								<ng-template #anios>({{tempItem.duracion/12 |
 								number:'1.1-1' | slice:0:1}} años)</ng-template>
 							</div>
 							</ng-template>
 
 							<ng-template #noFormacion>
+							<!-- <div
+								*ngIf="this.currentCategory==0; then busqueda else noBusqueda ">
+							</div> 
+							<ng-template #noBusqueda>
 							<div>
-								{{tempProduct.fechaInicio | date : 'MMMM yyyy'}} -
-								{{tempProduct.fechaFin | date : 'MMMM yyyy'}}
+								{{tempItem.fechaInicio | date : 'MMMM yyyy'}} -
+								{{tempItem.fechaFin | date : 'MMMM yyyy'}}
 								<div
-									*ngIf="tempProduct.duracion<12; then meses else anioConMeses"></div>
-								<ng-template #meses>({{tempProduct.duracion}}
+									*ngIf="tempItem.duracion<12; then meses else anioConMeses"></div>
+								<ng-template #meses>({{tempItem.duracion}}
 								meses)</ng-template>
-								<ng-template #anioConMeses>({{tempProduct.duracion/12
-								| number:'1.1-1' | slice:0:1}} años y
-								{{tempProduct.duracion%12}} meses)</ng-template>
+								<ng-template #anioConMeses>({{tempItem.duracion/12
+								| number:'1.1-1' | slice:0:1}} años y  
+								{{tempItem.duracion%12}} meses)</ng-template>
 							</div>
 							</ng-template>
+							 </ng-template>
+							
+
+							<ng-template #busqueda>
+								<div ngIf*="!tempItem.jornada; then form else trab"> </div>
+								<ng-template #form>
+								Ruta formacion
+								 {{tempItem.fechaInicio | date : 'yyyy'}} -
+								{{tempItem.fechaFin | date : 'yyyy'}}
+								({{tempItem.duracion/12 | number:'1.1-1' | slice:0:1}} años </ng-template>
+								<ng-template #trab>
+								Ruta trabajos
+								
+								{{tempItem.fechaInicio | date : 'MMMM yyyy'}} -
+								{{tempItem.fechaFin | date : 'MMMM yyyy'}}
+								({{tempItem.duracion}} meses)</ng-template>
+							</ng-template>
+							 -->
 						</div>
 					</div>
 				</div>

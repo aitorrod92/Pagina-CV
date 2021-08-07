@@ -18,8 +18,8 @@ export class CategoriasService {
 			pipe(map(response => response._embedded.categoria));
 	}
 
-	getCategoryOfJobByJobId(jobId:number): Observable<Categoria> {
-		let categoryUrl = `${this.baseUrl}/trabajos/${jobId}/categoria`;
+	getCategoryByCategoryId(CategoryId:number): Observable<Categoria> {
+		let categoryUrl = `${this.baseUrl}/categorias/${CategoryId}`;
 		return this.httpClient.get<Categoria>(categoryUrl);
 	}
 }
