@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { KeywordsService } from 'src/app/service/keywords.service';
 import { Keyword } from 'src/app/common/keyword';
+import { LanguageService } from 'src/app/service/language.service';
 
 @Component({
 	selector: 'app-search',
@@ -15,7 +16,8 @@ export class SearchComponent implements OnInit {
 	searchTerm = '';
 
 	constructor(private router: Router,
-		private keywordsService: KeywordsService) { }
+		private keywordsService: KeywordsService,
+		private languageService : LanguageService) { }
 
 	ngOnInit(): void {
 		this.listKeywords();
@@ -63,6 +65,10 @@ export class SearchComponent implements OnInit {
 		} else {
 			this.router.navigateByUrl(`/search/${'C%23'}`);
 		}
+	}
+	
+	changeLanguage(){
+		this.languageService.setLanguage("en");
 	}
 
 

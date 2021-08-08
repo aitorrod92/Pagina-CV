@@ -41,7 +41,7 @@ export class MainPageComponent {
 	public chartOptions: Partial<ChartOptions> | any;
 
 	constructor(private trabajoService: TrabajoService) {
-		trabajoService.getTrabajosListbyKeyword("biologia").subscribe(data => {
+		trabajoService.getTrabajosListbyKeyword("informatica").subscribe(data => {
 			this.trabajos = data;
 			//this.defineChartAttributes();
 			this.update();
@@ -72,9 +72,25 @@ export class MainPageComponent {
 			series: [{
 				data: [{
 					x: arrayNombres[0],
-					y: [arrayObjetosFechas[0].x,arrayObjetosFechas[0].y],
+					y: [arrayObjetosFechas[0].x, arrayObjetosFechas[0].y],
 					fillColor: "#008FFB"
-				}]
+				},
+				{
+					x: arrayNombres[1],
+					y: [arrayObjetosFechas[1].x, arrayObjetosFechas[1].y],
+					fillColor: "#775DD0"
+				},
+				{
+					x: arrayNombres[2],
+					y: [arrayObjetosFechas[2].x, arrayObjetosFechas[2].y],
+					fillColor: "#00E396"
+				},
+				{
+					x: arrayNombres[3],
+					y: [arrayObjetosFechas[3].x, arrayObjetosFechas[3].y],
+					fillColor: "#FEB019"
+				},
+				]
 			}],
 			chart: {
 				height: 350,

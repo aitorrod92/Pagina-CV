@@ -3,6 +3,7 @@ import { Categoria } from 'src/app/common/categoria';
 import { CategoriasService } from 'src/app/service/categorias.service';
 import { faGraduationCap, faBriefcase, faMicroscope, faLanguage, faQuestion, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { LanguageService } from 'src/app/service/language.service';
 
 @Component({
 	selector: 'app-categories-menu',
@@ -11,6 +12,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 })
 export class CategoriesMenuComponent implements OnInit {
 	categorias: Categoria[];
+	language: string = "es";
 
 	faGraduationCap = faGraduationCap;
 	faBriefcase = faBriefcase;
@@ -20,34 +22,46 @@ export class CategoriesMenuComponent implements OnInit {
 
 	map = new Map<string, IconDefinition>();
 
-	constructor(private categoriesService: CategoriasService) { }
+	constructor(private categoriesService: CategoriasService,
+		private languageService: LanguageService) {
+
+		this.languageService.language$.subscribe(data => {
+			this.language = data;
+			if (this.language == "en"){
+				this.listCategoriesAndDefineIcons();
+			}
+		});
+	}
 
 	ngOnInit(): void {
-		this.listCategories();
-		this.defineIconNamesMap();
+		this.listCategoriesAndDefineIcons();
 	}
 
 	getIcon(iconName: string): IconProp {
-		let iconNameiconWithoutAccents = iconName.normalize("NFD").replace(/\p{Diacritic}/gu, "");
-		let iconProp = this.map.get(iconNameiconWithoutAccents) as IconProp;
+		//let iconNameiconWithoutAccents = iconName.normalize("NFD").replace(/\p{Diacritic}/gu, "");
+		let iconProp = this.map.get(iconName) as IconProp;
 		if (iconProp != null) {
 			return iconProp;
 		}
 		return this.faQuestion;
 	}
 
-	listCategories() {
-		this.categoriesService.getCategories().subscribe(
+	listCategoriesAndDefineIcons() {
+		let categoryWord = this.language=="es"? "categorias":"categories";
+		this.categoriesService.getCategories(categoryWord).subscribe(
 			data => {
 				this.categorias = data;
+				this.defineIconNamesMap();
 			}
 		)
 	}
 
 	defineIconNamesMap() {
-		this.map.set("Trabajos", this.faBriefcase);
-		this.map.set("Formacion", this.faGraduationCap);
-		this.map.set("Practicas", this.faMicroscope);
-		this.map.set("Idiomas", this.faLanguage);
+		this.map.set(this.categorias[0].nombre, this.faBriefcase);
+		this.map.set(this.categorias[1].nombre, this.faGraduationCap);
+		this.map.set(this.categorias[2].nombre, this.faMicroscope);
+		this.map.set(this.categorias[3].nombre, this.faLanguage);
 	}
+
+
 }
