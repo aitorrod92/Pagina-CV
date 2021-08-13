@@ -27,9 +27,7 @@ export class CategoriesMenuComponent implements OnInit {
 
 		this.languageService.language$.subscribe(data => {
 			this.language = data;
-			if (this.language == "en"){
-				this.listCategoriesAndDefineIcons();
-			}
+			this.listCategoriesAndDefineIcons();
 		});
 	}
 
@@ -47,7 +45,7 @@ export class CategoriesMenuComponent implements OnInit {
 	}
 
 	listCategoriesAndDefineIcons() {
-		let categoryWord = this.language=="es"? "categorias":"categories";
+		let categoryWord = this.language == "es" ? "categorias" : "categories";
 		this.categoriesService.getCategories(categoryWord).subscribe(
 			data => {
 				this.categorias = data;

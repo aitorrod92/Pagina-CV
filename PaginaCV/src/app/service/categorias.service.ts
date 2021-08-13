@@ -9,24 +9,36 @@ import { Categoria } from '../common/categoria';
 })
 export class CategoriasService {
 	private baseUrl = 'http://localhost:8181/api';
+	private categoryUrl = '';
 
 	constructor(private httpClient: HttpClient) { }
 
 	getCategories(categoryWord: string): Observable<Categoria[]> {
-		let categoryUrl = `${this.baseUrl}/${categoryWord}`;
-		if (categoryWord == "categorias") {
-			return this.httpClient.get<GetResponseCategoria>(categoryUrl).
-			pipe(map(response => response._embedded.categoria));
-		} else {
-			return this.httpClient.get<GetResponseCategory>(categoryUrl).
-			pipe(map(response => response._embedded.category));
-		}
-
+		this.categoryUrl = `${this.baseUrl}/${categoryWord}`;
+		return this.getResponse(categoryWord);
 	}
 
-	getCategoryByCategoryId(CategoryId: number): Observable<Categoria> {
-		let categoryUrl = `${this.baseUrl}/categorias/${CategoryId}`;
-		return this.httpClient.get<Categoria>(categoryUrl);
+	getCategoryByCategoryId(CategoryId: number, categoryWord: string): Observable<Categoria> {
+		this.categoryUrl = `${this.baseUrl}/${categoryWord}/${CategoryId}`;
+		return this.httpClient.get<Categoria>(this.categoryUrl);
+	}
+
+	getResponse(categoryWord: string) {
+		if (categoryWord == "categorias") {
+			return this.getResponseSpanish();
+		} else {
+			return this.getResponseEnglish();
+		}
+	}
+
+	getResponseSpanish(): Observable<Categoria[]> {
+		return this.httpClient.get<GetResponseCategoria>(this.categoryUrl).
+			pipe(map(response => response._embedded.categoria));
+	}
+
+	getResponseEnglish(): Observable<Categoria[]> {
+		return this.httpClient.get<GetResponseCategory>(this.categoryUrl).
+			pipe(map(response => response._embedded.category));
 	}
 }
 

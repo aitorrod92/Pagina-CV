@@ -5,6 +5,7 @@ import { Trabajo } from '../common/trabajo';
 import { IdiomasService } from '../service/idiomas.service';
 import { TrabajoService } from '../service/trabajo.service';
 import { DatePipe } from '@angular/common';
+import { LanguageService } from '../service/language.service';
 
 
 @Component({
@@ -18,10 +19,18 @@ export class ListaTrabajosComponent implements OnInit {
 	idioma: Idioma[];
 	currentSearchingKeywords: String;
 	currentCategory: number;
+	language: string = "es";
 
 	constructor(private trabajoService: TrabajoService,
 		private idiomasService: IdiomasService,
-		private route: ActivatedRoute) { }
+		private languageService : LanguageService,
+		private route: ActivatedRoute) { 
+			this.languageService.language$.subscribe(data => {
+			this.language = data;
+			console.log("idioma seleccionado " + this.language);
+			this.listTrabajos();
+		});
+		}
 
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(() => { this.listTrabajos() });
@@ -95,8 +104,9 @@ export class ListaTrabajosComponent implements OnInit {
 	listTrabajos() {
 		this.getKeyword();
 		this.getCategory();
+		let jobWord = this.language == "es" ? "trabajos" : "jobs";
 		if (this.currentSearchingKeywords === "" && this.currentCategory == 0) {
-			this.trabajoService.getAllTrabajos().subscribe(data => {
+			this.trabajoService.getAllTrabajos(jobWord).subscribe(data => {
 				this.ObtenerYOrdenar(data);
 
 			})
@@ -104,14 +114,15 @@ export class ListaTrabajosComponent implements OnInit {
 			if (this.currentCategory === 4) {
 				this.idiomasService.getIdiomas().subscribe(data => this.idioma = data);
 			} else {
-				this.trabajoService.getTrabajosListbyCategory(this.currentCategory).subscribe(
+				let categoryWord = this.language == "es" ? "categorias" : "categories"; // AVERIGUAR QUÉ FALLA
+				this.trabajoService.getTrabajosListbyCategory(categoryWord, this.currentCategory, "trabajos").subscribe(
 					data => {
 						this.ObtenerYOrdenar(data);
 
 					})
 			}
 		} else {
-			this.trabajoService.getTrabajosListbyKeyword(this.currentSearchingKeywords).subscribe(
+			this.trabajoService.getTrabajosListbyKeyword(this.currentSearchingKeywords, jobWord).subscribe(
 				data => {
 					this.ObtenerYOrdenar(data);
 				})

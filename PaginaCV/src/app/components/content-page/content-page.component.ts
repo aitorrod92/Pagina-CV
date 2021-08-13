@@ -7,6 +7,7 @@ import { TrabajoService } from 'src/app/service/trabajo.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { Categoria } from 'src/app/common/categoria';
 import { CategoriasService } from 'src/app/service/categorias.service';
+import { LanguageService } from 'src/app/service/language.service';
 
 @Component({
 	selector: 'app-content-page',
@@ -19,7 +20,8 @@ export class ContentPageComponent implements OnInit {
 	trabajo: Trabajo;
 	categoria: Categoria;
 	idioma: Idioma;
-	isLanguagePage: boolean;//"https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=13&ie=UTF8&iwloc=&output=embed"
+	language: string = "es";
+	isLanguagePage: boolean;
 	mapUrl: string = "https://www.google.com/maps/embed/v1/place?q=place_id:*placeId*&key=*apiKey*";
 	apiKey: string = "AIzaSyDInTUjvpRLCgYonyLMyEacjQr0pnuPCdA";
 
@@ -27,7 +29,14 @@ export class ContentPageComponent implements OnInit {
 		private trabajoService: TrabajoService,
 		private idiomaService: IdiomasService,
 		private categoryService: CategoriasService,
-		public domSanitizer: DomSanitizer) { }
+		public domSanitizer: DomSanitizer,
+		private languageService : LanguageService) {
+			this.languageService.language$.subscribe(data => {
+			this.language = data;
+			this.showJobPage();
+		});
+			
+		 }
 
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(() => { this.getContent() });
@@ -54,9 +63,10 @@ export class ContentPageComponent implements OnInit {
 
 	showJobPage() {
 		this.isLanguagePage = false;
-		this.trabajoService.getTrabajo(this.contentId).subscribe(data => {
+		let jobWord = this.language == "es" ? "trabajos" : "jobs";
+		this.trabajoService.getTrabajo(jobWord, this.contentId).subscribe(data => {
 			this.trabajo = data;
-			this.categoryService.getCategoryByCategoryId(this.trabajo.categoria).subscribe(data => {
+			this.categoryService.getCategoryByCategoryId(this.trabajo.categoria, jobWord).subscribe(data => {
 				this.categoria = data;
 			})
 			//this.assignAndFormatCategory();

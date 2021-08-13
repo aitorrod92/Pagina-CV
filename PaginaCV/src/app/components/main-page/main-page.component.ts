@@ -15,6 +15,7 @@ import {
 } from "ng-apexcharts";
 
 import { Trabajo } from "src/app/common/trabajo";
+import { LanguageService } from "src/app/service/language.service";
 import { TrabajoService } from "src/app/service/trabajo.service";
 
 export type ChartOptions = {
@@ -36,12 +37,21 @@ export type ChartOptions = {
 export class MainPageComponent {
 
 	trabajos: Trabajo[];
+	language: string = "es";
+	jobWord : string;
 
 	@ViewChild("chart") chart: ChartComponent;
 	public chartOptions: Partial<ChartOptions> | any;
 
-	constructor(private trabajoService: TrabajoService) {
-		trabajoService.getTrabajosListbyKeyword("informatica").subscribe(data => {
+	constructor(private trabajoService: TrabajoService, private languageService: LanguageService) {
+		languageService.language$.subscribe(data => {
+			this.language = data;
+			this.update(); // DEBERÍA HACER QUE SE ACTUALICE LA DESCRIPCIÓN. NECESARIO CREARLA EN LA BBDD
+			this.jobWord = this.language ? "trabajos" : "jobs";
+			}
+		)
+
+		trabajoService.getTrabajosListbyKeyword("informatica", this.jobWord).subscribe(data => {
 			this.trabajos = data;
 			//this.defineChartAttributes();
 			this.update();
@@ -63,10 +73,6 @@ export class MainPageComponent {
 			arrayObjetosFechas.push(nuevoObjeto);
 		}
 		)
-
-		console.log("Nombres: " + arrayNombres);
-		console.log(arrayObjetosFechas.length);
-
 
 		this.chartOptions = {
 			series: [{

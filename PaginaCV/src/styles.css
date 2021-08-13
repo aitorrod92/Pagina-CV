@@ -54,6 +54,15 @@ img {
         filter: grayscale(100%)
 }
 
+.img-hoverable:hover {
+        opacity: 1;
+        filter: alpha(opacity=100);
+        filter: grayscale(0%);
+        cursor: pointer;
+        transition: 0.5s;
+		animation: zoomFrom100ToBigger 2s linear 0.5s 1 normal forwards;
+}
+
 .animated-spin-and-zoom {
 	animation:spin 0.5s linear, zoom 0.5s ease-in;
 }
@@ -68,10 +77,17 @@ img {
 	100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } 
 }	
 	
-@keyframes zoom { 
+@keyframes zoomFromNothingTo100 { 
   0% { width: 0%; height: 0%; }
   100% { width: 100%; height: 100%; }
 }
+
+/*
+@keyframes zoomFrom100ToBigger{ 
+  0% { width: 100%; height: 100%; }
+  100% { width: 120%; height: 120%; }
+}*/
+
 
 @keyframes beat { 
    0%   { -webkit-transform: scale(1)   ; opacity: 1;    }
@@ -79,14 +95,7 @@ img {
    100% { -webkit-transform: scale(1)   ; opacity: 1;    }
 }
 
-.img-hoverable:hover {
-        opacity: 1;
-        filter: alpha(opacity=100);
-        filter: grayscale(0%);
 
-        cursor: pointer;
-        transition: 2s
-}
 
 /*
 .img-profile{

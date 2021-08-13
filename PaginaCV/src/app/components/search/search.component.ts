@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { KeywordsService } from 'src/app/service/keywords.service';
 import { Keyword } from 'src/app/common/keyword';
 import { LanguageService } from 'src/app/service/language.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-search',
@@ -14,13 +15,16 @@ export class SearchComponent implements OnInit {
 	busquedaMinima: number = 2;
 	data: Keyword[];
 	searchTerm = '';
+	languagesSection: HTMLElement;
+
 
 	constructor(private router: Router,
 		private keywordsService: KeywordsService,
-		private languageService : LanguageService) { }
+		private languageService: LanguageService) { }
 
 	ngOnInit(): void {
 		this.listKeywords();
+		this.languagesSection = document.getElementById("languages-section") as HTMLElement;
 	}
 
 	listKeywords() {
@@ -66,10 +70,22 @@ export class SearchComponent implements OnInit {
 			this.router.navigateByUrl(`/search/${'C%23'}`);
 		}
 	}
-	
-	changeLanguage(){
-		this.languageService.setLanguage("en");
+
+	changeLanguage(language: string) {
+		this.languageService.setLanguage(language);
+		let childrenNodes = this.languagesSection.children;
+		let arrayChildrenNodes = Array.from(childrenNodes);
+		arrayChildrenNodes.forEach(element => {
+			element.id == "btn-" + language ? 
+				element.setAttribute("class", "language-button") :
+				element.setAttribute("class", "language-button img-hoverable");
+		}
+
+		);
+
+
 	}
+
 
 
 
