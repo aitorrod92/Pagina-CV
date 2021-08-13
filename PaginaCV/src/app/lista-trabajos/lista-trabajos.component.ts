@@ -23,14 +23,13 @@ export class ListaTrabajosComponent implements OnInit {
 
 	constructor(private trabajoService: TrabajoService,
 		private idiomasService: IdiomasService,
-		private languageService : LanguageService,
-		private route: ActivatedRoute) { 
-			this.languageService.language$.subscribe(data => {
+		private languageService: LanguageService,
+		private route: ActivatedRoute) {
+		this.languageService.language$.subscribe(data => {
 			this.language = data;
-			console.log("idioma seleccionado " + this.language);
 			this.listTrabajos();
 		});
-		}
+	}
 
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(() => { this.listTrabajos() });
@@ -40,6 +39,7 @@ export class ListaTrabajosComponent implements OnInit {
 	public adaptDate(date: string, categoria: number): string | null {
 		let formattedDate;
 		if (categoria != 3) {
+			this.datepipe = this.language=="es"? new DatePipe('es-MX') : new DatePipe('en-US');
 			formattedDate = this.datepipe.transform(new Date(date), 'MMMM YYYY');
 		} else {
 			formattedDate = this.datepipe.transform(new Date(date), 'YYYY');
@@ -60,8 +60,9 @@ export class ListaTrabajosComponent implements OnInit {
 			monthsString = this.defineMonthsString(months);
 		}
 		let finalString = "(" + yearsString;
-		if (yearsString!="" && months != 0) {
-			finalString = finalString.concat(" y ");
+		if (yearsString != "" && months != 0) {
+			let connectionString = this.language=="es" ? " y " : " and "; 
+			finalString = finalString.concat(connectionString);
 		}
 		finalString = finalString.concat(monthsString + ")");
 		return finalString;
@@ -70,14 +71,27 @@ export class ListaTrabajosComponent implements OnInit {
 	defineYearsString(duration: number): string {
 		let years;
 		years = +(duration / 12).toPrecision(1);
-		let yearsString = years + " a\xf1o";
+		let yearsString = "";
+		if (this.language == "es") {
+			yearsString = years + " a\xf1o";
+		} else {
+			yearsString = years + " year";
+		}
 		if (years > 1) { yearsString = yearsString.concat("s"); }
 		return yearsString;
 	}
 
 	defineMonthsString(numberOfMonths: number): string {
-		let monthsString = numberOfMonths + " mes";
-		if (numberOfMonths > 1) { monthsString = monthsString.concat("es"); }
+		let monthsString = "";
+		let monthsStringPlural = "";
+		if (this.language == "es") {
+			monthsString = numberOfMonths + " mes";
+			monthsStringPlural = "es";
+		} else {
+			monthsString = numberOfMonths + " month";
+			monthsStringPlural = "s";
+		}
+		if (numberOfMonths > 1) { monthsString = monthsString.concat(monthsStringPlural); }
 		return monthsString;
 	}
 
@@ -114,8 +128,8 @@ export class ListaTrabajosComponent implements OnInit {
 			if (this.currentCategory === 4) {
 				this.idiomasService.getIdiomas().subscribe(data => this.idioma = data);
 			} else {
-				let categoryWord = this.language == "es" ? "categorias" : "categories"; // AVERIGUAR QUÉ FALLA
-				this.trabajoService.getTrabajosListbyCategory(categoryWord, this.currentCategory, "trabajos").subscribe(
+				let categoryWord = this.language == "es" ? "categorias" : "categories";
+				this.trabajoService.getTrabajosListbyCategory(categoryWord, this.currentCategory).subscribe(
 					data => {
 						this.ObtenerYOrdenar(data);
 
