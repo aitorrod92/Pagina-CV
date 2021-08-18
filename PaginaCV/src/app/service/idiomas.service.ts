@@ -20,8 +20,8 @@ export class IdiomasService {
 			pipe(map(response => response._embedded.idioma));
 	}
 
-	getIdioma(contentId: number) {
-		const searchUrl = `${this.baseUrl}/idiomas/${contentId}`
+	getIdioma(languageWord: string, contentId: number) {
+		const searchUrl = `${this.baseUrl}/${languageWord}/${contentId}`
 		return this.httpClient.get<Idioma>(searchUrl);
 	}
 }

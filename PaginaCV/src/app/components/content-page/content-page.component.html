@@ -40,11 +40,11 @@
 				<img class="detail-img animated-beat" src="{{trabajo.imagen}}">
 				<h3>{{trabajo.nombre}}</h3>
 				<div class="price">{{trabajo.empresa}}</div>
-				<div>{{trabajo.fechaInicio}} - {{trabajo.fechaFin}}</div>
+				<div>{{this.adaptDate(trabajo.fechaInicio)}} - {{this.adaptDate(trabajo.fechaFin)}}</div>
 			</div>
 			<div class="col-md">
 				<iframe width="500" height="300" style="border: 0" loading="lazy"
-					allowfullscreen [src]="this.methodToGetMapURL()"></iframe>
+					allowfullscreen [src]=this.staticMapURL></iframe>
 			</div>
 		</div>
 		<hr>

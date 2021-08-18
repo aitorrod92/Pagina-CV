@@ -8,6 +8,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 import { Categoria } from 'src/app/common/categoria';
 import { CategoriasService } from 'src/app/service/categorias.service';
 import { LanguageService } from 'src/app/service/language.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
 	selector: 'app-content-page',
@@ -23,6 +24,10 @@ export class ContentPageComponent implements OnInit {
 	language: string = "es";
 	isLanguagePage: boolean;
 	mapUrl: string = "https://www.google.com/maps/embed/v1/place?q=place_id:*placeId*&key=*apiKey*";
+	firstLoad: boolean = true;
+	staticMapCode: string = "";
+	staticMapURL: SafeResourceUrl;
+	datepipe: DatePipe = new DatePipe('es-MX');
 	apiKey: string = "AIzaSyDInTUjvpRLCgYonyLMyEacjQr0pnuPCdA";
 
 	constructor(private route: ActivatedRoute,
@@ -30,13 +35,13 @@ export class ContentPageComponent implements OnInit {
 		private idiomaService: IdiomasService,
 		private categoryService: CategoriasService,
 		public domSanitizer: DomSanitizer,
-		private languageService : LanguageService) {
-			this.languageService.language$.subscribe(data => {
+		private languageService: LanguageService) {
+		this.languageService.language$.subscribe(data => {
 			this.language = data;
 			this.showJobPage();
 		});
-			
-		 }
+
+	}
 
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(() => { this.getContent() });
@@ -45,79 +50,94 @@ export class ContentPageComponent implements OnInit {
 	getContent() {
 		// @ts-ignore: Object is possibly 'null'.
 		this.contentId = this.route.snapshot.paramMap.get('id');
-		if (this.route.snapshot.paramMap.get('table') === 'languages') {
-			this.showLanguagePage();
-		} else {
-			this.showJobPage();
-		}
-
+		this.route.snapshot.paramMap.get('table') === 'languages' ?
+			this.showLanguagePage() : this.showJobPage();
 	}
 
 	showLanguagePage() {
 		this.isLanguagePage = true;
-		this.idiomaService.getIdioma(this.contentId).subscribe(data => {
+		let languageWord = this.language == "es" ? "idiomas" : "languages";
+		this.idiomaService.getIdioma(languageWord, this.contentId).subscribe(data => {
 			this.idioma = data;
-			//this.assignAndFormatCategory();
+			this.assignAndFormatCategory();
 		})
 	}
 
 	showJobPage() {
 		this.isLanguagePage = false;
 		let jobWord = this.language == "es" ? "trabajos" : "jobs";
+
 		this.trabajoService.getTrabajo(jobWord, this.contentId).subscribe(data => {
+			this.trabajo = new Trabajo();
 			this.trabajo = data;
-			this.categoryService.getCategoryByCategoryId(this.trabajo.categoria, jobWord).subscribe(data => {
-				this.categoria = data;
-			})
-			//this.assignAndFormatCategory();
+			if (this.firstLoad) {
+				this.staticMapCode = this.trabajo.codigoLocalizacion;
+				this.methodToGetMapURL();
+				this.firstLoad = false
+			}
+			this.assignAndFormatCategory();
 			this.buildDescription();
 		})
 	}
 
+	assignAndFormatCategory() {
+		let categoryWord = this.language == "es" ? "categorias" : "categories";
+		if (this.isLanguagePage) {
+			this.categoria = new Categoria();
+			this.categoria.id = 4;
+			this.categoria.nombre = 'idiomas';
+		} else {
+			this.categoryService.getCategoryByCategoryId(this.trabajo.categoria, categoryWord).subscribe(data => {
+				this.categoria = data;
+				this.categoria.nombre = this.categoria.nombre.toLowerCase();
+			})
+		}
+	}
+
+
 	buildDescription() {
+		let descriptionNode = document.getElementsByClassName("trabajoDesc")[0];
+		this.removePreviousDescriptionIfExists(descriptionNode);
 		let arrayDescripcion = this.trabajo.descripcion.split(/(?=[\n])|(?<=[\n])/g);
 		arrayDescripcion.forEach(element => {
 			if (element.includes('-')) {
 				let listElement = document.createElement("li");
 				let textNode = document.createTextNode(element.replace("-", ""));
 				listElement.appendChild(textNode);
-				document.getElementsByClassName("trabajoDesc")[0].appendChild(listElement);
+				descriptionNode.appendChild(listElement);
 			} else {
 				let spanElement = document.createElement("span");
 				let textNode = document.createTextNode(element);
 				spanElement.appendChild(textNode);
-				document.getElementsByClassName("trabajoDesc")[0].appendChild(spanElement);
+				descriptionNode.appendChild(spanElement);
 			}
 		});
 	}
-	
-/*
-	assignAndFormatCategory() {
-		
-		
-		if (this.isLanguagePage) {
-			this.categoria = new Categoria();
-			this.categoria.id = 4;
-			this.categoria.nombre = 'idiomas';
-		} else {
-			this.categoryService.getCategoryOfJobByJobId(this.trabajo.id).subscribe(
-				data => {
-					this.categoria = data;
-					this.categoria.nombre = this.categoria.nombre.toLowerCase();
-				})
-		}
-	}*/
 
-	public methodToGetMapURL(): SafeResourceUrl {
+
+	public methodToGetMapURL() {
 		this.createUrl();
-		return this.domSanitizer.bypassSecurityTrustResourceUrl(this.mapUrl);
+		this.staticMapURL = this.domSanitizer.bypassSecurityTrustResourceUrl(this.mapUrl);
 	}
 
 	createUrl() {
-		this.mapUrl = this.mapUrl.replace('*placeId*', this.trabajo.codigoLocalizacion);
+		this.mapUrl = this.mapUrl.replace('*placeId*', this.staticMapCode);
 		this.mapUrl = this.mapUrl.replace('*apiKey*', this.apiKey);
 	}
 
 
+	removePreviousDescriptionIfExists(descriptionNode: Element) {
+		if (descriptionNode.hasChildNodes()) {
+			descriptionNode.childNodes.forEach(childNode => {
+				childNode.remove();
+			});
+		}
+	}
 
+	public adaptDate(date: string): string | null {
+		let formattedDate;
+		this.datepipe = this.language == "es" ? new DatePipe('es-MX') : new DatePipe('en-US');
+		formattedDate = this.datepipe.transform(new Date(date), 'MMM YYYY');
+		return formattedDate;
+	}
 }

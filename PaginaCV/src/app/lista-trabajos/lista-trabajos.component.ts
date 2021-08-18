@@ -38,8 +38,8 @@ export class ListaTrabajosComponent implements OnInit {
 
 	public adaptDate(date: string, categoria: number): string | null {
 		let formattedDate;
+		this.datepipe = this.language == "es" ? new DatePipe('es-MX') : new DatePipe('en-US');
 		if (categoria != 3) {
-			this.datepipe = this.language=="es"? new DatePipe('es-MX') : new DatePipe('en-US');
 			formattedDate = this.datepipe.transform(new Date(date), 'MMMM YYYY');
 		} else {
 			formattedDate = this.datepipe.transform(new Date(date), 'YYYY');
@@ -61,7 +61,7 @@ export class ListaTrabajosComponent implements OnInit {
 		}
 		let finalString = "(" + yearsString;
 		if (yearsString != "" && months != 0) {
-			let connectionString = this.language=="es" ? " y " : " and "; 
+			let connectionString = this.language == "es" ? " y " : " and ";
 			finalString = finalString.concat(connectionString);
 		}
 		finalString = finalString.concat(monthsString + ")");
