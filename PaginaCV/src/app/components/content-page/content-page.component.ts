@@ -9,6 +9,7 @@ import { Categoria } from 'src/app/common/categoria';
 import { CategoriasService } from 'src/app/service/categorias.service';
 import { LanguageService } from 'src/app/service/language.service';
 import { DatePipe } from '@angular/common';
+import { TranslatedBitsService } from 'src/app/service/translated-bits.service';
 
 @Component({
 	selector: 'app-content-page',
@@ -30,15 +31,22 @@ export class ContentPageComponent implements OnInit {
 	datepipe: DatePipe = new DatePipe('es-MX');
 	apiKey: string = "AIzaSyDInTUjvpRLCgYonyLMyEacjQr0pnuPCdA";
 
+	returningString?: string = "";
+	descriptionString?: string = "";
+
 	constructor(private route: ActivatedRoute,
 		private trabajoService: TrabajoService,
 		private idiomaService: IdiomasService,
 		private categoryService: CategoriasService,
 		public domSanitizer: DomSanitizer,
-		private languageService: LanguageService) {
+		private languageService: LanguageService,
+		private translatedBitsService: TranslatedBitsService) {
+		this.translateStaticBits();
 		this.languageService.language$.subscribe(data => {
 			this.language = data;
+			this.translateStaticBits();
 			this.showJobPage();
+
 		});
 
 	}
@@ -139,5 +147,10 @@ export class ContentPageComponent implements OnInit {
 		this.datepipe = this.language == "es" ? new DatePipe('es-MX') : new DatePipe('en-US');
 		formattedDate = this.datepipe.transform(new Date(date), 'MMM YYYY');
 		return formattedDate;
+	}
+
+	translateStaticBits() {
+		this.returningString = this.translatedBitsService.translatedBitsMap.get(this.language + '-return');
+		this.descriptionString = this.translatedBitsService.translatedBitsMap.get(this.language + '-description');
 	}
 }

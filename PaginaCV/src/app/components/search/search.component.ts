@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { KeywordsService } from 'src/app/service/keywords.service';
 import { Keyword } from 'src/app/common/keyword';
 import { LanguageService } from 'src/app/service/language.service';
-import { Subscription } from 'rxjs';
+import { TranslatedBitsService } from 'src/app/service/translated-bits.service';
 
 @Component({
 	selector: 'app-search',
@@ -16,11 +16,20 @@ export class SearchComponent implements OnInit {
 	data: Keyword[];
 	searchTerm = '';
 	languagesSection: HTMLElement;
+	language : string = "es";
+	searchString? : string = "";
 
 
 	constructor(private router: Router,
 		private keywordsService: KeywordsService,
-		private languageService: LanguageService) { }
+		private languageService: LanguageService,
+		private translatedBitsService: TranslatedBitsService) {
+			this.translateStaticBits();
+			this.languageService.language$.subscribe(data => {
+				this.language = data;
+				this.translateStaticBits();
+			});
+	}
 
 	ngOnInit(): void {
 		this.listKeywords();
@@ -76,7 +85,7 @@ export class SearchComponent implements OnInit {
 		let childrenNodes = this.languagesSection.children;
 		let arrayChildrenNodes = Array.from(childrenNodes);
 		arrayChildrenNodes.forEach(element => {
-			element.id == "btn-" + language ? 
+			element.id == "btn-" + language ?
 				element.setAttribute("class", "language-button") :
 				element.setAttribute("class", "language-button img-hoverable");
 		}
@@ -84,6 +93,10 @@ export class SearchComponent implements OnInit {
 		);
 
 
+	}
+	
+	translateStaticBits(){
+		this.searchString = this.translatedBitsService.translatedBitsMap.get(this.language + "-search");
 	}
 
 

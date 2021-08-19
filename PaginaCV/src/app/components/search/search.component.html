@@ -10,7 +10,7 @@
 		(inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
 		[minQueryLength]="busquedaMinima"> </ng-autocomplete>
 	<button type="submit" (click)="doSearch()"
-		(keydown)="onKeydown($event)" class="au-btn-submit">Buscar</button>
+		(keydown)="onKeydown($event)" class="au-btn-submit">{{searchString}}</button>
 
 	<ng-template #itemTemplate let-item> <a
 		[innerHTML]="item.nombre"></a> </ng-template>

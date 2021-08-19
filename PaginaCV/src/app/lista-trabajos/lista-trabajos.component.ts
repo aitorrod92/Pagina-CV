@@ -73,7 +73,7 @@ export class ListaTrabajosComponent implements OnInit {
 		years = +(duration / 12).toPrecision(1);
 		let yearsString = "";
 		if (this.language == "es") {
-			yearsString = years + " a\xf1o";
+			yearsString = years + " a\xf1o"; //https://en.wikipedia.org/wiki/List_of_Unicode_characters#Latin_Extended-A
 		} else {
 			yearsString = years + " year";
 		}

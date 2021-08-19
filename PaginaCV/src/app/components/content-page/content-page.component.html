@@ -22,11 +22,11 @@
 				</div>
 			</div>
 			<hr>
-			<h4>Descripción</h4>
+			<h4>{{descriptionString}}</h4>
 			<p>
 				<!-- {{idioma.descripcion}} -->
 			</p>
-			<a routerLink="/category/4" class="mt-5">Volver a la página de {{categoria.nombre}}</a>
+			<a routerLink="/category/4" class="mt-5">{{returningString}} {{categoria.nombre}}</a>
 
 		</div>
 	</div>
@@ -49,10 +49,10 @@
 		</div>
 		<hr>
 		<div class='row'>
-			<h4>Descripción</h4>
+			<h4>{{descriptionString}}</h4>
 			<div>
 				<div class="trabajoDesc"></div>
-				<br> <a [routerLink]="['/category', trabajo.categoria]" class="mt-5">Volver a la página de {{categoria.nombre}}</a>
+				<br> <a [routerLink]="['/category', trabajo.categoria]" class="mt-5">{{returningString}} {{categoria.nombre}}</a>
 			</div>
 		</div>
 	</div>
