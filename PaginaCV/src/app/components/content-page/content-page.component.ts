@@ -22,7 +22,7 @@ export class ContentPageComponent implements OnInit {
 	trabajo: Trabajo;
 	categoria: Categoria;
 	idioma: Idioma;
-	language: string = "es";
+	language: string;
 	isLanguagePage: boolean;
 	mapUrl: string = "https://www.google.com/maps/embed/v1/place?q=place_id:*placeId*&key=*apiKey*";
 	firstLoad: boolean = true;
@@ -39,21 +39,27 @@ export class ContentPageComponent implements OnInit {
 		private idiomaService: IdiomasService,
 		private categoryService: CategoriasService,
 		public domSanitizer: DomSanitizer,
-		private languageService: LanguageService,
+		//private languageService: LanguageService,
 		private translatedBitsService: TranslatedBitsService) {
-		this.translateStaticBits();
-		this.languageService.language$.subscribe(data => {
+		LanguageService.language$.subscribe(data => {
 			this.language = data;
-			this.translateStaticBits();
-			this.showJobPage();
-
+			if (!this.firstLoad) {
+				this.translateStaticBits();
+				this.showJobPage();
+			}
 		});
+
 
 	}
 
 	ngOnInit(): void {
+		console.log(ContentPageComponent.name + " " + this.language);
 		this.route.paramMap.subscribe(() => { this.getContent() });
+		this.translateStaticBits();
+
 	}
+
+
 
 	getContent() {
 		// @ts-ignore: Object is possibly 'null'.

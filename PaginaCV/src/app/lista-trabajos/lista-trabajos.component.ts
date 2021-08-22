@@ -19,13 +19,13 @@ export class ListaTrabajosComponent implements OnInit {
 	idioma: Idioma[];
 	currentSearchingKeywords: String;
 	currentCategory: number;
-	language: string = "es";
+	language: string;
 
 	constructor(private trabajoService: TrabajoService,
 		private idiomasService: IdiomasService,
-		private languageService: LanguageService,
+		//private languageService: LanguageService,
 		private route: ActivatedRoute) {
-		this.languageService.language$.subscribe(data => {
+		LanguageService.language$.subscribe(data => {
 			this.language = data;
 			this.listTrabajos();
 		});

@@ -20,7 +20,6 @@ export class CategoriasService {
 
 	getCategoryByCategoryId(CategoryId: number, categoryWord: string): Observable<Categoria> {
 		this.categoryUrl = `${this.baseUrl}/${categoryWord}/${CategoryId}`;
-		console.log(this.categoryUrl);
 		return this.httpClient.get<Categoria>(this.categoryUrl);
 	}
 

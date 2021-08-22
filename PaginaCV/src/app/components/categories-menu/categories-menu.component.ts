@@ -22,10 +22,10 @@ export class CategoriesMenuComponent implements OnInit {
 
 	map = new Map<string, IconDefinition>();
 
-	constructor(private categoriesService: CategoriasService,
-		private languageService: LanguageService) {
+	constructor(private categoriesService: CategoriasService/*,
+		private languageService: LanguageService*/) {
 
-		this.languageService.language$.subscribe(data => {
+		LanguageService.language$.subscribe(data => {
 			this.language = data;
 			this.listCategoriesAndDefineIcons();
 		});

@@ -16,16 +16,18 @@ export class SearchComponent implements OnInit {
 	data: Keyword[];
 	searchTerm = '';
 	languagesSection: HTMLElement;
-	language : string = "es";
+	language : string;
 	searchString? : string = "";
 
 
 	constructor(private router: Router,
 		private keywordsService: KeywordsService,
-		private languageService: LanguageService,
+		//private languageService: LanguageService,
 		private translatedBitsService: TranslatedBitsService) {
+			this.language = LanguageService.language.getValue();
+			console.log("Lenguaje inicial de Search " + this.language);
 			this.translateStaticBits();
-			this.languageService.language$.subscribe(data => {
+			LanguageService.language$.subscribe(data => {
 				this.language = data;
 				this.translateStaticBits();
 			});
@@ -81,7 +83,7 @@ export class SearchComponent implements OnInit {
 	}
 
 	changeLanguage(language: string) {
-		this.languageService.setLanguage(language);
+		LanguageService.setLanguage(language);
 		let childrenNodes = this.languagesSection.children;
 		let arrayChildrenNodes = Array.from(childrenNodes);
 		arrayChildrenNodes.forEach(element => {
