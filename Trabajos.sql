@@ -11,7 +11,7 @@
   `Descripcion` VARCHAR(800) NULL,
   `Rama` VARCHAR(30) NOT NULL,
   `Tipo_de_jornada` VARCHAR(40) NULL,
-  `Tags` VARCHAR(100) NOT NULL,
+  `Tags` VARCHAR(250) NOT NULL,
   `Fecha_inicio_date` DATE NOT NULL,
   `Codigo_de_localizacion` VARCHAR(50) NULL,
   `Categoria` INT NOT NULL,
@@ -51,16 +51,16 @@ DATE_FORMAT('2015-01-01', '%Y'),DATE_FORMAT('2016-01-01', '%Y'), '12', 'Universi
 - Trabajo en equipo en situaciones que demandan ser rápido durante largos periodos de tiempo.
 - Formación y evaluación de empleados noveles.
 - Tareas de limpieza (incluida maquinaria de cocina), stock y porteo.',
-'Otro', 'Completa y parcial', 'Venta Cara al público Cocina Hostelería Limpieza Porteo Formación Trabajo', '2017-7-01', 'ChIJU9ix_gyFdUgR65uaqyyyeRg', 1),
+'Otro', 'Completa y parcial', 'Venta Cara al público Cocina Hostelería Limpieza Porteo Formación Trabajo Idiomas Inglés', '2017-7-01', 'ChIJU9ix_gyFdUgR65uaqyyyeRg', 1),
 (8, 'Grado Superior en Desarrollo de Aplicaciones Multiplataforma', 'assets/images/education/FOC.png'
 ,DATE_FORMAT('2018-01-01', '%Y'),DATE_FORMAT('2020-01-01', '%Y'), '24', 'Instituto Fomento Ocupacional', 'Brighton and Hove', 'Reino Unido',
-'', 'IT', null, 'Informática IT FP Grado superior Software Programación Bases de Datos',  '2018-01-01', 'ChIJeef454OFdUgRE8_it_x171c', 3),
+'', 'IT', null, 'Informática IT FP Grado superior Software Programación Bases de Datos Desarrollo Java C# .NET CSS SQL',  '2018-01-01', 'ChIJeef454OFdUgRE8_it_x171c', 3),
 (9, 'Desarrollador web', 'assets/images/jobs/Nubemedia.png',  DATE_FORMAT('2020-9-01','%b %Y'),  DATE_FORMAT('2020-12-31','%b %Y'), DATEDIFF('2020-12-31', '2020-9-01')/30, 'Nubemedia', 'Madrid','España',
 '- Creación, evaluación y migración de páginas web.
 - Utilización de WordPress y CSS.
 - Creación de programas auxiliares para tareas de la empresa.',
 'IT', null, 'Informática IT Prácticas Desarrollo Wordpress CSS Java Programación', '2018-01-01', 'ChIJ5ftsegovQg0Ro8rRTArZ0Ew', 2),
-(10, 'Consultor SAP SuccessFactors', 'assets/images/jobs/Deloitte.jpg',  DATE_FORMAT('2021-4-01','%b %Y'),  DATE_FORMAT('2021-7-31','%b %Y'), DATEDIFF('2021-5-31', '2021-4-01')/30, 'Deloitte', 'Madrid', 'España',
-'', 'IT', "Completa", 'Informática IT Trabajo Consultoría SAP SuccessFactors CSS SQL C# Programación', '2021-4-01', 'ChIJ947Eq2gsQg0RX8Sf25ay0nY', 1),
-(11, 'Desarrollador .NET', 'assets/images/jobs/Sanne.jpg',  DATE_FORMAT('2021-8-01','%b %Y'),  DATE_FORMAT('2021-8-31','%b %Y'), DATEDIFF('2021-8-31', '2021-8-01')/30, 'Sanne', 'Madrid', 'España',
-'', 'IT', "Completa", 'Informática IT Trabajo .NET C# CSS SQL Programación', '2021-8-01', NULL, 1);
+(10, 'Programador .NET', 'assets/images/jobs/Deloitte.jpg',  DATE_FORMAT('2021-4-01','%b %Y'),  DATE_FORMAT('2021-7-31','%b %Y'), DATEDIFF('2021-5-31', '2021-4-01')/30, 'Deloitte', 'Madrid', 'España',
+'', 'IT', "Completa", 'Informática IT Trabajo Consultoría .NET CSS SQL C# Programación Angular Bases de datos Software Programación Desarrollo', '2021-4-01', 'ChIJ947Eq2gsQg0RX8Sf25ay0nY', 1),
+(11, 'Programador', 'assets/images/jobs/Sanne.jpg',  DATE_FORMAT('2021-8-01','%b %Y'),  DATE_FORMAT('2021-8-31','%b %Y'), DATEDIFF('2021-8-31', '2021-8-01')/30, 'Sanne', 'Madrid', 'España',
+'', 'IT', "Completa", 'Informática IT Trabajo .NET C# CSS SQL Bases de Datos Programación Desarrollo Software', '2021-8-01', NULL, 1);

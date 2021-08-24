@@ -18,4 +18,5 @@ CREATE TABLE `datoscurriculo`.`palabrasclave`(
 	(31,'Inglés' ), (32,'IELTS' ), (33,'British Council' ),
 	(34,'C1' ), (35,'Chino' ), (36,'Confucio' ),
 	(37,'HSK' ), (38,'A2' ), (39,'Castellano' ),
-	(40,'Español' ), (41,'Nativo' ), (42, '.NET'), (43, 'C#');
+	(40,'Español' ), (41,'Nativo' ), (42, '.NET'), (43, 'C#'),
+	(44, 'Idiomas');

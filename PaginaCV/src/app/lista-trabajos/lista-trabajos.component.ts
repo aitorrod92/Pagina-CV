@@ -140,6 +140,11 @@ export class ListaTrabajosComponent implements OnInit {
 				data => {
 					this.ObtenerYOrdenar(data);
 				})
+
+			// SE PONE AQUÍ UN MÉTODO CON LOS TAGS DE IDIOMAS, HABRÁ QUE REDEFINIR LAS TABLAS
+			// SE FUSIONAN AMBOS ARRAYS DE RESPUESTA
+			// https://stackoverflow.com/questions/10384845/merge-two-json-javascript-arrays-in-to-one-array
+
 		}
 	}
 
