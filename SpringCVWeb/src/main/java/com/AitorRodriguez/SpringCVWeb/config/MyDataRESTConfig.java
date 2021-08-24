@@ -18,6 +18,8 @@ import com.AitorRodriguez.SpringCVWeb.entity.Category;
 import com.AitorRodriguez.SpringCVWeb.entity.Idioma;
 import com.AitorRodriguez.SpringCVWeb.entity.Job;
 import com.AitorRodriguez.SpringCVWeb.entity.Keyword;
+import com.AitorRodriguez.SpringCVWeb.entity.Language;
+import com.AitorRodriguez.SpringCVWeb.entity.Palabraclave;
 import com.AitorRodriguez.SpringCVWeb.entity.Trabajo;
 
 @Configuration
@@ -25,7 +27,7 @@ public class MyDataRESTConfig implements RepositoryRestConfigurer {
 
 	private EntityManager entityManager;
 	private HttpMethod[] theUnsupportedActions = { HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE };
-	private Class[] clases = { Trabajo.class, Job.class, Categoria.class, Category.class, Idioma.class, Keyword.class };
+	private Class[] clases = { Trabajo.class, Job.class, Categoria.class, Category.class, Idioma.class, Language.class, Keyword.class, Palabraclave.class };
 	private int pageSize = 100; // A cambiar si se incluyen más palabras clave
 
 	@Autowired

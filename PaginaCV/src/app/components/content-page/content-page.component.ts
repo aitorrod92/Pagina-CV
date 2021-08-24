@@ -39,9 +39,9 @@ export class ContentPageComponent implements OnInit {
 		private idiomaService: IdiomasService,
 		private categoryService: CategoriasService,
 		public domSanitizer: DomSanitizer,
-		//private languageService: LanguageService,
+		private languageService: LanguageService,
 		private translatedBitsService: TranslatedBitsService) {
-		LanguageService.language$.subscribe(data => {
+		languageService.language$.subscribe(data => {
 			this.language = data;
 			if (!this.firstLoad) {
 				this.translateStaticBits();

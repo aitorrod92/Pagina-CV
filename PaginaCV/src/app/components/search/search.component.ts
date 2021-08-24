@@ -22,14 +22,15 @@ export class SearchComponent implements OnInit {
 
 	constructor(private router: Router,
 		private keywordsService: KeywordsService,
-		//private languageService: LanguageService,
+		private languageService: LanguageService,
 		private translatedBitsService: TranslatedBitsService) {
-			this.language = LanguageService.language.getValue();
-			console.log("Lenguaje inicial de Search " + this.language);
+			this.language = languageService.language.getValue();
+			console.log("Lenguaje inicial de Search " + languageService.language.getValue());
 			this.translateStaticBits();
-			LanguageService.language$.subscribe(data => {
+			languageService.language$.subscribe(data => {
 				this.language = data;
 				this.translateStaticBits();
+				this.listKeywords();
 			});
 	}
 
@@ -39,7 +40,8 @@ export class SearchComponent implements OnInit {
 	}
 
 	listKeywords() {
-		this.keywordsService.getKeywords().subscribe(
+		console.log("listando las keywords en " + this.language);
+		this.keywordsService.getKeywords(this.language).subscribe(
 			data => {
 				this.data = data;
 			}
@@ -83,7 +85,8 @@ export class SearchComponent implements OnInit {
 	}
 
 	changeLanguage(language: string) {
-		LanguageService.setLanguage(language);
+		console.log("changing language to " + language);
+		this.languageService.setLanguage(language);
 		let childrenNodes = this.languagesSection.children;
 		let arrayChildrenNodes = Array.from(childrenNodes);
 		arrayChildrenNodes.forEach(element => {

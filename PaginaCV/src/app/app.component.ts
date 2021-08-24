@@ -22,8 +22,9 @@ export class AppComponent {
 	language = "";
 	footerString? = "";
 
-	constructor(private translatedBitsService : TranslatedBitsService) {
-		LanguageService.language$.subscribe(data => {
+	constructor(private translatedBitsService : TranslatedBitsService,
+				private languageService : LanguageService) {
+		languageService.language$.subscribe(data => {
 			this.language = data;
 			this.translateStaticBits();
 		});

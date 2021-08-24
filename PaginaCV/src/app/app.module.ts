@@ -14,19 +14,23 @@ import { ContentPageComponent } from './components/content-page/content-page.com
 import { CategoriesMenuComponent } from './components/categories-menu/categories-menu.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MainPageComponent } from './components/main-page/main-page.component';
-import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { APP_INITIALIZER } from '@angular/core';
+import { LanguageService } from './service/language.service';
+import config from '../assets/generalconfig.json';
 
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEs, 'es');
+
 
 const routes: Routes =
 	[{ path: 'category/:categoryid', component: ListaTrabajosComponent },
 	{ path: 'search/:keyword', component: ListaTrabajosComponent },
 	{ path: 'content/:table/:id', component: ContentPageComponent },
-	{path: 'index', component: MainPageComponent},
+	{ path: 'index', component: MainPageComponent },
 	{ path: '', component: ListaTrabajosComponent },
-	{ path: '**', component: PageNotFoundComponent}];
+	{ path: '**', component: PageNotFoundComponent }];
 
 
 @NgModule({
@@ -37,7 +41,7 @@ const routes: Routes =
 		SearchComponent,
 		ContentPageComponent,
 		CategoriesMenuComponent,
-  MainPageComponent
+		MainPageComponent
 	],
 	imports: [
 		BrowserModule,
@@ -45,9 +49,19 @@ const routes: Routes =
 		RouterModule.forRoot(routes),
 		FontAwesomeModule,
 		AutocompleteLibModule,
-		NgApexchartsModule	
+		NgApexchartsModule
 	],
-	providers: [TrabajoService, { provide: LOCALE_ID, useValue: 'es' }],
-	bootstrap: [AppComponent]
+	providers: [TrabajoService, { provide: LOCALE_ID, useValue: 'es' }, {
+		provide: APP_INITIALIZER,
+		useFactory: resourceProviderFactory,
+		deps: [LanguageService],
+		multi: true
+	}],
+	bootstrap: [AppComponent],
+
 })
-export class AppModule { }
+export class AppModule {}
+
+export function resourceProviderFactory(provider: LanguageService) {
+	let json = config;
+	return () => provider.setInitialLanguage(json['initialLanguage']);}

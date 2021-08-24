@@ -43,9 +43,9 @@ export class MainPageComponent {
 	@ViewChild("chart") chart: ChartComponent;
 	public chartOptions: Partial<ChartOptions> | any;
 
-	constructor(private trabajoService: TrabajoService
-		/*, private languageService: LanguageService)*/) {
-		LanguageService.language$.subscribe(data => {
+	constructor(private trabajoService: TrabajoService, 
+				private languageService: LanguageService) {
+		languageService.language$.subscribe(data => {
 			this.language = data;
 			this.update(); // DEBERÍA HACER QUE SE ACTUALICE LA DESCRIPCIÓN. NECESARIO CREARLA EN LA BBDD
 			this.jobWord = this.language ? "trabajos" : "jobs";

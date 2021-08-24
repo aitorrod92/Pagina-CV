@@ -23,9 +23,9 @@ export class ListaTrabajosComponent implements OnInit {
 
 	constructor(private trabajoService: TrabajoService,
 		private idiomasService: IdiomasService,
-		//private languageService: LanguageService,
+		private languageService: LanguageService,
 		private route: ActivatedRoute) {
-		LanguageService.language$.subscribe(data => {
+		languageService.language$.subscribe(data => {
 			this.language = data;
 			this.listTrabajos();
 		});

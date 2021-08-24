@@ -5,17 +5,17 @@ CREATE TABLE `datoscurriculo`.`keywords`(
   );
   
   INSERT INTO datoscurriculo.keywords
-  VALUES (1,'Informatica' ), (2,'Biologia' ), (3,'Docencia' ),
-	(4,'Ciencia' ), (5,'Grado' ), (6,'Universad' ),
-	(7,'Investigación' ), (8,'Prácticas' ), (9,'Enseñanza' ),
-	(10,'Máster' ), (11,'Venta' ), (12,'Cara al público' ),
-	(13,'Trabajo' ), (14,'Cocina' ), (15,'Hostelería' ),
-	(16,'Limpieza' ), (17,'Porteo' ), (18,'Formación' ),
-	(19,'IT' ), (20,'FP' ), (21,'Grado superior' ),
-	(22,'Software' ), (23,'Programación' ), (24,'Bases de datos' ),
-	(25,'Desarrollo' ), (26,'Wordpress' ), (27,'Java' ),
-	(28,'CSS' ), (29,'Consultoría' ), (30,'SAP' ),
-	(31,'Inglés' ), (32,'IELTS' ), (33,'British Council' ),
-	(34,'C1' ), (35,'Chino' ), (36,'Confucio' ),
-	(37,'HSK' ), (38,'A2' ), (39,'Castellano' ),
-	(40,'Español' ), (41,'Nativo' ), (42, '.NET'), (43, 'C#');
+  VALUES (1,'Informatics' ), (2,'Biology' ), (3,'Teaching' ),
+	(4,'Science' ), (5,'Degree' ), (6,'University' ),
+	(7,'Researching' ), (8,'Internship' ), (9,'Education' ),
+	(10,'Master degree' ), (11,'Sales' ), (12,'Deal with customers' ),
+	(13,'Job' ), (14,'Cooking' ), (15,'Hospitality' ),
+	(16,'Cleaning' ), (17,'Carriaging' ), (18,'Training' ),
+	(19,'IT' ), (20,'HNC' ), (21,'Software' ), (22,'Coding' ),
+	(23,'Development' ), (24,'Databases' ),
+	(25,'Languages' ), (26,'Wordpress' ), (27,'Java' ),
+	(28,'CSS' ), (29,'Consulting' ), (30,'SAP' ),
+	(31,'English' ), (32,'IELTS' ), (33,'British Council' ),
+	(34,'C1' ), (35,'Chinese' ), (36,'Confucio' ),
+	(37,'HSK' ), (38,'A2' ), (39,'Castilian' ),
+	(40,'Spanish' ), (41,'Native' ), (42, '.NET'), (43, 'C#');
