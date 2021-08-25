@@ -21,7 +21,10 @@ export class TranslatedBitsService {
 		this.translatedBitsMap.set("en-description", "Description");
 		this.translatedBitsMap.set("es-search", "Buscar");
 		this.translatedBitsMap.set("en-search", "Search");
+		this.translatedBitsMap.set("es-searchPlaceholder", "Busca por palabras clave...");
+		this.translatedBitsMap.set("en-searchPlaceholder", "Search by keywords...");
 		this.translatedBitsMap.set("es-mail", "Correo");
 		this.translatedBitsMap.set("en-mail", "Mail");
+
 	}
 }

@@ -5,7 +5,7 @@
 <div class="ng-autocomplete form-header" (keyup.enter)="doSearch()">
 	<ng-autocomplete #myInput [data]="data" [searchKeyword]="keyword"
 		class="au-input au-input-xl" (selected)="selectEvent($event)"
-		placeholder="Busca por palabras clave ..."
+		[placeholder]="this.placeholderString"
 		(inputChanged)="onChangeSearch($event)"
 		(inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
 		[minQueryLength]="busquedaMinima"> </ng-autocomplete>

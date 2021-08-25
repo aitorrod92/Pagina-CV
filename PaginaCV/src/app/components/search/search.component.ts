@@ -18,6 +18,7 @@ export class SearchComponent implements OnInit {
 	languagesSection: HTMLElement;
 	language : string;
 	searchString? : string = "";
+	placeholderString: string;
 
 
 	constructor(private router: Router,
@@ -102,6 +103,7 @@ export class SearchComponent implements OnInit {
 	
 	translateStaticBits(){
 		this.searchString = this.translatedBitsService.translatedBitsMap.get(this.language + "-search");
+		this.placeholderString = this.translatedBitsService.translatedBitsMap.get(this.language + "-searchPlaceholder")!;
 	}
 
 
