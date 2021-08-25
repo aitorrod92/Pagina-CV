@@ -4,7 +4,7 @@ import { Idioma } from 'src/app/common/idioma';
 import { Trabajo } from 'src/app/common/trabajo';
 import { IdiomasService } from 'src/app/service/idiomas.service';
 import { TrabajoService } from 'src/app/service/trabajo.service';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Categoria } from 'src/app/common/categoria';
 import { CategoriasService } from 'src/app/service/categorias.service';
 import { LanguageService } from 'src/app/service/language.service';
@@ -17,7 +17,7 @@ import { TranslatedBitsService } from 'src/app/service/translated-bits.service';
 	styleUrls: ['./content-page.component.css']
 })
 
-export class ContentPageComponent implements OnInit {
+export class ContentPageComponent {
 	contentId: number;
 	trabajo: Trabajo;
 	categoria: Categoria;
@@ -41,31 +41,23 @@ export class ContentPageComponent implements OnInit {
 		public domSanitizer: DomSanitizer,
 		private languageService: LanguageService,
 		private translatedBitsService: TranslatedBitsService) {
+		this.isLanguagePage = 
+			this.route.snapshot.paramMap.get('table') == ('languages' || 'idiomas') ?  true : false;
 		languageService.language$.subscribe(data => {
 			this.language = data;
-			if (!this.firstLoad) {
-				this.translateStaticBits();
-				this.showJobPage();
-			}
+			this.getContent();
 		});
 
 
 	}
 
-	ngOnInit(): void {
-		console.log(ContentPageComponent.name + " " + this.language);
-		this.route.paramMap.subscribe(() => { this.getContent() });
-		this.translateStaticBits();
-
-	}
-
-
 
 	getContent() {
+		console.log("get content");
 		// @ts-ignore: Object is possibly 'null'.
 		this.contentId = this.route.snapshot.paramMap.get('id');
-		this.route.snapshot.paramMap.get('table') === 'languages' ?
-			this.showLanguagePage() : this.showJobPage();
+		this.isLanguagePage ? this.showLanguagePage() : this.showJobPage();
+		this.translateStaticBits();
 	}
 
 	showLanguagePage() {
@@ -99,7 +91,7 @@ export class ContentPageComponent implements OnInit {
 		if (this.isLanguagePage) {
 			this.categoria = new Categoria();
 			this.categoria.id = 4;
-			this.categoria.nombre = 'idiomas';
+			this.categoria.nombre = this.language == "es" ? "idiomas" : "languages";
 		} else {
 			this.categoryService.getCategoryByCategoryId(this.trabajo.categoria, categoryWord).subscribe(data => {
 				this.categoria = data;

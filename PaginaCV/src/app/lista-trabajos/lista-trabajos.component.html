@@ -40,7 +40,7 @@
 						<div>
 							<b>{{idiom.institucion}}</b>
 						</div>
-						<div>{{idiom.fecha | date : 'MMMM yyyy'}}</div>
+						<div>{{this.adaptDate(idiom.fecha, 4)}}</div>
 					</div>
 				</div>
 				</ng-template>

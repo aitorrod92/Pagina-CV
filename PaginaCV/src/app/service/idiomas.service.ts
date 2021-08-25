@@ -10,19 +10,31 @@ import { map } from 'rxjs/operators';
 
 export class IdiomasService {
 	private baseUrl = 'http://localhost:8181/api';
+	private searchUrl = '';
 	idioma: Idioma[] = [];
 
 	constructor(private httpClient: HttpClient) { }
 
-	getIdiomas(): Observable<Idioma[]> {
-		const searchUrl = `${this.baseUrl}/idiomas`;
-		return this.httpClient.get<GetResponse>(searchUrl).
-			pipe(map(response => response._embedded.idioma));
+	getLanguages(languageWord: string): Observable<Idioma[]> {
+		this.searchUrl = `${this.baseUrl}/${languageWord}`;
+		return languageWord == "idiomas" ? 
+			this.getResponseSpanish() : 
+			this.getResponseEnglish();
 	}
 
 	getIdioma(languageWord: string, contentId: number) {
-		const searchUrl = `${this.baseUrl}/${languageWord}/${contentId}`
-		return this.httpClient.get<Idioma>(searchUrl);
+		this.searchUrl = `${this.baseUrl}/${languageWord}/${contentId}`
+		return this.httpClient.get<Idioma>(this.searchUrl);
+	}
+
+	getResponseSpanish(): Observable<Idioma[]> {
+		return this.httpClient.get<GetResponse>(this.searchUrl).
+			pipe(map(response => response._embedded.idioma));
+	}
+
+	getResponseEnglish(): Observable<Idioma[]> {
+		return this.httpClient.get<GetResponseLanguage>(this.searchUrl).
+			pipe(map(response => response._embedded.language));
 	}
 }
 
@@ -32,4 +44,11 @@ interface GetResponse {
 		idioma: Idioma[];
 	}
 }
+
+interface GetResponseLanguage {
+	_embedded: {
+		language: Idioma[];
+	}
+}
+
 

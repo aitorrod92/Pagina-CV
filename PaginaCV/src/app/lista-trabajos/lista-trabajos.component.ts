@@ -19,14 +19,14 @@ export class ListaTrabajosComponent implements OnInit {
 	idioma: Idioma[];
 	currentSearchingKeywords: String;
 	currentCategory: number;
-	language: string;
+	currentLanguage: string;
 
 	constructor(private trabajoService: TrabajoService,
 		private idiomasService: IdiomasService,
 		private languageService: LanguageService,
 		private route: ActivatedRoute) {
 		languageService.language$.subscribe(data => {
-			this.language = data;
+			this.currentLanguage = data;
 			this.listTrabajos();
 		});
 	}
@@ -38,7 +38,7 @@ export class ListaTrabajosComponent implements OnInit {
 
 	public adaptDate(date: string, categoria: number): string | null {
 		let formattedDate;
-		this.datepipe = this.language == "es" ? new DatePipe('es-MX') : new DatePipe('en-US');
+		this.datepipe = this.currentLanguage == "es" ? new DatePipe('es-MX') : new DatePipe('en-US');
 		if (categoria != 3) {
 			formattedDate = this.datepipe.transform(new Date(date), 'MMMM YYYY');
 		} else {
@@ -61,7 +61,7 @@ export class ListaTrabajosComponent implements OnInit {
 		}
 		let finalString = "(" + yearsString;
 		if (yearsString != "" && months != 0) {
-			let connectionString = this.language == "es" ? " y " : " and ";
+			let connectionString = this.currentLanguage == "es" ? " y " : " and ";
 			finalString = finalString.concat(connectionString);
 		}
 		finalString = finalString.concat(monthsString + ")");
@@ -72,7 +72,7 @@ export class ListaTrabajosComponent implements OnInit {
 		let years;
 		years = +(duration / 12).toPrecision(1);
 		let yearsString = "";
-		if (this.language == "es") {
+		if (this.currentLanguage == "es") {
 			yearsString = years + " a\xf1o"; //https://en.wikipedia.org/wiki/List_of_Unicode_characters#Latin_Extended-A
 		} else {
 			yearsString = years + " year";
@@ -84,7 +84,7 @@ export class ListaTrabajosComponent implements OnInit {
 	defineMonthsString(numberOfMonths: number): string {
 		let monthsString = "";
 		let monthsStringPlural = "";
-		if (this.language == "es") {
+		if (this.currentLanguage == "es") {
 			monthsString = numberOfMonths + " mes";
 			monthsStringPlural = "es";
 		} else {
@@ -118,7 +118,7 @@ export class ListaTrabajosComponent implements OnInit {
 	listTrabajos() {
 		this.getKeyword();
 		this.getCategory();
-		let jobWord = this.language == "es" ? "trabajos" : "jobs";
+		let jobWord = this.currentLanguage == "es" ? "trabajos" : "jobs";
 		if (this.currentSearchingKeywords === "" && this.currentCategory == 0) {
 			this.trabajoService.getAllTrabajos(jobWord).subscribe(data => {
 				this.ObtenerYOrdenar(data);
@@ -126,9 +126,10 @@ export class ListaTrabajosComponent implements OnInit {
 			})
 		} else if (this.currentCategory != 0) {
 			if (this.currentCategory === 4) {
-				this.idiomasService.getIdiomas().subscribe(data => this.idioma = data);
+				let languageWord = this.currentLanguage == "es" ? "idiomas" : "languages";
+				this.idiomasService.getLanguages(languageWord).subscribe(data => this.idioma = data);
 			} else {
-				let categoryWord = this.language == "es" ? "categorias" : "categories";
+				let categoryWord = this.currentLanguage == "es" ? "categorias" : "categories";
 				this.trabajoService.getTrabajosListbyCategory(categoryWord, this.currentCategory).subscribe(
 					data => {
 						this.ObtenerYOrdenar(data);
