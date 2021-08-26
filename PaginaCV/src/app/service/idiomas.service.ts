@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 })
 
 export class IdiomasService {
+
 	private baseUrl = 'http://localhost:8181/api';
 	private searchUrl = '';
 	idioma: Idioma[] = [];
@@ -17,14 +18,23 @@ export class IdiomasService {
 
 	getLanguages(languageWord: string): Observable<Idioma[]> {
 		this.searchUrl = `${this.baseUrl}/${languageWord}`;
-		return languageWord == "idiomas" ? 
-			this.getResponseSpanish() : 
-			this.getResponseEnglish();
+		return this.getResponse(languageWord);
+	}
+
+	getLanguagesListbyKeyword(languageWord: string, tags : string) {
+		this.searchUrl = `${this.baseUrl}/${languageWord}/search/findByTagsContaining?tags=${tags}`;
+		return this.getResponse(languageWord);
 	}
 
 	getIdioma(languageWord: string, contentId: number) {
 		this.searchUrl = `${this.baseUrl}/${languageWord}/${contentId}`
 		return this.httpClient.get<Idioma>(this.searchUrl);
+	}
+
+	getResponse(languageWord : string) : Observable<Idioma[]>{
+		return languageWord == "idiomas" ?
+			this.getResponseSpanish() :
+			this.getResponseEnglish();
 	}
 
 	getResponseSpanish(): Observable<Idioma[]> {

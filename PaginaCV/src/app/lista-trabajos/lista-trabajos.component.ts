@@ -17,7 +17,7 @@ export class ListaTrabajosComponent implements OnInit {
 	datepipe: DatePipe = new DatePipe('es-MX');
 	trabajo: Trabajo[];
 	idioma: Idioma[];
-	currentSearchingKeywords: String;
+	currentSearchingKeywords: string;
 	currentCategory: number;
 	currentLanguage: string;
 
@@ -33,7 +33,6 @@ export class ListaTrabajosComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.route.paramMap.subscribe(() => { this.listTrabajos() });
-
 	}
 
 	public adaptDate(date: string, categoria: number): string | null {
@@ -119,6 +118,7 @@ export class ListaTrabajosComponent implements OnInit {
 		this.getKeyword();
 		this.getCategory();
 		let jobWord = this.currentLanguage == "es" ? "trabajos" : "jobs";
+		let languageWord = this.currentLanguage == "es" ? "idiomas" : "languages";
 		if (this.currentSearchingKeywords === "" && this.currentCategory == 0) {
 			this.trabajoService.getAllTrabajos(jobWord).subscribe(data => {
 				this.ObtenerYOrdenar(data);
@@ -126,14 +126,12 @@ export class ListaTrabajosComponent implements OnInit {
 			})
 		} else if (this.currentCategory != 0) {
 			if (this.currentCategory === 4) {
-				let languageWord = this.currentLanguage == "es" ? "idiomas" : "languages";
 				this.idiomasService.getLanguages(languageWord).subscribe(data => this.idioma = data);
 			} else {
 				let categoryWord = this.currentLanguage == "es" ? "categorias" : "categories";
 				this.trabajoService.getTrabajosListbyCategory(categoryWord, this.currentCategory).subscribe(
 					data => {
 						this.ObtenerYOrdenar(data);
-
 					})
 			}
 		} else {
@@ -142,12 +140,16 @@ export class ListaTrabajosComponent implements OnInit {
 					this.ObtenerYOrdenar(data);
 				})
 
-			// SE PONE AQUÍ UN MÉTODO CON LOS TAGS DE IDIOMAS, HABRÁ QUE REDEFINIR LAS TABLAS
-			// SE FUSIONAN AMBOS ARRAYS DE RESPUESTA
-			// https://stackoverflow.com/questions/10384845/merge-two-json-javascript-arrays-in-to-one-array
-
+			this.idiomasService.getLanguagesListbyKeyword(languageWord, this.currentSearchingKeywords).subscribe(
+				data =>
+					this.idioma = data);
 		}
 	}
+	// SE PONE AQUÍ UN MÉTODO CON LOS TAGS DE IDIOMAS, HABRÁ QUE REDEFINIR LAS TABLAS
+	// SE FUSIONAN AMBOS ARRAYS DE RESPUESTA
+	// https://stackoverflow.com/questions/10384845/merge-two-json-javascript-arrays-in-to-one-array
+
+
 
 	ObtenerYOrdenar(data: Trabajo[]) {
 		this.trabajo = data;

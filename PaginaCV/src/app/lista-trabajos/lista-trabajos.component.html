@@ -4,7 +4,7 @@
 	<div class="section-content section-content-p30">
 		<div class="container-fluid">
 			<div class="row">
-				<div *ngIf="currentCategory<4; then trabajos else idiomas"></div>
+				<div *ngIf="currentCategory<4 && currentCategory!=0; then trabajos"></div>
 				<ng-template #trabajos>
 
 				<div *ngFor="let tempItem of trabajo.slice().reverse()"
@@ -12,7 +12,7 @@
 
 					<div class="product-box">
 						<h3>
-						<a routerLink="/content/jobs/{{tempItem.id}}"> <img
+							<a routerLink="/content/jobs/{{tempItem.id}}"> <img
 								class="img-responsive animated-beat" alt="image not found"
 								src="{{ tempItem.imagen }}" height="50">
 							</a><a href="content/jobs/{{tempItem.id}}" class="primary-btn"><b>{{tempItem.nombre}}</b></a>
@@ -26,8 +26,43 @@
 					</div>
 				</div>
 				</ng-template>
-
+				<div *ngIf="currentCategory==4; then idiomas"></div>
 				<ng-template #idiomas>
+				<div *ngFor="let idiom of idioma.slice().reverse()" class="col-md-4">
+					<div class="product-box">
+						<h3>
+							<img class="img-responsive animated-spin-and-zoom"
+								alt="image not found" src="{{ idiom.imagen }}" height="50">
+							<!-- MODIFICAR EL ENLACE -->
+							<a href="content/languages/{{idiom.id}}" class="primary-btn">{{idiom.nombre}}</a>
+						</h3>
+						<div>
+							<b>{{idiom.institucion}}</b>
+						</div>
+						<div>{{this.adaptDate(idiom.fecha, 4)}}</div>
+					</div>
+				</div>
+				</ng-template>
+
+				<div *ngIf="currentCategory==0; then ambos"></div>
+				<ng-template #ambos>
+				<div *ngFor="let tempItem of trabajo.slice().reverse()"
+					class="col-md-4">
+					<div class="product-box">
+						<h3>
+							<a routerLink="/content/jobs/{{tempItem.id}}"> <img
+								class="img-responsive animated-beat" alt="image not found"
+								src="{{ tempItem.imagen }}" height="50">
+							</a><a href="content/jobs/{{tempItem.id}}" class="primary-btn"><b>{{tempItem.nombre}}</b></a>
+						</h3>
+						<div>
+							<b>{{tempItem.empresa}}</b>
+							<div>{{this.adaptDate(tempItem.fechaInicio,
+								tempItem.categoria)}} - {{this.adaptDate(tempItem.fechaFin,
+								tempItem.categoria)}} {{this.adaptDuration(tempItem.duracion)}}</div>
+						</div>
+					</div>
+				</div>
 				<div *ngFor="let idiom of idioma.slice().reverse()" class="col-md-4">
 
 					<div class="product-box">
@@ -44,6 +79,7 @@
 					</div>
 				</div>
 				</ng-template>
+
 			</div>
 		</div>
 	</div>
