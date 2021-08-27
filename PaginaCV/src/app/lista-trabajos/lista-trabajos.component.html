@@ -78,7 +78,15 @@
 						<div>{{this.adaptDate(idiom.fecha, 4)}}</div>
 					</div>
 				</div>
-				</ng-template>
+
+				<div *ngIf="noSearchResults; then noResults"></div>
+				<ng-template #noResults> 
+				<br/>
+				<br/>
+				<br/>
+				<div>{{noResultsString}} <b>"{{currentSearchingKeywords}}"</b></div>
+				
+				</ng-template>  </ng-template>
 
 			</div>
 		</div>

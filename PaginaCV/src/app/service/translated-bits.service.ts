@@ -25,6 +25,8 @@ export class TranslatedBitsService {
 		this.translatedBitsMap.set("en-searchPlaceholder", "Search by keywords...");
 		this.translatedBitsMap.set("es-mail", "Correo");
 		this.translatedBitsMap.set("en-mail", "Mail");
+		this.translatedBitsMap.set("es-noResults", "No hay resultados que coincidan con la palabra clave");
+		this.translatedBitsMap.set("en-noResults", "There are no results that match the keyword");
 
 	}
 }

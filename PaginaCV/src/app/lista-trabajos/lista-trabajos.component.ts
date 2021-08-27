@@ -6,6 +6,8 @@ import { IdiomasService } from '../service/idiomas.service';
 import { TrabajoService } from '../service/trabajo.service';
 import { DatePipe } from '@angular/common';
 import { LanguageService } from '../service/language.service';
+import { TranslatedBitsService } from '../service/translated-bits.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -20,18 +22,28 @@ export class ListaTrabajosComponent implements OnInit {
 	currentSearchingKeywords: string;
 	currentCategory: number;
 	currentLanguage: string;
+	noSearchResults: boolean;
+	noResultsString?: string = "";
+
+	// Para esperar a que el resultado de la subscripción se obtenga antes de ir al siguiente paso
+	// es necesario que esté en esta misma clase, porque se ejecuta de manera asíncrona
+	language$: Observable<string>;
 
 	constructor(private trabajoService: TrabajoService,
 		private idiomasService: IdiomasService,
 		private languageService: LanguageService,
+		private translatedBitService: TranslatedBitsService,
 		private route: ActivatedRoute) {
-		languageService.language$.subscribe(data => {
-			this.currentLanguage = data;
-			this.listTrabajos();
-		});
+		this.language$ = this.languageService.getLanguage();
 	}
 
 	ngOnInit(): void {
+		this.language$.subscribe(data => {
+			this.currentLanguage = data;
+			this.listTrabajos();
+			this.translateStaticBits();
+		});
+
 		this.route.paramMap.subscribe(() => { this.listTrabajos() });
 	}
 
@@ -117,6 +129,7 @@ export class ListaTrabajosComponent implements OnInit {
 	listTrabajos() {
 		this.getKeyword();
 		this.getCategory();
+		console.log("keyword: " + this.currentSearchingKeywords + " category: " + this.currentCategory);
 		let jobWord = this.currentLanguage == "es" ? "trabajos" : "jobs";
 		let languageWord = this.currentLanguage == "es" ? "idiomas" : "languages";
 		if (this.currentSearchingKeywords === "" && this.currentCategory == 0) {
@@ -135,21 +148,21 @@ export class ListaTrabajosComponent implements OnInit {
 					})
 			}
 		} else {
+			let noJobResults = false;
+			let noLanguageResults = false;
 			this.trabajoService.getTrabajosListbyKeyword(this.currentSearchingKeywords, jobWord).subscribe(
 				data => {
 					this.ObtenerYOrdenar(data);
+					noJobResults = this.trabajo.length == 0 ? true : false;
 				})
-
 			this.idiomasService.getLanguagesListbyKeyword(languageWord, this.currentSearchingKeywords).subscribe(
-				data =>
-					this.idioma = data);
+				data => {
+					this.idioma = data;
+					noLanguageResults = this.idioma.length == 0 ? true : false;
+					this.noSearchResults = noJobResults && noLanguageResults ? true : false;
+				});
 		}
 	}
-	// SE PONE AQUÍ UN MÉTODO CON LOS TAGS DE IDIOMAS, HABRÁ QUE REDEFINIR LAS TABLAS
-	// SE FUSIONAN AMBOS ARRAYS DE RESPUESTA
-	// https://stackoverflow.com/questions/10384845/merge-two-json-javascript-arrays-in-to-one-array
-
-
 
 	ObtenerYOrdenar(data: Trabajo[]) {
 		this.trabajo = data;
@@ -157,6 +170,10 @@ export class ListaTrabajosComponent implements OnInit {
 			return <any>new Date(a.fechaInicioDate) - <any>new Date(b.fechaInicioDate);
 		});
 
+	}
+
+	translateStaticBits() {
+		this.noResultsString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-noResults")!;
 	}
 }
 
