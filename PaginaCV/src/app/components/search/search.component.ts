@@ -41,7 +41,6 @@ export class SearchComponent implements OnInit {
 	}
 
 	listKeywords() {
-		console.log("listando las keywords en " + this.language);
 		this.keywordsService.getKeywords(this.language).subscribe(
 			data => {
 				this.data = data;

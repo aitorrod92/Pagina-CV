@@ -27,6 +27,9 @@ export class TranslatedBitsService {
 		this.translatedBitsMap.set("en-mail", "Mail");
 		this.translatedBitsMap.set("es-noResults", "No hay resultados que coincidan con la palabra clave");
 		this.translatedBitsMap.set("en-noResults", "There are no results that match the keyword");
+		this.translatedBitsMap.set("es-suggestion", "Se ha encontrado un t\xe9rmino parecido:");
+		this.translatedBitsMap.set("en-suggestion", "A similar search term has been found:");
+
 
 	}
 }

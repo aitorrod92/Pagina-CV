@@ -13,24 +13,33 @@ export class KeywordsService {
 	private baseUrl = 'http://localhost:8181/api/';
 	constructor(private httpClient: HttpClient) { }
 
-	/*getNumberOfKeywords() : number {
-		
-		return this.httpClient.get<GetResponseKeywords>(this.url).pipe(map(response => response._embedded.keyword));
+	private spanishKeywords: Observable<Keyword[]>;
+	private englishKeywords: Observable<Keyword[]>;
 
-	}*/
 
 	getKeywords(language: string): Observable<Keyword[]> {
-		return language == "es" ? this.getResponseSpanish() : this.getResponseEnglish();
+		return language == "es" ? this.getSpanishKeywords() : this.getEnglishKeywords();
+	}
+
+	getSpanishKeywords() {
+		return this.spanishKeywords == undefined ? this.getResponseSpanish() : this.spanishKeywords;
 	}
 
 	getResponseSpanish() {
 		let url = this.baseUrl + "palabrasclave";
-		return this.httpClient.get<GetResponsePalabrasClave>(url).pipe(map(response => response._embedded.palabraclave));
+		this.spanishKeywords = this.httpClient.get<GetResponsePalabrasClave>(url).pipe(map(response => response._embedded.palabraclave));
+		return this.spanishKeywords;
 	}
+
+	getEnglishKeywords() {
+		return this.englishKeywords == undefined ? this.getResponseEnglish() : this.englishKeywords;
+	}
+
 
 	getResponseEnglish(): Observable<Keyword[]> {
 		let url = this.baseUrl + "keywords";
-		return this.httpClient.get<GetResponseKeywords>(url).pipe(map(response => response._embedded.keyword));
+		this.englishKeywords = this.httpClient.get<GetResponseKeywords>(url).pipe(map(response => response._embedded.keyword));
+		return this.englishKeywords;
 	}
 }
 

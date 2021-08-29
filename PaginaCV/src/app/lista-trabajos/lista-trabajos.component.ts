@@ -8,6 +8,8 @@ import { DatePipe } from '@angular/common';
 import { LanguageService } from '../service/language.service';
 import { TranslatedBitsService } from '../service/translated-bits.service';
 import { Observable } from 'rxjs';
+import { KeywordsService } from '../service/keywords.service';
+import { Keyword } from '../common/keyword';
 
 
 @Component({
@@ -24,6 +26,11 @@ export class ListaTrabajosComponent implements OnInit {
 	currentLanguage: string;
 	noSearchResults: boolean;
 	noResultsString?: string = "";
+	searchSuggestionString?: string = "";
+	suggestionString: string = "";
+
+	keywords: Keyword[];
+	coincidence: boolean = false;
 
 	// Para esperar a que el resultado de la subscripción se obtenga antes de ir al siguiente paso
 	// es necesario que esté en esta misma clase, porque se ejecuta de manera asíncrona
@@ -33,6 +40,7 @@ export class ListaTrabajosComponent implements OnInit {
 		private idiomasService: IdiomasService,
 		private languageService: LanguageService,
 		private translatedBitService: TranslatedBitsService,
+		private keywordsService: KeywordsService,
 		private route: ActivatedRoute) {
 		this.language$ = this.languageService.getLanguage();
 	}
@@ -43,6 +51,11 @@ export class ListaTrabajosComponent implements OnInit {
 			this.listTrabajos();
 			this.translateStaticBits();
 		});
+
+		this.keywordsService.getKeywords(this.currentLanguage).subscribe( // ADAPTARLO PARA INGLÉS
+			data => {
+				this.keywords = data;
+			});
 
 		this.route.paramMap.subscribe(() => { this.listTrabajos() });
 	}
@@ -160,7 +173,11 @@ export class ListaTrabajosComponent implements OnInit {
 					this.idioma = data;
 					noLanguageResults = this.idioma.length == 0 ? true : false;
 					this.noSearchResults = noJobResults && noLanguageResults ? true : false;
+					if (this.noSearchResults) {
+						this.generateSearchSuggestionString();
+					}
 				});
+
 		}
 	}
 
@@ -174,7 +191,47 @@ export class ListaTrabajosComponent implements OnInit {
 
 	translateStaticBits() {
 		this.noResultsString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-noResults")!;
+		this.suggestionString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-suggestion")!;
 	}
+
+	generateSearchSuggestionString() {
+		this.coincidence = false;
+		this.keywords.forEach(keyword => {
+			this.compareWithCurrentSearchingKeyword(keyword);
+		})
+		if (!this.coincidence) {
+			this.suggestionString = "";
+			this.searchSuggestionString = "";
+		} else {
+			this.suggestionString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-suggestion")!;
+		}
+	}
+
+
+	compareWithCurrentSearchingKeyword(keyword: Keyword) {
+		var mismatches = 0;
+
+		if (Math.abs(keyword.nombre.length - this.currentSearchingKeywords.length) == 0) {
+			for (let i = 0; i < keyword.nombre.length; i++) {
+				console.log("analizando " + keyword.nombre);
+				if (keyword.nombre[i].toLowerCase() == this.currentSearchingKeywords[i].toLowerCase()) {
+					//console.log("keyword: " + keyword.nombre[i] + " Search " + this.currentSearchingKeywords[i])
+					//console.log("indice " + i + " " + (keyword.nombre.length - 1).toString());
+				} else {
+					mismatches++;
+					if (mismatches > 1) {
+						break;
+					}
+				}
+				if (i == keyword.nombre.length - 1) {
+					console.log(keyword.nombre + " es coincidencia");
+					this.searchSuggestionString = keyword.nombre;
+					this.coincidence = true;
+				}
+			}
+		}
+	}
+
 }
 
 
