@@ -21,7 +21,7 @@
 							<b>{{tempItem.empresa}}</b>
 							<div>{{this.adaptDate(tempItem.fechaInicio,
 								tempItem.categoria)}} - {{this.adaptDate(tempItem.fechaFin,
-								tempItem.categoria)}} {{this.adaptDuration(tempItem.duracion)}}</div>
+								tempItem.categoria)}} {{this.adaptDuration(tempItem.duracion, tempItem.fechaInicio)}}</div>
 						</div>
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 							<b>{{tempItem.empresa}}</b>
 							<div>{{this.adaptDate(tempItem.fechaInicio,
 								tempItem.categoria)}} - {{this.adaptDate(tempItem.fechaFin,
-								tempItem.categoria)}} {{this.adaptDuration(tempItem.duracion)}}</div>
+								tempItem.categoria)}} {{this.adaptDuration(tempItem.duracion, tempItem.fechaInicio)}}</div>
 						</div>
 					</div>
 				</div>

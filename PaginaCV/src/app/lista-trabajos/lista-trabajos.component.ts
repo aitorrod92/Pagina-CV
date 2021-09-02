@@ -31,7 +31,7 @@ export class ListaTrabajosComponent implements OnInit {
 	searchSuggestionString?: string = "";
 	suggestionString: string = "";
 	buttonsMargin: string = "20px";
-	maximumSearchTolerance : number;
+	maximumSearchTolerance: number;
 
 	keywords: Keyword[];
 	coincidence: boolean = false;
@@ -57,7 +57,7 @@ export class ListaTrabajosComponent implements OnInit {
 			this.translateStaticBits();
 		});
 
-		this.keywordsService.getKeywords(this.currentLanguage).subscribe( // ADAPTARLO PARA INGLÉS
+		this.keywordsService.getKeywords(this.currentLanguage).subscribe(
 			data => {
 				this.keywords = data;
 			});
@@ -66,8 +66,9 @@ export class ListaTrabajosComponent implements OnInit {
 	}
 
 	public adaptDate(date: string, categoria: number): string | null {
-		let formattedDate;
 		this.datepipe = this.currentLanguage == "es" ? new DatePipe('es-MX') : new DatePipe('en-US');
+		if (date == 'Actual') { date = new Date().toISOString().slice(0, 10) }
+		let formattedDate;
 		if (categoria != 3) {
 			formattedDate = this.datepipe.transform(new Date(date), 'MMMM YYYY');
 		} else {
@@ -76,7 +77,17 @@ export class ListaTrabajosComponent implements OnInit {
 		return formattedDate;
 	}
 
-	public adaptDuration(duration: number): string | null {
+	/*EN UN FUTURO LA DURACIÓN NO SE INCLUIRÁ Y SE CALCULARÁ PARA TODOS */
+	public adaptDuration(duration: number, date: string): string | null { 
+		return duration == -1 ? this.adaptUndefinedDuration(date) : this.adaptDefinedDuration(duration);
+	}
+	
+	adaptUndefinedDuration(date: string): string | null {
+		var difference = new Date().getMonth() - new Date(date).getMonth();
+		return this.adaptDefinedDuration(difference);
+	}
+
+	adaptDefinedDuration(duration: number): string | null {
 		let yearsString = "";
 		let months = 0;
 		let monthsString = "";
@@ -96,6 +107,8 @@ export class ListaTrabajosComponent implements OnInit {
 		finalString = finalString.concat(monthsString + ")");
 		return finalString;
 	}
+
+
 
 	defineYearsString(duration: number): string {
 		let years;

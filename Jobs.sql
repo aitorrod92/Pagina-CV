@@ -62,5 +62,5 @@ DATE_FORMAT('2015-01-01', '%Y'),DATE_FORMAT('2016-01-01', '%Y'), '12', 'Complute
 'IT', null, 'Informatics IT Internship Software development Coding Wordpress CSS Java Programming', '2018-01-01', 'ChIJ5ftsegovQg0Ro8rRTArZ0Ew', 2),
 (10, '.NET Developer', 'assets/images/jobs/Deloitte.jpg',  DATE_FORMAT('2021-4-01','%b %Y'),  DATE_FORMAT('2021-7-31','%b %Y'), DATEDIFF('2021-7-31', '2021-4-01')/30, 'Deloitte', 'Madrid', 'Spain',
 '', 'IT', "Full", 'Informatics IT Job Consultancy .NET CSS SQL C# Programming Angular Databases Software Development Coding', '2021-4-01', 'ChIJ947Eq2gsQg0RX8Sf25ay0nY', 1),
-(11, '.NET Developer', 'assets/images/jobs/Sanne.jpg',  DATE_FORMAT('2021-8-01','%b %Y'),  DATE_FORMAT('2021-8-31','%b %Y'), DATEDIFF('2021-8-31', '2021-8-01')/30, 'Sanne', 'Madrid', 'Spain',
+(11, '.NET Developer', 'assets/images/jobs/Sanne.jpg',  DATE_FORMAT('2021-8-01','%b %Y'), "Actual", -1, 'Sanne', 'Madrid', 'Spain',
 '', 'IT', "Full", 'Informatics IT Job .NET C# CSS Databases SQL Programming Software development Coding', '2021-8-01', NULL, 1);
