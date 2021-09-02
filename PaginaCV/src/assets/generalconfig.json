@@ -1,3 +1,4 @@
     {
-        "initialLanguage" : "es"
+        "initialLanguage" : "en",
+        "maximumSearchTolerance" : 1
     }

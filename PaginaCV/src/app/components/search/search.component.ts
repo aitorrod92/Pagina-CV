@@ -27,6 +27,7 @@ export class SearchComponent implements OnInit {
 		private translatedBitsService: TranslatedBitsService) {
 			this.language = languageService.language.getValue();
 			console.log("Lenguaje inicial de Search " + languageService.language.getValue());
+			
 			this.translateStaticBits();
 			languageService.language$.subscribe(data => {
 				this.language = data;
@@ -38,6 +39,7 @@ export class SearchComponent implements OnInit {
 	ngOnInit(): void {
 		this.listKeywords();
 		this.languagesSection = document.getElementById("languages-section") as HTMLElement;
+		this.changeLanguage(this.language);
 	}
 
 	listKeywords() {

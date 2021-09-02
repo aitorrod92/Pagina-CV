@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 })
 
 export class KeywordsService {
+	maximumSearchTolerance: number;
 
 	private baseUrl = 'http://localhost:8181/api/';
 	constructor(private httpClient: HttpClient) { }
@@ -41,6 +42,15 @@ export class KeywordsService {
 		this.englishKeywords = this.httpClient.get<GetResponseKeywords>(url).pipe(map(response => response._embedded.keyword));
 		return this.englishKeywords;
 	}
+
+	setMaximumSearchTolerance(maximumSearchTolerance: number) {
+		this.maximumSearchTolerance = maximumSearchTolerance;
+	}
+
+	getMaximumSearchTolerance(): number {
+		return this.maximumSearchTolerance;
+	}
+
 }
 
 interface GetResponseKeywords {

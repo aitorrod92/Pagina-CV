@@ -19,6 +19,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { APP_INITIALIZER } from '@angular/core';
 import { LanguageService } from './service/language.service';
 import config from '../assets/generalconfig.json';
+import { KeywordsService } from './service/keywords.service';
 
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEs, 'es');
@@ -51,17 +52,32 @@ const routes: Routes =
 		AutocompleteLibModule,
 		NgApexchartsModule
 	],
-	providers: [TrabajoService, { provide: LOCALE_ID, useValue: 'es' }, {
-		provide: APP_INITIALIZER,
-		useFactory: resourceProviderFactory,
-		deps: [LanguageService],
-		multi: true
-	}],
+	providers:
+		[TrabajoService,
+			{ provide: LOCALE_ID, useValue: 'es' },
+			{
+				provide: APP_INITIALIZER,
+				useFactory: languageProviderFactory,
+				deps: [LanguageService],
+				multi: true
+			},
+			{
+				provide: APP_INITIALIZER,
+				useFactory: searchProviderFactory,
+				deps: [KeywordsService],
+				multi: true
+			}],
 	bootstrap: [AppComponent],
 
 })
-export class AppModule {}
+export class AppModule { }
 
-export function resourceProviderFactory(provider: LanguageService) {
+export function languageProviderFactory(provider: LanguageService) {
 	let json = config;
-	return () => provider.setInitialLanguage(json['initialLanguage']);}
+	return () => provider.setInitialLanguage(json['initialLanguage']);
+}
+
+export function searchProviderFactory(provider: KeywordsService) {
+	let json = config;
+	return () => provider.setMaximumSearchTolerance(json['maximumSearchTolerance']);
+}

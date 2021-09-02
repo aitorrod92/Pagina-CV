@@ -22,6 +22,7 @@ export class IdiomasService {
 	}
 
 	getLanguagesListbyKeyword(languageWord: string, tags : string) {
+		if (tags == 'C#') tags = 'C%23';
 		this.searchUrl = `${this.baseUrl}/${languageWord}/search/findByTagsContaining?tags=${tags}`;
 		return this.getResponse(languageWord);
 	}

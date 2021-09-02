@@ -17,7 +17,9 @@ import { Keyword } from '../common/keyword';
 	templateUrl: './lista-trabajos.component.html',
 	styleUrls: ['./lista-trabajos.component.css']
 })
+
 export class ListaTrabajosComponent implements OnInit {
+
 	datepipe: DatePipe = new DatePipe('es-MX');
 	trabajo: Trabajo[];
 	idioma: Idioma[];
@@ -28,6 +30,8 @@ export class ListaTrabajosComponent implements OnInit {
 	noResultsString?: string = "";
 	searchSuggestionString?: string = "";
 	suggestionString: string = "";
+	buttonsMargin: string = "20px";
+	maximumSearchTolerance : number;
 
 	keywords: Keyword[];
 	coincidence: boolean = false;
@@ -43,6 +47,7 @@ export class ListaTrabajosComponent implements OnInit {
 		private keywordsService: KeywordsService,
 		private route: ActivatedRoute) {
 		this.language$ = this.languageService.getLanguage();
+		this.maximumSearchTolerance = this.keywordsService.getMaximumSearchTolerance();
 	}
 
 	ngOnInit(): void {
@@ -174,7 +179,7 @@ export class ListaTrabajosComponent implements OnInit {
 					noLanguageResults = this.idioma.length == 0 ? true : false;
 					this.noSearchResults = noJobResults && noLanguageResults ? true : false;
 					if (this.noSearchResults) {
-						this.generateSearchSuggestionString();
+						this.generateNoResultsElements();
 					}
 				});
 
@@ -194,11 +199,73 @@ export class ListaTrabajosComponent implements OnInit {
 		this.suggestionString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-suggestion")!;
 	}
 
-	generateSearchSuggestionString() {
+	generateNoResultsElements() {
 		this.coincidence = false;
+		this.generateNoResultsSuggestionButtonsIfNecessary();
+		this.generateNoResultsSuggestionsStringsIfNecessary();
+	}
+
+	generateNoResultsSuggestionButtonsIfNecessary() {
+		let coincidentTerms: string[] = [];
 		this.keywords.forEach(keyword => {
-			this.compareWithCurrentSearchingKeyword(keyword);
+			let coincidentTerm = this.determineIfCoincidence(keyword);
+			if (coincidentTerm) {
+				coincidentTerms.push(coincidentTerm);
+			}
 		})
+		let divSuggestedTerms = document.getElementById("suggestedTerms")!;
+		this.removeChildrenIfExist(divSuggestedTerms);
+		if (coincidentTerms.length > 0) {
+			console.log(coincidentTerms);
+			this.generateNoResultsHTMLButtons(coincidentTerms, divSuggestedTerms);
+		}
+	}
+
+	determineIfCoincidence(keyword: Keyword): string | null {
+		let mismatches = 0;
+		let coincidentTerm: string = "";
+		if (Math.abs(keyword.nombre.length - this.currentSearchingKeywords.length) == 0) {
+			for (let i = 0; i < keyword.nombre.length; i++) {
+				if (keyword.nombre[i].toLowerCase() == this.currentSearchingKeywords[i].toLowerCase()) {
+				} else {
+					mismatches++;
+					if (mismatches > this.maximumSearchTolerance) {
+						break;
+					}
+				}
+				if (i == keyword.nombre.length - 1) {
+					console.log(keyword.nombre + " es coincidencia");
+					coincidentTerm = keyword.nombre;
+					this.coincidence = true;
+				}
+			}
+		}
+		if (coincidentTerm != "") { return coincidentTerm; } else { return null; }
+	}
+
+	removeChildrenIfExist(divSuggestedTerms: HTMLElement) {
+		if (divSuggestedTerms.hasChildNodes()) {
+			while (divSuggestedTerms.firstChild) {
+				divSuggestedTerms.removeChild(divSuggestedTerms.firstChild);
+			}
+		}
+	}
+
+	generateNoResultsHTMLButtons(coincidentTerms: string[], divSuggestedTerms: HTMLElement) {
+		coincidentTerms.forEach(element => {
+			let buttonLink = document.createElement("a");
+			buttonLink.innerHTML = element;
+			element = element.replace("#", "%23");
+			buttonLink.setAttribute("href", "http://localhost:4200/search/" + element);
+			buttonLink.setAttribute("class", "primary-btn");
+			buttonLink.setAttribute("style", "margin-right: " + this.buttonsMargin);
+			let bold = document.createElement("b");
+			bold.appendChild(buttonLink);
+			divSuggestedTerms.appendChild(bold);
+		})
+	}
+
+	generateNoResultsSuggestionsStringsIfNecessary() {
 		if (!this.coincidence) {
 			this.suggestionString = "";
 			this.searchSuggestionString = "";
@@ -208,29 +275,6 @@ export class ListaTrabajosComponent implements OnInit {
 	}
 
 
-	compareWithCurrentSearchingKeyword(keyword: Keyword) {
-		var mismatches = 0;
-
-		if (Math.abs(keyword.nombre.length - this.currentSearchingKeywords.length) == 0) {
-			for (let i = 0; i < keyword.nombre.length; i++) {
-				console.log("analizando " + keyword.nombre);
-				if (keyword.nombre[i].toLowerCase() == this.currentSearchingKeywords[i].toLowerCase()) {
-					//console.log("keyword: " + keyword.nombre[i] + " Search " + this.currentSearchingKeywords[i])
-					//console.log("indice " + i + " " + (keyword.nombre.length - 1).toString());
-				} else {
-					mismatches++;
-					if (mismatches > 1) {
-						break;
-					}
-				}
-				if (i == keyword.nombre.length - 1) {
-					console.log(keyword.nombre + " es coincidencia");
-					this.searchSuggestionString = keyword.nombre;
-					this.coincidence = true;
-				}
-			}
-		}
-	}
 
 }
 
