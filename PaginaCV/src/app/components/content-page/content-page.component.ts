@@ -31,8 +31,10 @@ export class ContentPageComponent {
 	datepipe: DatePipe = new DatePipe('es-MX');
 	apiKey: string = "AIzaSyDInTUjvpRLCgYonyLMyEacjQr0pnuPCdA";
 
+
+	descriptionString?: string;
+	descriptionStringHTML: string;
 	returningString?: string = "";
-	descriptionString?: string = "";
 
 	constructor(private route: ActivatedRoute,
 		private trabajoService: TrabajoService,
@@ -41,19 +43,15 @@ export class ContentPageComponent {
 		public domSanitizer: DomSanitizer,
 		private languageService: LanguageService,
 		private translatedBitsService: TranslatedBitsService) {
-		this.isLanguagePage = 
-			this.route.snapshot.paramMap.get('table') == ('languages' || 'idiomas') ?  true : false;
+		this.isLanguagePage =
+			this.route.snapshot.paramMap.get('table') == ('languages' || 'idiomas') ? true : false;
 		languageService.language$.subscribe(data => {
 			this.currentLanguage = data;
 			this.getContent();
 		});
-
-
 	}
 
-
 	getContent() {
-		console.log("get content");
 		// @ts-ignore: Object is possibly 'null'.
 		this.contentId = this.route.snapshot.paramMap.get('id');
 		this.isLanguagePage ? this.showLanguagePage() : this.showJobPage();
@@ -102,24 +100,19 @@ export class ContentPageComponent {
 
 
 	buildDescription() {
+		this.descriptionStringHTML = '';
 		let descriptionNode = document.getElementsByClassName("trabajoDesc")[0];
 		this.removePreviousDescriptionIfExists(descriptionNode);
 		let arrayDescripcion = this.trabajo.descripcion.split(/(?=[\n])|(?<=[\n])/g);
 		arrayDescripcion.forEach(element => {
 			if (element.includes('-')) {
-				let listElement = document.createElement("li");
-				let textNode = document.createTextNode(element.replace("-", ""));
-				listElement.appendChild(textNode);
-				descriptionNode.appendChild(listElement);
+				this.descriptionStringHTML =
+					this.descriptionStringHTML + '<li>' + element.replace("-", "") + "</li>";
 			} else {
-				let spanElement = document.createElement("span");
-				let textNode = document.createTextNode(element);
-				spanElement.appendChild(textNode);
-				descriptionNode.appendChild(spanElement);
+				this.descriptionStringHTML = "<span>" + element + "</span>" + this.descriptionStringHTML;
 			}
 		});
 	}
-
 
 	public methodToGetMapURL() {
 		this.createUrl();
@@ -139,7 +132,7 @@ export class ContentPageComponent {
 			});
 		}
 	}
-	
+
 	// POSIBLEMENTE UNIFICARLO EN UN SERVICIO JUNTO AL DE LA LISTA DE TRABAJOS
 	public adaptDate(date: string): string | null {
 		this.datepipe = this.currentLanguage == "es" ? new DatePipe('es-MX') : new DatePipe('en-US');
@@ -147,9 +140,31 @@ export class ContentPageComponent {
 		let formattedDate = this.datepipe.transform(new Date(date), 'MMM YYYY');
 		return formattedDate;
 	}
-	
+
 	translateStaticBits() {
 		this.returningString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-return');
 		this.descriptionString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-description');
 	}
+	
+		// VERSIÓN ALTERNATIVA MONTANDO EL PROPIO HTML. NO FUNCIONABA BIEN
+	/*	buildDescription() {
+		let descriptionNode = document.getElementsByClassName("trabajoDesc")[0];
+		this.removePreviousDescriptionIfExists(descriptionNode);
+		let arrayDescripcion = this.trabajo.descripcion.split(/(?=[\n])|(?<=[\n])/g);
+		arrayDescripcion.forEach(element => {
+			if (element.includes('-')) {
+				let listElement = document.createElement("li");
+				let textNode = document.createTextNode(element.replace("-", ""));
+				listElement.appendChild(textNode);
+				descriptionNode.appendChild(listElement);
+			} else {
+				let spanElement = document.createElement("span");
+				let textNode = document.createTextNode(element);
+				spanElement.appendChild(textNode);
+				descriptionNode.appendChild(spanElement);
+			}
+		});
+	}*/
+	
+	
 }

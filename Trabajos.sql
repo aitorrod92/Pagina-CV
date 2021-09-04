@@ -63,4 +63,4 @@ DATE_FORMAT('2015-01-01', '%Y'),DATE_FORMAT('2016-01-01', '%Y'), '12', 'Universi
 (10, 'Programador .NET', 'assets/images/jobs/Deloitte.jpg',  DATE_FORMAT('2021-4-01','%b %Y'),  DATE_FORMAT('2021-7-31','%b %Y'), DATEDIFF('2021-7-31', '2021-4-01')/30, 'Deloitte', 'Madrid', 'España',
 '', 'IT', "Completa", 'Informática IT Trabajo Consultoría .NET CSS SQL C# Programación Angular Bases de datos Software Programación Desarrollo', '2021-4-01', 'ChIJ947Eq2gsQg0RX8Sf25ay0nY', 1),
 (11, 'Programador', 'assets/images/jobs/Sanne.jpg',  DATE_FORMAT('2021-8-01','%b %Y'), 'Actual', -1, 'Sanne', 'Madrid', 'España',
-'', 'IT', "Completa", 'Informática IT Trabajo .NET C# CSS SQL Bases de Datos Programación Desarrollo Software', '2021-8-01', NULL, 1);
+'', 'IT', "Completa", 'Informática IT Trabajo .NET C# CSS SQL Bases de Datos Programación Desarrollo Software Inglés', '2021-8-01', NULL, 1);

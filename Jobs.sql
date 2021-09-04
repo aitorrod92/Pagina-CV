@@ -44,14 +44,14 @@ DATE_FORMAT('2015-01-01', '%Y'),DATE_FORMAT('2016-01-01', '%Y'), '12', 'Complute
 - Basic cooking.
 - Cash balance and inventory.
 - Cleaning, maintenance and carriage tasks.',
-'Other', 'Partial', 'Sales Deal with customers Job Cooking Hospitality Cleaning Carriage Languages English', '2016-10-01', 'ChIJO-zP-QeIQQ0RypPybBogF2I', 1),
+'Other', 'Partial', 'Sales Deal with customers Job Cooking Hospitality Cleaning Carriage Languages', '2016-10-01', 'ChIJO-zP-QeIQQ0RypPybBogF2I', 1),
 (7, 'Crew Trainer', 'assets/images/jobs/McDonalds.png', DATE_FORMAT('2017-7-01','%b %Y'), DATE_FORMAT('2020-6-30','%b %Y'), DATEDIFF('2020-6-30', '2017-7-01')/30, 'McDonald\'s', 'Brighton and Hove', 'United Kingdom',
 '- Food preparation.
 - Dealing with customers as a shop assistant assistant and a waiter.
 - Teamwork in situations that demand to be quick during long periods of time.
 - Training and evaluation of new employees.
 - Cleaning (including kitchen machinery), stock and carriage tasks.',
-'Other', 'Full and partial', 'Sales Deal with customers Job Cooking Cocina  Hospitality Cleaning Carriage Training', '2017-7-01', 'ChIJU9ix_gyFdUgR65uaqyyyeRg', 1),
+'Other', 'Full and partial', 'Sales Deal with customers Job Cooking Cocina  Hospitality Cleaning Carriage Training English', '2017-7-01', 'ChIJU9ix_gyFdUgR65uaqyyyeRg', 1),
 (8, 'Development of Multiplatform Applications (HNC)', 'assets/images/education/FOC.png'
 ,DATE_FORMAT('2018-01-01', '%Y'),DATE_FORMAT('2020-01-01', '%Y'), '24', 'Fomento Ocupacional Institute', 'Brighton and Hove', 'United Kingdom',
 '', 'IT', null, 'Informatics IT HNC Software development Java C# Databases CSS SQL .NET Programming Coding',  '2018-01-01', 'ChIJeef454OFdUgRE8_it_x171c', 3),
@@ -63,4 +63,4 @@ DATE_FORMAT('2015-01-01', '%Y'),DATE_FORMAT('2016-01-01', '%Y'), '12', 'Complute
 (10, '.NET Developer', 'assets/images/jobs/Deloitte.jpg',  DATE_FORMAT('2021-4-01','%b %Y'),  DATE_FORMAT('2021-7-31','%b %Y'), DATEDIFF('2021-7-31', '2021-4-01')/30, 'Deloitte', 'Madrid', 'Spain',
 '', 'IT', "Full", 'Informatics IT Job Consultancy .NET CSS SQL C# Programming Angular Databases Software Development Coding', '2021-4-01', 'ChIJ947Eq2gsQg0RX8Sf25ay0nY', 1),
 (11, '.NET Developer', 'assets/images/jobs/Sanne.jpg',  DATE_FORMAT('2021-8-01','%b %Y'), "Actual", -1, 'Sanne', 'Madrid', 'Spain',
-'', 'IT', "Full", 'Informatics IT Job .NET C# CSS Databases SQL Programming Software development Coding', '2021-8-01', NULL, 1);
+'', 'IT', "Full", 'Informatics IT Job .NET C# CSS Databases SQL Programming Software development Coding English', '2021-8-01', NULL, 1);
