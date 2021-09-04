@@ -47,16 +47,16 @@ export class MainPageComponent {
 				private languageService: LanguageService) {
 		languageService.language$.subscribe(data => {
 			this.language = data;
-			this.update(); // DEBERÍA HACER QUE SE ACTUALICE LA DESCRIPCIÓN. NECESARIO CREARLA EN LA BBDD
+			//this.update(); 
 			this.jobWord = this.language ? "trabajos" : "jobs";
 			}
 		)
 
-		trabajoService.getTrabajosListbyKeyword("informatica", this.jobWord).subscribe(data => {
+		/*trabajoService.getTrabajosListbyKeyword("informatica", this.jobWord).subscribe(data => {
 			this.trabajos = data;
 			//this.defineChartAttributes();
 			this.update();
-		})
+		})*/
 	}
 
 	update() {

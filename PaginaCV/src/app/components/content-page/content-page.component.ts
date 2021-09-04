@@ -22,7 +22,7 @@ export class ContentPageComponent {
 	trabajo: Trabajo;
 	categoria: Categoria;
 	idioma: Idioma;
-	language: string;
+	currentLanguage: string;
 	isLanguagePage: boolean;
 	mapUrl: string = "https://www.google.com/maps/embed/v1/place?q=place_id:*placeId*&key=*apiKey*";
 	firstLoad: boolean = true;
@@ -44,7 +44,7 @@ export class ContentPageComponent {
 		this.isLanguagePage = 
 			this.route.snapshot.paramMap.get('table') == ('languages' || 'idiomas') ?  true : false;
 		languageService.language$.subscribe(data => {
-			this.language = data;
+			this.currentLanguage = data;
 			this.getContent();
 		});
 
@@ -62,7 +62,7 @@ export class ContentPageComponent {
 
 	showLanguagePage() {
 		this.isLanguagePage = true;
-		let languageWord = this.language == "es" ? "idiomas" : "languages";
+		let languageWord = this.currentLanguage == "es" ? "idiomas" : "languages";
 		this.idiomaService.getIdioma(languageWord, this.contentId).subscribe(data => {
 			this.idioma = data;
 			this.assignAndFormatCategory();
@@ -71,7 +71,7 @@ export class ContentPageComponent {
 
 	showJobPage() {
 		this.isLanguagePage = false;
-		let jobWord = this.language == "es" ? "trabajos" : "jobs";
+		let jobWord = this.currentLanguage == "es" ? "trabajos" : "jobs";
 
 		this.trabajoService.getTrabajo(jobWord, this.contentId).subscribe(data => {
 			this.trabajo = new Trabajo();
@@ -87,11 +87,11 @@ export class ContentPageComponent {
 	}
 
 	assignAndFormatCategory() {
-		let categoryWord = this.language == "es" ? "categorias" : "categories";
+		let categoryWord = this.currentLanguage == "es" ? "categorias" : "categories";
 		if (this.isLanguagePage) {
 			this.categoria = new Categoria();
 			this.categoria.id = 4;
-			this.categoria.nombre = this.language == "es" ? "idiomas" : "languages";
+			this.categoria.nombre = this.currentLanguage == "es" ? "idiomas" : "languages";
 		} else {
 			this.categoryService.getCategoryByCategoryId(this.trabajo.categoria, categoryWord).subscribe(data => {
 				this.categoria = data;
@@ -139,16 +139,17 @@ export class ContentPageComponent {
 			});
 		}
 	}
-
+	
+	// POSIBLEMENTE UNIFICARLO EN UN SERVICIO JUNTO AL DE LA LISTA DE TRABAJOS
 	public adaptDate(date: string): string | null {
-		let formattedDate;
-		this.datepipe = this.language == "es" ? new DatePipe('es-MX') : new DatePipe('en-US');
-		formattedDate = this.datepipe.transform(new Date(date), 'MMM YYYY');
+		this.datepipe = this.currentLanguage == "es" ? new DatePipe('es-MX') : new DatePipe('en-US');
+		if (date == 'Actual') { date = new Date().toISOString().slice(0, 10) }
+		let formattedDate = this.datepipe.transform(new Date(date), 'MMM YYYY');
 		return formattedDate;
 	}
-
+	
 	translateStaticBits() {
-		this.returningString = this.translatedBitsService.translatedBitsMap.get(this.language + '-return');
-		this.descriptionString = this.translatedBitsService.translatedBitsMap.get(this.language + '-description');
+		this.returningString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-return');
+		this.descriptionString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-description');
 	}
 }

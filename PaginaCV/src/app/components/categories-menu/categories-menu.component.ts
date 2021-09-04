@@ -48,6 +48,7 @@ export class CategoriesMenuComponent implements OnInit {
 		this.categoriesService.getCategories(categoryWord).subscribe(
 			data => {
 				this.categorias = data;
+				console.log(this.categorias);
 				this.defineIconNamesMap();
 			}
 		)
