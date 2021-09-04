@@ -146,7 +146,7 @@ export class ContentPageComponent {
 		this.descriptionString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-description');
 	}
 	
-		// VERSIÓN ALTERNATIVA MONTANDO EL PROPIO HTML. NO FUNCIONABA BIEN
+		// VERSIÓN ALTERNATIVA MONTANDO EL PROPIO HTML. NO FUNCIONABA BIEN. REQUIERE USAR LA CLASE QUE SE ESPECIFICA EN EL DIV
 	/*	buildDescription() {
 		let descriptionNode = document.getElementsByClassName("trabajoDesc")[0];
 		this.removePreviousDescriptionIfExists(descriptionNode);

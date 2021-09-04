@@ -10,7 +10,7 @@
 				<div *ngFor="let tempItem of trabajo.slice().reverse()"
 					class="col-md-4">
 
-					<div class="product-box">
+					<div class="product-box hoverable">
 						<h3>
 							<a routerLink="/content/jobs/{{tempItem.id}}"> <img
 								class="img-responsive animated-beat" alt="image not found"
@@ -29,10 +29,11 @@
 				<div *ngIf="currentCategory==4; then idiomas"></div>
 				<ng-template #idiomas>
 				<div *ngFor="let idiom of idioma.slice().reverse()" class="col-md-4">
-					<div class="product-box">
+					<div class="product-box hoverable">
 						<h3>
-							<img class="img-responsive animated-spin-and-zoom"
-								alt="image not found" src="{{ idiom.imagen }}" height="50">
+							<a routerLink="/content/languages/{{idiom.id}}"> <img
+								class="img-responsive animated-beat" alt="image not found"
+								src="{{ idiom.imagen }}" height="50"></a>
 							<!-- MODIFICAR EL ENLACE -->
 							<a href="content/languages/{{idiom.id}}" class="primary-btn">{{idiom.nombre}}</a>
 						</h3>
@@ -48,7 +49,7 @@
 				<ng-template #ambos>
 				<div *ngFor="let tempItem of trabajo.slice().reverse()"
 					class="col-md-4">
-					<div class="product-box">
+					<div class="product-box hoverable">
 						<h3>
 							<a routerLink="/content/jobs/{{tempItem.id}}"> <img
 								class="img-responsive animated-beat" alt="image not found"

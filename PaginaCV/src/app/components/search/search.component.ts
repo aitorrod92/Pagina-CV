@@ -94,7 +94,7 @@ export class SearchComponent implements OnInit {
 		arrayChildrenNodes.forEach(element => {
 			element.id == "btn-" + language ?
 				element.setAttribute("class", "language-button") :
-				element.setAttribute("class", "language-button img-hoverable");
+				element.setAttribute("class", "language-button hoverable xtra-hoverable");
 		}
 
 		);
