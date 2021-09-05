@@ -49,8 +49,12 @@ export class MainPageComponent {
 	// QR Properties
 	elementType = NgxQrcodeElementTypes.URL;
 	correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
-	value = 'assets/CV.pdf'; 
-	public qrScale = 3;
+	QRLink : string;  
+	englishQRLink = "https://www.patreon.com/file?h=55788541&i=8815602";
+	spanishQRLink = "https://www.patreon.com/file?h=55788541&i=8815603";
+	buttonString : string; 
+	buttonLink : string ;
+	public qrScale = 2.7;
 
 	@ViewChild("chart") chart: ChartComponent;
 	public chartOptions: Partial<ChartOptions> | any;
@@ -73,7 +77,17 @@ export class MainPageComponent {
 	}
 
 	translateStaticBits() {
-		this.htmlText = this.language == "es" ? this.spanishIntroText : this.englishIntroText;
+		if (this.language == "es"){
+			this.htmlText = this.spanishIntroText;
+			this.QRLink = this.spanishQRLink;
+			this.buttonString = "CV versi\xf3n pdf";
+			this.buttonLink = "assets/CV-es-06-2020.pdf";
+		} else {
+			this.htmlText = this.englishIntroText;
+			this.QRLink = this.englishQRLink; 
+			this.buttonString = "CV pdf version";
+			this.buttonLink = "assets/CV-en-07-2020.pdf";
+		}
 	}
 
 	update() {

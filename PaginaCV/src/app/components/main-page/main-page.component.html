@@ -4,11 +4,10 @@
 		<div class='row'>
 			<div class='col-md'>
 						<ngx-qrcode [elementType]="elementType"
-					[errorCorrectionLevel]="correctionLevel" [value]="value"
+					[errorCorrectionLevel]="correctionLevel" [value]="QRLink"
 					cssStyle="QRCode"
 					[scale]="this.qrScale"></ngx-qrcode>
-				<a target="_blank" href="/assets/CV.pdf" class="primary-btn"><b>CV
-						versión pdf</b></a>
+				<a target="_blank" href="{{this.buttonLink}}" class="primary-btn"><b>{{buttonString}}</b></a>
 			</div>
 			<div style="width: 85%;" [innerHtml]="htmlText"></div>
 		</div>
