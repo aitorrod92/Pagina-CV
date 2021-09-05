@@ -4,10 +4,10 @@
 		<div class='row'>
 			<div class='col-md'>
 						<ngx-qrcode [elementType]="elementType"
-					[errorCorrectionLevel]="correctionLevel" [value]="QRLink"
-					cssStyle="QRCode"
+					[errorCorrectionLevel]="correctionLevel" [value]="QRCode.link"
+					cssClass="animated-spin-and-zoom "
 					[scale]="this.qrScale"></ngx-qrcode>
-				<a target="_blank" href="{{this.buttonLink}}" class="primary-btn"><b>{{buttonString}}</b></a>
+				<a target="_blank" href="{{this.QRCode.buttonLink}}" class="primary-btn"><b>{{QRCode.buttonString}}</b></a>
 			</div>
 			<div style="width: 85%;" [innerHtml]="htmlText"></div>
 		</div>

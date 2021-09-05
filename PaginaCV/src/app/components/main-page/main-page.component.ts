@@ -14,9 +14,11 @@ import {
 	ApexYAxis,
 	ApexGrid
 } from "ng-apexcharts";
+import { QRCode } from "src/app/common/qrcode";
 
 import { Trabajo } from "src/app/common/trabajo";
 import { LanguageService } from "src/app/service/language.service";
+import { QRCodesService } from "src/app/service/qrcodes.service";
 import { TrabajoService } from "src/app/service/trabajo.service";
 
 export type ChartOptions = {
@@ -36,7 +38,6 @@ export type ChartOptions = {
 	styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent {
-
 	trabajos: Trabajo[];
 	language: string = "es";
 	jobWord: string;
@@ -46,25 +47,23 @@ export class MainPageComponent {
 	// Esto asume que las rutas no van a cambiar
 	htmlText = this.spanishIntroText;
 
-	// QR Properties
+	// QR and some properties
+	QRCode: QRCode;
 	elementType = NgxQrcodeElementTypes.URL;
 	correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
-	QRLink : string;  
-	englishQRLink = "https://www.patreon.com/file?h=55788541&i=8815602";
-	spanishQRLink = "https://www.patreon.com/file?h=55788541&i=8815603";
-	buttonString : string; 
-	buttonLink : string ;
 	public qrScale = 2.7;
 
 	@ViewChild("chart") chart: ChartComponent;
 	public chartOptions: Partial<ChartOptions> | any;
 
 	constructor(private trabajoService: TrabajoService,
-		private languageService: LanguageService) {
+		private languageService: LanguageService,
+		private qrCodesService: QRCodesService) {
 		languageService.language$.subscribe(data => {
 			this.language = data;
 			//this.update(); 
 			this.translateStaticBits();
+			this.adaptQR();
 			this.jobWord = this.language ? "trabajos" : "jobs";
 		}
 		)
@@ -75,19 +74,15 @@ export class MainPageComponent {
 			this.update();
 		})*/
 	}
+	
+	adaptQR() {
+		this.qrCodesService.getQRCode(this.language).subscribe(data => {
+			this.QRCode = data[0];
+		});
+	}
 
 	translateStaticBits() {
-		if (this.language == "es"){
-			this.htmlText = this.spanishIntroText;
-			this.QRLink = this.spanishQRLink;
-			this.buttonString = "CV versi\xf3n pdf";
-			this.buttonLink = "assets/CV-es-06-2020.pdf";
-		} else {
-			this.htmlText = this.englishIntroText;
-			this.QRLink = this.englishQRLink; 
-			this.buttonString = "CV pdf version";
-			this.buttonLink = "assets/CV-en-07-2020.pdf";
-		}
+		this.htmlText = this.language == "es" ? this.spanishIntroText : this.englishIntroText;
 	}
 
 	update() {
