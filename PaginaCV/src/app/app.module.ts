@@ -20,6 +20,7 @@ import { APP_INITIALIZER } from '@angular/core';
 import { LanguageService } from './service/language.service';
 import config from '../assets/generalconfig.json';
 import { KeywordsService } from './service/keywords.service';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEs, 'es');
@@ -50,7 +51,8 @@ const routes: Routes =
 		RouterModule.forRoot(routes),
 		FontAwesomeModule,
 		AutocompleteLibModule,
-		NgApexchartsModule
+		NgApexchartsModule,
+		NgxQRCodeModule
 	],
 	providers:
 		[TrabajoService,

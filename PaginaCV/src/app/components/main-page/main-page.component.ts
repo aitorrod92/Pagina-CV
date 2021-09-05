@@ -1,4 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
+import { NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels } from "@techiediaries/ngx-qrcode";
 import * as ApexCharts from "apexcharts";
 import * as moment from "moment";
 
@@ -39,11 +40,17 @@ export class MainPageComponent {
 	trabajos: Trabajo[];
 	language: string = "es";
 	jobWord: string;
-	spanishIntroText= 'Graduado en <a href="/content/trabajos/1" class="mt-5">Biolog\xeda</a> con <a href="/content/trabajos/4" class="mt-5">m\xe1ster en Formaci\xf3n del Profesorado</a> que decidi\xf3 cambiar su rumbo. Estuve desde 2017 a 2020 viviendo en Brighton (Reino Unido), compaginando un <a href="/content/trabajos/7" class="mt-5">empleo en hosteler\xeda</a> con la realizaci\xf3n del grado \"<a href="/content/trabajos/8" class="mt-5">Desarrollo de Aplicaciones Multiplataforma</a>\" y la autoformaci\xf3n. Tras terminar el grado y sus <a href="/content/trabajos/9" class="mt-5">pr\xe1cticas</a>, trabaj\xe9 brevemente en <a href="/content/trabajos/10" class="mt-5">Deloitte</a>. Actualmente ejerzo de desarrollador en <a href="/content/trabajos/11" class="mt-5">Sanne</a>. Me considero trabajador, organizado y lleno de motivaci\xf3n. <br> <br>';
-	englishIntroText= '<a href="/content/jobs/1" class="mt-5">Biology grad </a> with a<a href="/content/jobs/4" class="mt-5"> master\'s degree in Teacher Training </a> who decided to change his path. I lived in Brighton (United Kingdom) from 2017 to 2020, combining a <a href="/content/jobs/7" class="mt-5"> job at hospitality</a> with the completion of the HNC \"<a href ="/content/jobs/8" class="mt-5">Cross-platform Application Development </a>\" and coding self-training. After finishing the course and its <a href="/content/jobs/9" class="mt-5"> internship </a>, I worked  briefly in <a href = "/content/jobs/10 "class =" mt-5 "> Deloitte </a>. Nowadays, I am employes as a developer at <a href="/content/jobs/11" class="mt-5"> Sanne </a>. I consider myself hard-working, organized and full of motivation. <br> <br>';
-	
+	spanishIntroText = 'Graduado en <a href="/content/trabajos/1" class="mt-5">Biolog\xeda</a> con <a href="/content/trabajos/4" class="mt-5">m\xe1ster en Formaci\xf3n del Profesorado</a> que decidi\xf3 cambiar su rumbo. Estuve desde 2017 a 2020 viviendo en Brighton (Reino Unido), compaginando un <a href="/content/trabajos/7" class="mt-5">empleo en hosteler\xeda</a> con la realizaci\xf3n del grado \"<a href="/content/trabajos/8" class="mt-5">Desarrollo de Aplicaciones Multiplataforma</a>\" y la autoformaci\xf3n. Tras terminar el grado y sus <a href="/content/trabajos/9" class="mt-5">pr\xe1cticas</a>, trabaj\xe9 brevemente en <a href="/content/trabajos/10" class="mt-5">Deloitte</a>. Actualmente ejerzo de desarrollador en <a href="/content/trabajos/11" class="mt-5">Sanne</a>. Me considero trabajador, organizado y lleno de motivaci\xf3n. <br> <br>';
+	englishIntroText = '<a href="/content/jobs/1" class="mt-5">Biology grad </a> with a<a href="/content/jobs/4" class="mt-5"> master\'s degree in Teacher Training </a> who decided to change his path. I lived in Brighton (United Kingdom) from 2017 to 2020, combining a <a href="/content/jobs/7" class="mt-5"> job at hospitality</a> with the completion of the HNC \"<a href ="/content/jobs/8" class="mt-5">Cross-platform Application Development</a>\" and coding self-training. After finishing the course and its <a href="/content/jobs/9" class="mt-5"> internship</a>, I worked  briefly in <a href = "/content/jobs/10 "class =" mt-5 "> Deloitte</a>. Currently I am employed as a developer at <a href="/content/jobs/11" class="mt-5"> Sanne</a>. I consider myself hard-working, organized and full of motivation. <br> <br>';
+
 	// Esto asume que las rutas no van a cambiar
 	htmlText = this.spanishIntroText;
+
+	// QR Properties
+	elementType = NgxQrcodeElementTypes.URL;
+	correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
+	value = 'assets/CV.pdf'; 
+	public qrScale = 3;
 
 	@ViewChild("chart") chart: ChartComponent;
 	public chartOptions: Partial<ChartOptions> | any;
@@ -66,9 +73,8 @@ export class MainPageComponent {
 	}
 
 	translateStaticBits() {
-		this.htmlText = this.language == "es" ? this.spanishIntroText: this.englishIntroText;
+		this.htmlText = this.language == "es" ? this.spanishIntroText : this.englishIntroText;
 	}
-
 
 	update() {
 		var arrayNombres: string[] = [];

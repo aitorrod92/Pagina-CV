@@ -2,11 +2,23 @@
 <div class='main-content-main-page'>
 	<div class='section-content section-content-p30 main-page'>
 		<div class='row'>
-			<div class='col-md' [innerHtml]="htmlText">
-
+			<div class='col-md'>
+						<ngx-qrcode [elementType]="elementType"
+					[errorCorrectionLevel]="correctionLevel" [value]="value"
+					cssStyle="QRCode"
+					[scale]="this.qrScale"></ngx-qrcode>
+				<a target="_blank" href="/assets/CV.pdf" class="primary-btn"><b>CV
+						versión pdf</b></a>
 			</div>
+			<div style="width: 85%;" [innerHtml]="htmlText"></div>
+		</div>
+		
 
-			<!-- 
+
+
+
+
+		<!-- 
 			<div class='col-md'>
 				<a href="https://www.linkedin.com/in/aitor-rodr%C3%ADguez/"> <img
 					class='img-hoverable img-responsive img-profile' alt="foto de Aitor Rodríguez"
@@ -14,9 +26,9 @@
 				</a>
 
 			</div> -->
-			
-		
-		</div>
+
+
+
 		<!--<div class='row'>
 		  <button (click)="this.update()">Update</button>
 			<div id="chart">
