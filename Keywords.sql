@@ -19,4 +19,4 @@ CREATE TABLE `datoscurriculo`.`keywords`(
 	(34,'C1' ), (35,'Chinese' ), (36,'Confucio' ),
 	(37,'HSK' ), (38,'A2' ), (39,'Castilian' ),
 	(40,'Spanish' ), (41,'Native' ), (42, '.NET'), (43, 'C#'),
-	(44, 'Programming');
+	(44, 'Programming'), (45, 'Git');

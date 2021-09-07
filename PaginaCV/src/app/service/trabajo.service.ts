@@ -17,8 +17,8 @@ export class TrabajoService {
 
 	// Devuelve un observable tras mapear el JSON devuelto por Spring Data Rest a un array de productos
 	getTrabajosListbyKeyword(tags: String, jobWord: string): Observable<Trabajo[]> {
-		if (tags == 'C#') tags = 'C%23';
-		this.searchUrl = `${this.baseUrl}/${jobWord}/search/findByTagsContaining?tags=${tags}`;
+		tags = tags.replace('#','%23');		
+		this.searchUrl = `${this.baseUrl}/${jobWord}/search/findByTagsContaining?tags=%20${tags}%20`;
 		return this.getResponse(jobWord);
 	}
 

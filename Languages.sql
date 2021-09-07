@@ -10,6 +10,6 @@ CREATE TABLE `datoscurriculo`.`languages`(
   
 INSERT INTO datoscurriculo.idiomas
 VALUES 
-(1, 'English - C1 level (IELTS test)', 'British Council', 'assets/images/languages/Inglés.png', DATE_FORMAT('2018-8-1','%M %Y'),'English IELTS British Council C1 Language'),
-(2, 'Chinese - A2 level (HSK-2 test)', 'Instituto Confucio', 'assets/images/languages/Chino.png', DATE_FORMAT('2016-8-1','%M %Y'), 'Chinese Confucio HSK A2 Language'),
-(3, 'Spanish - Native', '', 'assets/images/languages/Castellano.png', DATE_FORMAT('1992-07-27','%M %Y'), 'Spanish Castilian Native Language');
+(1, 'English - C1 level (IELTS test)', 'British Council', 'assets/images/languages/Inglés.png', DATE_FORMAT('2018-8-1','%M %Y'),' English IELTS British Council C1 Language '),
+(2, 'Chinese - A2 level (HSK-2 test)', 'Instituto Confucio', 'assets/images/languages/Chino.png', DATE_FORMAT('2016-8-1','%M %Y'), ' Chinese Confucio HSK A2 Language '),
+(3, 'Spanish - Native', '', 'assets/images/languages/Castellano.png', DATE_FORMAT('1992-07-27','%M %Y'), ' Spanish Castilian Native Language ');

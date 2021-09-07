@@ -51,18 +51,18 @@ export class ListaTrabajosComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.route.paramMap.subscribe(() => { this.listTrabajos() });
 		this.language$.subscribe(data => {
 			this.currentLanguage = data;
+			this.keywordsService.getKeywords(this.currentLanguage).subscribe(
+				data => {
+					this.keywords = data;
+				});
 			this.listTrabajos();
 			this.translateStaticBits();
 		});
 
-		this.keywordsService.getKeywords(this.currentLanguage).subscribe(
-			data => {
-				this.keywords = data;
-			});
 
-		this.route.paramMap.subscribe(() => { this.listTrabajos() });
 	}
 
 	public adaptDate(date: string, categoria: number): string | null {
@@ -78,10 +78,10 @@ export class ListaTrabajosComponent implements OnInit {
 	}
 
 	/*EN UN FUTURO LA DURACIÓN NO SE INCLUIRÁ Y SE CALCULARÁ PARA TODOS */
-	public adaptDuration(duration: number, date: string): string | null { 
+	public adaptDuration(duration: number, date: string): string | null {
 		return duration == -1 ? this.adaptUndefinedDuration(date) : this.adaptDefinedDuration(duration);
 	}
-	
+
 	adaptUndefinedDuration(date: string): string | null {
 		var difference = new Date().getMonth() - new Date(date).getMonth();
 		return this.adaptDefinedDuration(difference);
@@ -107,7 +107,6 @@ export class ListaTrabajosComponent implements OnInit {
 		finalString = finalString.concat(monthsString + ")");
 		return finalString;
 	}
-
 
 
 	defineYearsString(duration: number): string {
@@ -185,16 +184,19 @@ export class ListaTrabajosComponent implements OnInit {
 				data => {
 					this.ObtenerYOrdenar(data);
 					noJobResults = this.trabajo.length == 0 ? true : false;
+					this.idiomasService.getLanguagesListbyKeyword(languageWord, this.currentSearchingKeywords).subscribe(
+						data => {
+							this.idioma = data;
+							noLanguageResults = this.idioma.length == 0 ? true : false;
+							console.log("listTrabajos " + this.currentLanguage);
+							console.log(noJobResults + " " + noLanguageResults);
+							this.noSearchResults = noJobResults && noLanguageResults ? true : false;
+							if (this.noSearchResults) {
+								this.generateNoResultsElements();
+							}
+						});
 				})
-			this.idiomasService.getLanguagesListbyKeyword(languageWord, this.currentSearchingKeywords).subscribe(
-				data => {
-					this.idioma = data;
-					noLanguageResults = this.idioma.length == 0 ? true : false;
-					this.noSearchResults = noJobResults && noLanguageResults ? true : false;
-					if (this.noSearchResults) {
-						this.generateNoResultsElements();
-					}
-				});
+
 
 		}
 	}
@@ -220,9 +222,12 @@ export class ListaTrabajosComponent implements OnInit {
 
 	generateNoResultsSuggestionButtonsIfNecessary() {
 		let coincidentTerms: string[] = [];
+		console.log("keywords " + this.keywords);
 		this.keywords.forEach(keyword => {
+			console.log("keyword " + keyword);
 			let coincidentTerm = this.determineIfCoincidence(keyword);
 			if (coincidentTerm) {
+				console.log("generateNoResultsSuggestionButtonsIfNecessary " + coincidentTerm);
 				coincidentTerms.push(coincidentTerm);
 			}
 		})
@@ -265,6 +270,7 @@ export class ListaTrabajosComponent implements OnInit {
 	}
 
 	generateNoResultsHTMLButtons(coincidentTerms: string[], divSuggestedTerms: HTMLElement) {
+		console.log("generateNoResultsHTMLButtons");
 		coincidentTerms.forEach(element => {
 			let buttonLink = document.createElement("a");
 			buttonLink.innerHTML = element;
