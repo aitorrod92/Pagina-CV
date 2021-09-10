@@ -21,13 +21,16 @@ import { LanguageService } from './service/language.service';
 import config from '../assets/generalconfig.json';
 import { KeywordsService } from './service/keywords.service';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEs, 'es');
 
 
 const routes: Routes =
-	[{ path: 'category/:categoryid', component: ListaTrabajosComponent },
+	[{ path: 'contact', component: ContactFormComponent },
+	{ path: 'category/:categoryid', component: ListaTrabajosComponent },
 	{ path: 'search/:keyword', component: ListaTrabajosComponent },
 	{ path: 'content/:table/:id', component: ContentPageComponent },
 	{ path: 'index', component: MainPageComponent },
@@ -43,7 +46,8 @@ const routes: Routes =
 		SearchComponent,
 		ContentPageComponent,
 		CategoriesMenuComponent,
-		MainPageComponent
+		MainPageComponent,
+		ContactFormComponent
 	],
 	imports: [
 		BrowserModule,
@@ -52,7 +56,8 @@ const routes: Routes =
 		FontAwesomeModule,
 		AutocompleteLibModule,
 		NgApexchartsModule,
-		NgxQRCodeModule
+		NgxQRCodeModule,
+		ReactiveFormsModule
 	],
 	providers:
 		[TrabajoService,

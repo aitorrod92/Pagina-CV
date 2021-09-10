@@ -61,18 +61,19 @@ export class ListaTrabajosComponent implements OnInit {
 			this.listTrabajos();
 			this.translateStaticBits();
 		});
-
-
 	}
 
-	public adaptDate(date: string, categoria: number): string | null {
+	public adaptDate(date: string, categoria: number): string | null  {
 		this.datepipe = this.currentLanguage == "es" ? new DatePipe('es-MX') : new DatePipe('en-US');
-		if (date == 'Actual') { date = new Date().toISOString().slice(0, 10) }
 		let formattedDate;
-		if (categoria != 3) {
-			formattedDate = this.datepipe.transform(new Date(date), 'MMMM YYYY');
+		if (date == 'Actual') {
+			formattedDate = this.currentLanguage == "es" ? 'actualidad' : 'present';
 		} else {
-			formattedDate = this.datepipe.transform(new Date(date), 'YYYY');
+			if (categoria != 3) {
+				formattedDate = this.datepipe.transform(new Date(date), 'MMMM YYYY');
+			} else {
+				formattedDate = this.datepipe.transform(new Date(date), 'YYYY');
+			}
 		}
 		return formattedDate;
 	}

@@ -1,0 +1,34 @@
+
+<div class="main-content" style="padding-top: 50px;">
+	<div class="section-content section-content-p30">
+		<div class="container-fluid">
+			<div class="container">
+				<h2 class="text-center mb-5">{{titleString}}</h2>
+				<div class="row">
+					<div class="col-md-6 offset-md-3">
+						<form [formGroup]="FormData" (ngSubmit)="onSubmit(FormData.value)">
+							<div class="form-group">
+								<label for="Email">Email</label> <input type="email"
+									class="form-control" name="Email" aria-describedby="emailHelp"
+									placeholder="{{emailPromptString}}" formControlName="Email"> <small
+									id="emailHelp" class="form-text text-muted">{{emailHelpString}}</small>
+							</div>
+							<div class="form-group">
+								<label for="fullname">{{fullNameString}}</label> <input type="text"
+									class="form-control" name="Fullname" placeholder="{{namePromptString}}"
+									formControlName="Fullname">
+							</div>
+							<div class="form-group">
+								<label for="comment">{{messageString}}</label>
+								<textarea class="form-control" formControlName="Comment"
+									name="Comment">
+</textarea>
+							</div>
+							<button type="submit" class="btn btn-primary"
+								[disabled]="!FormData.valid">{{buttonString}}</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
