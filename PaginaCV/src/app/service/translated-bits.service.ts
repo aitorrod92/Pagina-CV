@@ -41,8 +41,8 @@ export class TranslatedBitsService {
 		this.translatedBitsMap.set("es-contactFullName", 'Nombre completo');
 		this.translatedBitsMap.set("en-emailHelp", 'We\'ll never share your email with anyone else.');
 		this.translatedBitsMap.set("es-emailHelp", 'Nunca compartiremos tu email con nadie.');
-		this.translatedBitsMap.set("en-prompt", 'Enter your ');
-		this.translatedBitsMap.set("es-prompt", 'Introduce tu ');
+		this.translatedBitsMap.set("en-placeholder", 'Enter your ');
+		this.translatedBitsMap.set("es-placeholder", 'Introduce tu ');
 		
 	}
 }

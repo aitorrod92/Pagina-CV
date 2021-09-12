@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Email } from 'src/app/common/email';
+import { EmailService } from 'src/app/service/email.service';
 import { LanguageService } from 'src/app/service/language.service';
 import { TranslatedBitsService } from 'src/app/service/translated-bits.service';
 
@@ -10,7 +13,7 @@ import { TranslatedBitsService } from 'src/app/service/translated-bits.service';
 	styleUrls: ['./contact-form.component.css']
 })
 export class ContactFormComponent implements OnInit {
-
+	api: string = "";
 	currentLanguage: string = "es";
 
 	titleString: string;
@@ -18,16 +21,18 @@ export class ContactFormComponent implements OnInit {
 	fullNameString: string;
 	messageString: string;
 	buttonString: string;
-	emailHelpString : string;
-	emailPromptString : string;
-	namePromptString : string;
+	emailHelpString: string;
+	emailplaceholderString: string;
+	nameplaceholderString: string;
 
 
 	FormData: FormGroup;
 	constructor(private route: ActivatedRoute,
 		private builder: FormBuilder,
 		private languageService: LanguageService,
-		private translatedBitService: TranslatedBitsService) {
+		private translatedBitService: TranslatedBitsService,
+		private http: HttpClient,
+		private emailService: EmailService) {
 		languageService.language$.subscribe(data => {
 			this.currentLanguage = data;
 			this.translateStaticBits();
@@ -40,15 +45,9 @@ export class ContactFormComponent implements OnInit {
 		this.messageString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-contactMessage")!;
 		this.fullNameString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-contactFullName")!;
 		this.emailHelpString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-emailHelp")!;
-		let promptString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-prompt")!;
-		this.emailPromptString = promptString + "email";
-		this.namePromptString = promptString + this.fullNameString.toLowerCase();
-		
-		
-		/*emailString: string;
-		fullNameString: string;
-		messageString: string;
-		buttonString: string;*/
+		let placeholderString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-placeholder")!;
+		this.emailplaceholderString = placeholderString + "email";
+		this.nameplaceholderString = placeholderString + this.fullNameString.toLowerCase();
 	}
 
 	ngOnInit(): void {
@@ -60,15 +59,11 @@ export class ContactFormComponent implements OnInit {
 		})
 	}
 
-	onSubmit(FormData: any) {
-		console.log(FormData)
-		/*this.contact.PostMessage(FormData)
-			.subscribe(response => {
-				location.href = 'https://mailthis.to/confirm'
-				console.log(response)
-			}, error => {
-				console.warn(error.responseText)
-				console.log({ error })
-			})*/
+	async onSubmit(FormData: any) {
+		let email: Email = new Email();
+		email.email = FormData.Email;
+		email.subject = "Nuevo mensaje de " + FormData.Fullname + " desde la web de CV";
+		email.content = FormData.Comment;
+		this.emailService.sendEmail(email).subscribe(data => console.log(data));
 	}
 }

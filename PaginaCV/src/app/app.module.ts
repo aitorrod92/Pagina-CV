@@ -24,6 +24,8 @@ import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
+
+
 registerLocaleData(localeEn, 'en')
 registerLocaleData(localeEs, 'es');
 
@@ -48,6 +50,7 @@ const routes: Routes =
 		CategoriesMenuComponent,
 		MainPageComponent,
 		ContactFormComponent
+		
 	],
 	imports: [
 		BrowserModule,
@@ -58,6 +61,7 @@ const routes: Routes =
 		NgApexchartsModule,
 		NgxQRCodeModule,
 		ReactiveFormsModule
+		
 	],
 	providers:
 		[TrabajoService,

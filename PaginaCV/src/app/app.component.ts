@@ -6,6 +6,7 @@ import { LanguageService } from './service/language.service';
 import { TranslatedBitsService } from './service/translated-bits.service';
 
 
+
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
