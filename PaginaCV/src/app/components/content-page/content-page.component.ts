@@ -19,22 +19,30 @@ import { TranslatedBitsService } from 'src/app/service/translated-bits.service';
 
 export class ContentPageComponent {
 	contentId: number;
+
 	trabajo: Trabajo;
-	categoria: Categoria;
 	idioma: Idioma;
-	currentLanguage: string;
+	spanishJob: Trabajo;
+	englishJob: Trabajo;
+	spanishLanguage: Idioma;
+	englishLanguage: Idioma;
+
+	categoria: Categoria;
+
 	isLanguagePage: boolean;
-	mapUrl: string = "https://www.google.com/maps/embed/v1/place?q=place_id:*placeId*&key=*apiKey*";
 	firstLoad: boolean = true;
+
+	currentLanguage: string;
+	datepipe: DatePipe = new DatePipe('es-MX');
+
 	staticMapCode: string = "";
 	staticMapURL: SafeResourceUrl;
-	datepipe: DatePipe = new DatePipe('es-MX');
 	apiKey: string = "AIzaSyDInTUjvpRLCgYonyLMyEacjQr0pnuPCdA";
-
+	mapUrl: string = "https://www.google.com/maps/embed/v1/place?q=place_id:*placeId*&key=*apiKey*";
 
 	descriptionString?: string;
 	descriptionStringHTML: string;
-	returningString?: string = "";
+	returningString?: string;
 
 	constructor(private route: ActivatedRoute,
 		private trabajoService: TrabajoService,
@@ -43,6 +51,7 @@ export class ContentPageComponent {
 		public domSanitizer: DomSanitizer,
 		private languageService: LanguageService,
 		private translatedBitsService: TranslatedBitsService) {
+		this.trabajo = new Trabajo();
 		this.isLanguagePage =
 			this.route.snapshot.paramMap.get('table') == ('languages' || 'idiomas') ? true : false;
 		languageService.language$.subscribe(data => {
@@ -61,27 +70,38 @@ export class ContentPageComponent {
 	showLanguagePage() {
 		this.isLanguagePage = true;
 		let languageWord = this.currentLanguage == "es" ? "idiomas" : "languages";
-		this.idiomaService.getIdioma(languageWord, this.contentId).subscribe(data => {
-			this.idioma = data;
+		if (this.languageInMemory() == undefined) {
+			this.idiomaService.getIdioma(languageWord, this.contentId).subscribe(data => {
+				this.idioma = data;
+				this.saveLanguageInMemory();
+				this.assignAndFormatCategory();
+			})
+		} else {
+			this.idioma = this.currentLanguage == 'es' ? this.spanishLanguage : this.englishLanguage;
 			this.assignAndFormatCategory();
-		})
+		}
 	}
 
 	showJobPage() {
 		this.isLanguagePage = false;
 		let jobWord = this.currentLanguage == "es" ? "trabajos" : "jobs";
 
-		this.trabajoService.getTrabajo(jobWord, this.contentId).subscribe(data => {
-			this.trabajo = new Trabajo();
-			this.trabajo = data;
-			if (this.firstLoad) {
-				this.staticMapCode = this.trabajo.codigoLocalizacion;
-				this.methodToGetMapURL();
-				this.firstLoad = false
-			}
+		if (this.jobInMemory() == undefined) {
+			this.trabajoService.getTrabajo(jobWord, this.contentId).subscribe(data => {
+				this.trabajo = data;
+				if (this.firstLoad) {
+					this.methodToGetMapURL();
+					this.saveJobInMemory();
+					this.firstLoad = false
+				}
+				this.assignAndFormatCategory();
+				this.buildDescription();
+			})
+		} else {
+			this.trabajo = this.currentLanguage == 'es' ? this.spanishJob : this.englishJob;
 			this.assignAndFormatCategory();
 			this.buildDescription();
-		})
+		}
 	}
 
 	assignAndFormatCategory() {
@@ -102,7 +122,6 @@ export class ContentPageComponent {
 	buildDescription() {
 		this.descriptionStringHTML = '';
 		let descriptionNode = document.getElementsByClassName("trabajoDesc")[0];
-		this.removePreviousDescriptionIfExists(descriptionNode);
 		let arrayDescripcion = this.trabajo.descripcion.split(/(?=[\n])|(?<=[\n])/g);
 		arrayDescripcion.forEach(element => {
 			if (element.includes('-')) {
@@ -115,6 +134,7 @@ export class ContentPageComponent {
 	}
 
 	public methodToGetMapURL() {
+		this.staticMapCode = this.trabajo.codigoLocalizacion;
 		this.createUrl();
 		this.staticMapURL = this.domSanitizer.bypassSecurityTrustResourceUrl(this.mapUrl);
 	}
@@ -122,15 +142,6 @@ export class ContentPageComponent {
 	createUrl() {
 		this.mapUrl = this.mapUrl.replace('*placeId*', this.staticMapCode);
 		this.mapUrl = this.mapUrl.replace('*apiKey*', this.apiKey);
-	}
-
-
-	removePreviousDescriptionIfExists(descriptionNode: Element) {
-		if (descriptionNode.hasChildNodes()) {
-			descriptionNode.childNodes.forEach(childNode => {
-				childNode.remove();
-			});
-		}
 	}
 
 	// POSIBLEMENTE UNIFICARLO EN UN SERVICIO JUNTO AL DE LA LISTA DE TRABAJOS
@@ -145,8 +156,29 @@ export class ContentPageComponent {
 		this.returningString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-return');
 		this.descriptionString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-description');
 	}
+
+	jobInMemory(): Trabajo | undefined {
+		return this.currentLanguage == 'es'? this.spanishJob : this.englishJob;
+
+	}
+
+	saveJobInMemory() {
+		if (this.currentLanguage == 'es') { this.spanishJob = this.trabajo; }
+		else { this.englishJob = this.trabajo; }
+	}
 	
-		// VERSIÓN ALTERNATIVA MONTANDO EL PROPIO HTML. NO FUNCIONABA BIEN. REQUIERE USAR LA CLASE QUE SE ESPECIFICA EN EL DIV
+	languageInMemory(): Idioma | undefined {
+		return this.currentLanguage == 'es'? this.spanishLanguage : this.englishLanguage;
+	}
+	
+	saveLanguageInMemory(){
+		if (this.currentLanguage == 'es') { this.spanishLanguage = this.idioma; }
+		else { this.englishLanguage = this.idioma; }
+	}
+	
+	
+
+	// VERSIÓN ALTERNATIVA MONTANDO EL PROPIO HTML. NO FUNCIONABA BIEN. REQUIERE USAR LA CLASE QUE SE ESPECIFICA EN EL DIV
 	/*	buildDescription() {
 		let descriptionNode = document.getElementsByClassName("trabajoDesc")[0];
 		this.removePreviousDescriptionIfExists(descriptionNode);
@@ -165,6 +197,6 @@ export class ContentPageComponent {
 			}
 		});
 	}*/
-	
-	
+
+
 }
