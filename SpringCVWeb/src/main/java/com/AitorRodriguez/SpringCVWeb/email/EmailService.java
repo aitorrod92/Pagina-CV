@@ -1,5 +1,8 @@
 package com.AitorRodriguez.SpringCVWeb.email;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -11,6 +14,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.AitorRodriguez.SpringCVWeb.DAO.ExceptionsRepository;
+
 @Service
 public class EmailService implements IEmailService {
 
@@ -18,9 +23,12 @@ public class EmailService implements IEmailService {
 
 	@Autowired
 	private JavaMailSender sender;
+	
+	@Autowired
+	private ExceptionsRepository exceptionsRepository;
+	
 	@Value("${mailRecipient}")
 	private String mailRecipient;
-	
 
 	@Override
 	public boolean sendEmail(Email email) {
@@ -31,14 +39,26 @@ public class EmailService implements IEmailService {
 	private boolean sendEmailTool(String textMessage, String email, String subject) {
 		boolean sent = false;
 		try {
-			MimeMessage message = createAndDefineEmail(textMessage, email, subject);
-			sender.send(message);
-			sent = true;
-			LOGGER.info("Mail enviado!");
-		} catch (MessagingException e) {
-			LOGGER.error("Hubo un error al enviar el mail: {}", e);
+			int i = 0 / 0;
+		} catch (Exception e) {
+			defineAndSaveException(e);
 		}
+		/*
+		 * try { MimeMessage message = createAndDefineEmail(textMessage, email,
+		 * subject); sender.send(message); sent = true; LOGGER.info("Mail enviado!"); }
+		 * catch (MessagingException e) {
+		 * LOGGER.error("Hubo un error al enviar el mail: {}", e); }
+		 */
 		return sent;
+	}
+
+	private void defineAndSaveException(Exception e) {
+		com.AitorRodriguez.SpringCVWeb.entity.Exception exception = new com.AitorRodriguez.SpringCVWeb.entity.Exception(); 
+		exception.setMessage(e.getMessage());
+		exception.setStacktrace(e.getStackTrace().toString());
+		exception.setTimestamp(java.time.LocalDateTime.now().toString());
+		System.out.println(exception);
+		exceptionsRepository.save(exception);
 	}
 
 	private MimeMessage createAndDefineEmail(String textMessage, String email, String subject)

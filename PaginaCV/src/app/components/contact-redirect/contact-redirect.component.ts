@@ -9,11 +9,10 @@ import { TranslatedBitsService } from 'src/app/service/translated-bits.service';
 	styleUrls: ['./contact-redirect.component.css']
 })
 export class ContactRedirectComponent implements OnInit {
-
 	response: any;
 	currentLanguage: string;
 	
-	successString: string;
+	resultString: string;
 	returningString : string;
 	indexString : string;
 
@@ -28,7 +27,9 @@ export class ContactRedirectComponent implements OnInit {
 	 }
 
 	translateStaticBits() {
-		this.successString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-emailSuccess")!;
+		this.resultString = this.response == true ? 
+			this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-emailSuccess")! :
+			this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-emailFailure")!;
 		this.returningString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-return")!;
 		this.indexString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-index")!;
 	}

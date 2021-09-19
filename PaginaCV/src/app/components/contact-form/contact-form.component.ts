@@ -75,11 +75,7 @@ export class ContactFormComponent implements OnInit {
 		email.subject = "Nuevo mensaje de " + FormData.Fullname + " desde la web de CV";
 		email.content = FormData.Comment;
 		this.emailService.sendEmail(email).subscribe(data => {
-			console.log(data);
-			this.router.navigate([data], { relativeTo: this.route });
-			
-
-			
+			this.router.navigate([data], { relativeTo: this.route });	
 		})
 	}
 }
