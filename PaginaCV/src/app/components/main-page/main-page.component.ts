@@ -81,9 +81,7 @@ export class MainPageComponent {
 	}
 
 	translateStaticBits() {
-		this.htmlText = this.language == "es" ? 
-		this.translatedBitsService.translatedBitsMap.get("es-introText")
-		 : this.translatedBitsService.translatedBitsMap.get("en-introText");
+		this.htmlText = this.translatedBitsService.translatedBitsMap.get(this.language + "-introText");
 	}
 
 	update() {

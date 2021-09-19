@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ContactFormComponent } from './contact-form.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ContactFormComponent } from "./contact-form.component";
 
 describe('ContactFormComponent', () => {
   let component: ContactFormComponent;
@@ -18,6 +19,17 @@ describe('ContactFormComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule, Router
+      ],
+      declarations: [ ContactFormComponent ]
+    })
+    .compileComponents();
+  }));
+
 
   it('should create', () => {
     expect(component).toBeTruthy();

@@ -1,17 +1,25 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, ModuleWithProviders, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Email } from 'src/app/common/email';
 import { EmailService } from 'src/app/service/email.service';
 import { LanguageService } from 'src/app/service/language.service';
 import { TranslatedBitsService } from 'src/app/service/translated-bits.service';
 
+
 @Component({
 	selector: 'app-contact-form',
 	templateUrl: './contact-form.component.html',
 	styleUrls: ['./contact-form.component.css']
 })
+
+@Injectable({
+	providedIn: 'root'
+})
+
+
 export class ContactFormComponent implements OnInit {
 	api: string = "";
 	currentLanguage: string = "es";
@@ -27,7 +35,9 @@ export class ContactFormComponent implements OnInit {
 
 
 	FormData: FormGroup;
+	
 	constructor(private route: ActivatedRoute,
+		private router: Router,
 		private builder: FormBuilder,
 		private languageService: LanguageService,
 		private translatedBitService: TranslatedBitsService,
@@ -54,7 +64,7 @@ export class ContactFormComponent implements OnInit {
 		this.route.paramMap.subscribe(() => { });
 		this.FormData = this.builder.group({
 			Fullname: new FormControl('', [Validators.required]),
-			Email: new FormControl('', [Validators.email]),
+			Email: new FormControl('', [Validators.email, Validators.required]),
 			Comment: new FormControl('', [Validators.required])
 		})
 	}
@@ -64,6 +74,13 @@ export class ContactFormComponent implements OnInit {
 		email.email = FormData.Email;
 		email.subject = "Nuevo mensaje de " + FormData.Fullname + " desde la web de CV";
 		email.content = FormData.Comment;
-		this.emailService.sendEmail(email).subscribe(data => console.log(data));
+		this.emailService.sendEmail(email).subscribe(data => {
+			console.log(data);
+			this.router.navigate([data], { relativeTo: this.route });
+			
+
+			
+		})
 	}
 }
+

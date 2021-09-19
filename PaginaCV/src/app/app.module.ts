@@ -7,7 +7,7 @@ import { TrabajoService } from './service/trabajo.service';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import localeEn from '@angular/common/locales/en';
-import { RouterModule, Routes } from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { SearchComponent } from "./components/search/search.component";
 import { ContentPageComponent } from './components/content-page/content-page.component';
@@ -21,8 +21,10 @@ import { LanguageService } from './service/language.service';
 import config from '../assets/generalconfig.json';
 import { KeywordsService } from './service/keywords.service';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
-import { ContactFormComponent } from './components/contact-form/contact-form.component';
+
 import { ReactiveFormsModule } from '@angular/forms';
+import { ContactRedirectComponent } from './components/contact-redirect/contact-redirect.component';
+import { ContactFormComponent } from "./components/contact-form/contact-form.component";
 
 
 
@@ -32,6 +34,7 @@ registerLocaleData(localeEs, 'es');
 
 const routes: Routes =
 	[{ path: 'contact', component: ContactFormComponent },
+	{ path: 'contact/:success', component: ContactRedirectComponent },
 	{ path: 'category/:categoryid', component: ListaTrabajosComponent },
 	{ path: 'search/:keyword', component: ListaTrabajosComponent },
 	{ path: 'content/:table/:id', component: ContentPageComponent },
@@ -49,8 +52,8 @@ const routes: Routes =
 		ContentPageComponent,
 		CategoriesMenuComponent,
 		MainPageComponent,
-		ContactFormComponent
-		
+		ContactFormComponent,
+		ContactRedirectComponent
 	],
 	imports: [
 		BrowserModule,
@@ -61,7 +64,7 @@ const routes: Routes =
 		NgApexchartsModule,
 		NgxQRCodeModule,
 		ReactiveFormsModule
-		
+
 	],
 	providers:
 		[TrabajoService,
@@ -77,7 +80,8 @@ const routes: Routes =
 				useFactory: searchProviderFactory,
 				deps: [KeywordsService],
 				multi: true
-			}],
+			}
+		],
 	bootstrap: [AppComponent],
 
 })

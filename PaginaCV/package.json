@@ -9,7 +9,10 @@
 		"lint": "ng lint",
 		"e2e": "ng e2e"
 	},
-	"browser": {"crypto":false},"private":true,
+	"browser": {
+		"crypto": false
+	},
+	"private": true,
 	"dependencies": {
 		"@angular/animations": "~11.2.5",
 		"@angular/common": "~11.2.5",

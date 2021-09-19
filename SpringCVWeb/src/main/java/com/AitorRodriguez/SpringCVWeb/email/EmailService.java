@@ -29,16 +29,16 @@ public class EmailService implements IEmailService {
 	}
 
 	private boolean sendEmailTool(String textMessage, String email, String subject) {
-		boolean send = false;
+		boolean sent = false;
 		try {
 			MimeMessage message = createAndDefineEmail(textMessage, email, subject);
 			sender.send(message);
-			send = true;
+			sent = true;
 			LOGGER.info("Mail enviado!");
 		} catch (MessagingException e) {
 			LOGGER.error("Hubo un error al enviar el mail: {}", e);
 		}
-		return send;
+		return sent;
 	}
 
 	private MimeMessage createAndDefineEmail(String textMessage, String email, String subject)

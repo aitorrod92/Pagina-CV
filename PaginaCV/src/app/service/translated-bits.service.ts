@@ -43,6 +43,10 @@ export class TranslatedBitsService {
 		this.translatedBitsMap.set("es-emailHelp", 'Nunca compartiremos tu email con nadie.');
 		this.translatedBitsMap.set("en-placeholder", 'Enter your ');
 		this.translatedBitsMap.set("es-placeholder", 'Introduce tu ');
-		
+		this.translatedBitsMap.set("es-emailSuccess", '<h2>Mensaje enviado con \xe9xito</h2><h5>Nos pondremos en contacto contigo en el menor tiempo posible</h5>');
+		this.translatedBitsMap.set("en-emailSuccess", '<h2>Email delivered successfully</h2><h5>We will contact with you shortly.</h5>');
+		this.translatedBitsMap.set("es-index", 'inicio');
+		this.translatedBitsMap.set("en-index", 'index');
+
 	}
 }
