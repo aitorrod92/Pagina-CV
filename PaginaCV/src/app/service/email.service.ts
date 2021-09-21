@@ -8,7 +8,7 @@ import { Email } from '../common/email';
 	providedIn: 'root'
 })
 export class EmailService {
-	private baseUrl = 'http://localhost:8181/email/send'; // PUEDE QUE SE TENGA QUE MODIFICAR Y PONER /API CUANDO SE REINICIE EL SERVIDOR
+	private baseUrl = 'http://localhost:8181/email/send';
 	constructor(private httpClient: HttpClient) { }
 
 	sendEmail(email: Email) : Observable<any> {

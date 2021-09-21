@@ -15,7 +15,7 @@ import org.springframework.http.HttpMethod;
 
 import com.AitorRodriguez.SpringCVWeb.entity.Categoria;
 import com.AitorRodriguez.SpringCVWeb.entity.Category;
-import com.AitorRodriguez.SpringCVWeb.entity.Exception;
+import com.AitorRodriguez.SpringCVWeb.entity.Information;
 import com.AitorRodriguez.SpringCVWeb.entity.Idioma;
 import com.AitorRodriguez.SpringCVWeb.entity.Job;
 import com.AitorRodriguez.SpringCVWeb.entity.Keyword;
@@ -29,7 +29,7 @@ public class MyDataRESTConfig implements RepositoryRestConfigurer {
 
 	private EntityManager entityManager;
 	private HttpMethod[] theUnsupportedActions = { HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE };
-	private Class[] clases = { Trabajo.class, Job.class, Categoria.class, Category.class, Idioma.class, Language.class, Keyword.class, Palabraclave.class, QRCodesPDF.class};
+	private Class[] clases = { Trabajo.class, Job.class, Categoria.class, Category.class, Idioma.class, Language.class, Keyword.class, Palabraclave.class, QRCodesPDF.class, Information.class};
 	private int pageSize = 100; // A cambiar si se incluyen más palabras clave
 
 	@Autowired

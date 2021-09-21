@@ -45,8 +45,8 @@ export class TranslatedBitsService {
 		this.translatedBitsMap.set("es-placeholder", 'Introduce tu ');
 		this.translatedBitsMap.set("es-emailSuccess", '<h2>Mensaje enviado con \xe9xito</h2><h5>Nos pondremos en contacto contigo en el menor tiempo posible</h5>');
 		this.translatedBitsMap.set("en-emailSuccess", '<h2>Email delivered successfully</h2><h5>We will contact with you shortly.</h5>');
-		this.translatedBitsMap.set("es-emailFailure", '<h2>Error al enviar el mensaje</h2><h5>Int\xe9ntalo de nuevo. Si el error persiste, revisaremos la aplicaci\xf3n.</h5>');
-		this.translatedBitsMap.set("en-emailFailure", '<h2>Failure in email delivery</h2><h5>Try it again. If the error persists, we will check the application.</h5>');
+		this.translatedBitsMap.set("es-emailFailure", '<h2>Error al enviar el mensaje</h2><h5>Int\xe9ntalo de nuevo. Se ha guardado un informe de error con prop\xf3sito de mejora.</h5>');
+		this.translatedBitsMap.set("en-emailFailure", '<h2>Failure in email delivery</h2><h5>Try it again. An error log has been saved for improvement purposes.</h5>');
 		this.translatedBitsMap.set("es-index", 'inicio');
 		this.translatedBitsMap.set("en-index", 'index');
 

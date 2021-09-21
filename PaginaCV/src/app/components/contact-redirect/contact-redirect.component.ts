@@ -19,7 +19,6 @@ export class ContactRedirectComponent implements OnInit {
 	constructor(private route: ActivatedRoute,
 	private languageService: LanguageService,
 	private translatedBitService: TranslatedBitsService) {
-		
 		languageService.language$.subscribe(data => {
 			this.currentLanguage = data;
 			this.translateStaticBits();
@@ -27,7 +26,7 @@ export class ContactRedirectComponent implements OnInit {
 	 }
 
 	translateStaticBits() {
-		this.resultString = this.response == true ? 
+		this.resultString = this.response == 'true' ? 
 			this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-emailSuccess")! :
 			this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-emailFailure")!;
 		this.returningString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-return")!;
@@ -36,6 +35,6 @@ export class ContactRedirectComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.response = this.route.snapshot.paramMap.get('success');
+		this.translateStaticBits();
 	}
-
 }

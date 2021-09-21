@@ -1,7 +1,10 @@
 package com.AitorRodriguez.SpringCVWeb.email;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -14,7 +17,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.AitorRodriguez.SpringCVWeb.DAO.ExceptionsRepository;
+import com.AitorRodriguez.SpringCVWeb.DAO.InformationRepository;
+import com.AitorRodriguez.SpringCVWeb.entity.Information;
 
 @Service
 public class EmailService implements IEmailService {
@@ -23,42 +27,49 @@ public class EmailService implements IEmailService {
 
 	@Autowired
 	private JavaMailSender sender;
-	
+
 	@Autowired
-	private ExceptionsRepository exceptionsRepository;
-	
+	private InformationRepository exceptionsRepository;
+
 	@Value("${mailRecipient}")
 	private String mailRecipient;
 
 	@Override
 	public boolean sendEmail(Email email) {
-		LOGGER.info("EmailBody: {}", email.toString());
 		return sendEmailTool(email.getContent(), email.getEmail(), email.getSubject());
 	}
 
 	private boolean sendEmailTool(String textMessage, String email, String subject) {
 		boolean sent = false;
 		try {
-			int i = 0 / 0;
+			MimeMessage message = createAndDefineEmail(textMessage, email, subject);
+			sender.send(message);
+			sent = true;
+			this.defineAndSaveLogInformation(null);
 		} catch (Exception e) {
-			defineAndSaveException(e);
+			this.defineAndSaveLogInformation(e);
 		}
-		/*
-		 * try { MimeMessage message = createAndDefineEmail(textMessage, email,
-		 * subject); sender.send(message); sent = true; LOGGER.info("Mail enviado!"); }
-		 * catch (MessagingException e) {
-		 * LOGGER.error("Hubo un error al enviar el mail: {}", e); }
-		 */
 		return sent;
 	}
 
-	private void defineAndSaveException(Exception e) {
-		com.AitorRodriguez.SpringCVWeb.entity.Exception exception = new com.AitorRodriguez.SpringCVWeb.entity.Exception(); 
-		exception.setMessage(e.getMessage());
-		exception.setStacktrace(e.getStackTrace().toString());
-		exception.setTimestamp(java.time.LocalDateTime.now().toString());
-		System.out.println(exception);
-		exceptionsRepository.save(exception);
+	private void defineAndSaveLogInformation(Exception e) {
+		Information informationPiece = new Information();
+		informationPiece.setTimestamp(java.time.LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm:ss")));
+		if (e==null) {
+			informationPiece.setType("Information");
+			informationPiece.setMessage("Mensaje enviado con éxito");
+		} else {
+			informationPiece.setType("Exception");
+			informationPiece.setStacktrace(convertStackTraceToString(e));
+			informationPiece.setMessage(e.getMessage());
+		}
+		exceptionsRepository.save(informationPiece);
+	}
+
+	private String convertStackTraceToString(Exception e) {
+		StringWriter sw = new StringWriter();
+		e.printStackTrace(new PrintWriter(sw));
+		return sw.toString();
 	}
 
 	private MimeMessage createAndDefineEmail(String textMessage, String email, String subject)
