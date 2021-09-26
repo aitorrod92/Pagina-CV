@@ -25,6 +25,7 @@ import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContactRedirectComponent } from './components/contact-redirect/contact-redirect.component';
 import { ContactFormComponent } from "./components/contact-form/contact-form.component";
+import { EmailService } from './service/email.service';
 
 
 
@@ -96,3 +97,8 @@ export function searchProviderFactory(provider: KeywordsService) {
 	let json = config;
 	return () => provider.setMaximumSearchTolerance(json['maximumSearchTolerance']);
 }
+
+/*export function minimumEmailMessageLengthFactory(provider: EmailService) {
+	let json = config;
+	return () => provider.setMinEmailMessageLength(json['minimumEmailMessageLength']);
+}*/

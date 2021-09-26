@@ -1,4 +1,5 @@
     {
         "initialLanguage" : "es",
-        "maximumSearchTolerance" : 1
+        "maximumSearchTolerance" : 1,
+        "minimumEmailMessageLength": 30
     }

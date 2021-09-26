@@ -9,12 +9,23 @@ import { Email } from '../common/email';
 })
 export class EmailService {
 	private baseUrl = 'http://localhost:8181/email/send';
+	minEmailMessageLength: number;
+	
 	constructor(private httpClient: HttpClient) { }
 
-	sendEmail(email: Email) : Observable<any> {
-
+	sendEmail(email: Email): Observable<any> {
 		return this.httpClient.post<Email>(this.baseUrl, email);
 	}
+
+	setMinEmailMessageLength(length: number) {
+		this.minEmailMessageLength = length;
+	}
+	
+	getMinEmailMessageLength(): number{
+		return this.minEmailMessageLength;
+	}
+
+
 
 
 }

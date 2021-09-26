@@ -39,8 +39,6 @@ export class TranslatedBitsService {
 		this.translatedBitsMap.set("es-contactMessage", 'Mensaje');
 		this.translatedBitsMap.set("en-contactFullName", 'Full Name');
 		this.translatedBitsMap.set("es-contactFullName", 'Nombre completo');
-		this.translatedBitsMap.set("en-emailHelp", 'We\'ll never share your email with anyone else.');
-		this.translatedBitsMap.set("es-emailHelp", 'Nunca compartiremos tu email con nadie.');
 		this.translatedBitsMap.set("en-placeholder", 'Enter your ');
 		this.translatedBitsMap.set("es-placeholder", 'Introduce tu ');
 		this.translatedBitsMap.set("es-emailSuccess", '<h2>Mensaje enviado con \xe9xito</h2><h5>Nos pondremos en contacto contigo en el menor tiempo posible</h5>');
@@ -49,6 +47,18 @@ export class TranslatedBitsService {
 		this.translatedBitsMap.set("en-emailFailure", '<h2>Failure in email delivery</h2><h5>Try it again. An error log has been saved for improvement purposes.</h5>');
 		this.translatedBitsMap.set("es-index", 'inicio');
 		this.translatedBitsMap.set("en-index", 'index');
+		this.translatedBitsMap.set("es-email", "direcci\xf3n de correo electr\xf3nico");
+		this.translatedBitsMap.set("en-email", "email address");
+		this.translatedBitsMap.set("es-invalidEmail", "Direcci\xf3n de correo electr\xf3nico inv\xe1lida");
+		this.translatedBitsMap.set("en-invalidEmail", "Invalid email address");
+		this.translatedBitsMap.set("es-pleaseInputYour", "Por favor, introduce tu ");
+		this.translatedBitsMap.set("en-pleaseInputYour", "Please input your ");
+		this.translatedBitsMap.set("es-minLengthMessage", "El mensaje ha de tener un m\xednimo de 30 caracteres");
+		this.translatedBitsMap.set("en-minLengthMessage", "Message must be at least 30 characters long");
+		this.translatedBitsMap.set("en-current", "current");
+		this.translatedBitsMap.set("es-current", "actuales");
+
+
 
 	}
 }

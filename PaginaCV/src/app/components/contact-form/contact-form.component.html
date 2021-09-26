@@ -6,26 +6,47 @@
 				<h2 class="text-center mb-5">{{titleString}}</h2>
 				<div class="row">
 					<div class="col-md-6 offset-md-3">
-						<form [formGroup]="FormData" (ngSubmit)="onSubmit(FormData.value)">
-							<div class="form-group">
+						<form [formGroup]="contactForm"
+							(ngSubmit)="onSubmit(contactForm.value)">
+							<div class="form-group" formGroupName="contactForm">
 								<label for="Email">Email</label> <input type="email"
 									class="form-control" name="Email" aria-describedby="emailHelp"
-									placeholder="{{emailplaceholderString}}" formControlName="Email"> <small
-									id="emailHelp" class="form-text text-muted">{{emailHelpString}}</small>
-							</div>
-							<div class="form-group">
-								<label for="fullname">{{fullNameString}}</label> <input type="text"
-									class="form-control" name="Fullname" placeholder="{{nameplaceholderString}}"
+									placeholder="{{emailplaceholderString}}"
+									formControlName="Email">
+								<div *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+									<div *ngIf="email?.errors!.required"
+										class="alert alert-danger mt-1">{{emailRequiredString}}</div>
+									<div *ngIf="email?.errors!.pattern"
+										class="alert alert-danger mt-1">{{invalidEmailString}}</div>
+									<div *ngElse class=""></div>
+								</div>
+								<label for="fullname">{{fullNameString}}</label> <input
+									type="text" class="form-control" name="Fullname"
+									placeholder="{{nameplaceholderString}}"
 									formControlName="Fullname">
-							</div>
-							<div class="form-group">
+								<div
+									*ngIf="fullname?.invalid && (fullname?.dirty || fullname?.touched)">
+									<div *ngIf="fullname?.errors!.required"
+										class="alert alert-danger mt-1">{{fullNameRequiredString}}</div>
+									<div *ngElse class=""></div>
+								</div>
+
 								<label for="comment">{{messageString}}</label>
 								<textarea class="form-control" formControlName="Comment"
-									name="Comment">
-</textarea>
+									name="Comment"></textarea>
+								<div
+									*ngIf="comment?.invalid && (comment?.dirty || comment?.touched)">
+									<div *ngIf="comment?.errors!.required"
+										class="alert alert-danger mt-1">{{commentRequiredString}}</div>
+									<div *ngIf="comment?.errors!.minlength"
+										class="alert alert-danger mt-1">{{commentMinLengthString}} {{comment!.value.length}})</div>
+									<div *ngElse class=""></div>
+								</div>
+
+
 							</div>
 							<button type="submit" class="btn btn-primary"
-								[disabled]="!FormData.valid">{{buttonString}}</button>
+								[disabled]="!contactForm.valid">{{buttonString}}</button>
 						</form>
 					</div>
 				</div>
