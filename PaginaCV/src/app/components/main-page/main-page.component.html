@@ -7,16 +7,12 @@
 					[errorCorrectionLevel]="correctionLevel" [value]="QRCode.link"
 					cssClass="animated-beat"
 					[scale]="this.qrScale"></ngx-qrcode>
-				<a target="_blank" href="{{this.QRCode.buttonLink}}" class="primary-btn"><b>{{QRCode.buttonString}}</b></a>
+				<a target="_blank" href="{{this.QRCode.buttonLink}}" class="primary-btn"><b>{{QRCode.buttonString}}</b></a><br>
+				<small>{{updatedString}}: {{CVupdateDateString}}</small>
 			</div>
 			<div style="width: 85%;" [innerHtml]="htmlText"></div>
 		</div>
 		
-
-
-
-
-
 		<!-- 
 			<div class='col-md'>
 				<a href="https://www.linkedin.com/in/aitor-rodr%C3%ADguez/"> <img

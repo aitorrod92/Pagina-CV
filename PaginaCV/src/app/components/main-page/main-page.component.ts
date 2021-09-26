@@ -42,8 +42,11 @@ export class MainPageComponent {
 	trabajos: Trabajo[];
 	language: string = "es";
 	jobWord: string;
+	updatedString:string;
+
+	htmlText?: string;
+	CVupdateDateString: string;
 	
-	htmlText? : string;
 
 	// QR and some properties
 	QRCode: QRCode;
@@ -57,7 +60,7 @@ export class MainPageComponent {
 	constructor(private trabajoService: TrabajoService,
 		private languageService: LanguageService,
 		private qrCodesService: QRCodesService,
-		private translatedBitsService : TranslatedBitsService) {
+		private translatedBitsService: TranslatedBitsService) {
 		languageService.language$.subscribe(data => {
 			this.language = data;
 			//this.update(); 
@@ -73,15 +76,18 @@ export class MainPageComponent {
 			this.update();
 		})*/
 	}
-	
+
 	adaptQR() {
 		this.qrCodesService.getQRCode(this.language).subscribe(data => {
 			this.QRCode = data[0];
+			this.CVupdateDateString = 
+				this.QRCode.buttonLink.substring(this.QRCode.buttonLink.lastIndexOf("/") + 7, this.QRCode.buttonLink.length).replace('.pdf', '');
 		});
 	}
 
 	translateStaticBits() {
 		this.htmlText = this.translatedBitsService.translatedBitsMap.get(this.language + "-introText");
+		this.updatedString = this.translatedBitsService.translatedBitsMap.get(this.language + "-updated")!;
 	}
 
 	update() {

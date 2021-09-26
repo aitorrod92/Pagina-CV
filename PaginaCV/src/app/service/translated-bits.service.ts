@@ -57,6 +57,8 @@ export class TranslatedBitsService {
 		this.translatedBitsMap.set("en-minLengthMessage", "Message must be at least 30 characters long");
 		this.translatedBitsMap.set("en-current", "current");
 		this.translatedBitsMap.set("es-current", "actuales");
+		this.translatedBitsMap.set("en-updated", "Updated");
+		this.translatedBitsMap.set("es-updated", "Actualizado");
 
 
 
