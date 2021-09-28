@@ -271,7 +271,6 @@ export class ListaTrabajosComponent implements OnInit {
 	}
 
 	generateNoResultsHTMLButtons(coincidentTerms: string[], divSuggestedTerms: HTMLElement) {
-		console.log("generateNoResultsHTMLButtons");
 		coincidentTerms.forEach(element => {
 			let buttonLink = document.createElement("a");
 			buttonLink.innerHTML = element;

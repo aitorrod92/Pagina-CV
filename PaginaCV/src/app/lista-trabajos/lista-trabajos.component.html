@@ -15,7 +15,7 @@
 							<a routerLink="/content/jobs/{{tempItem.id}}"> <img
 								class="img-responsive animated-beat list-item" alt="image not found"
 								src="{{ tempItem.imagen }}" height="50">
-							</a><a href="content/jobs/{{tempItem.id}}" class="primary-btn"><b>{{tempItem.nombre}}</b></a>
+							</a><a [routerLink]="['/content/jobs', tempItem.id]" class="primary-btn"><b>{{tempItem.nombre}}</b></a>
 						</h3>
 						<div>
 							<b>{{tempItem.empresa}}</b>
@@ -35,7 +35,7 @@
 								class="img-responsive animated-spin-and-zoom list-item" alt="image not found"
 								src="{{ idiom.imagen }}" height="50"></a>
 							<!-- MODIFICAR EL ENLACE -->
-							<a href="content/languages/{{idiom.id}}" class="primary-btn">{{idiom.nombre}}</a>
+							<a routerLink="/content/languages/{{idiom.id}}" class="primary-btn">{{idiom.nombre}}</a>
 						</h3>
 						<div>
 							<b>{{idiom.institucion}}</b>
@@ -54,7 +54,7 @@
 							<a routerLink="/content/jobs/{{tempItem.id}}"> <img
 								class="img-responsive animated-beat list-item" alt="image not found"
 								src="{{ tempItem.imagen }}" height="50">
-							</a><a href="content/jobs/{{tempItem.id}}" class="primary-btn"><b>{{tempItem.nombre}}</b></a>
+							</a><a routerLink="/content/jobs/{{tempItem.id}}" class="primary-btn"><b>{{tempItem.nombre}}</b></a>
 						</h3>
 						<div>
 							<b>{{tempItem.empresa}}</b>
@@ -71,7 +71,7 @@
 							<img class="img-responsive animated-spin-and-zoom list-item"
 								alt="image not found" src="{{ idiom.imagen }}" height="50">
 							<!-- MODIFICAR EL ENLACE -->
-							<a href="content/languages/{{idiom.id}}" class="primary-btn ">{{idiom.nombre}}</a>
+							<a routerLink="/content/languages/{{idiom.id}}" class="primary-btn ">{{idiom.nombre}}</a>
 						</h3>
 						<div>
 							<b>{{idiom.institucion}}</b>

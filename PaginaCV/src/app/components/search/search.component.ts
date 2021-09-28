@@ -16,24 +16,21 @@ export class SearchComponent implements OnInit {
 	data: Keyword[];
 	searchTerm = '';
 	languagesSection: HTMLElement;
-	language : string;
-	searchString? : string = "";
+	language: string;
+	searchString?: string = "";
 	placeholderString: string;
-
 
 	constructor(private router: Router,
 		private keywordsService: KeywordsService,
 		private languageService: LanguageService,
 		private translatedBitsService: TranslatedBitsService) {
-			this.language = languageService.language.getValue();
-			console.log("Lenguaje inicial de Search " + languageService.language.getValue());
-			
+		this.language = languageService.language.getValue();
+		this.translateStaticBits();
+		languageService.language$.subscribe(data => {
+			this.language = data;
 			this.translateStaticBits();
-			languageService.language$.subscribe(data => {
-				this.language = data;
-				this.translateStaticBits();
-				this.listKeywords();
-			});
+			this.listKeywords();
+		});
 	}
 
 	ngOnInit(): void {
@@ -96,13 +93,10 @@ export class SearchComponent implements OnInit {
 				element.setAttribute("class", "language-button") :
 				element.setAttribute("class", "language-button hoverable xtra-hoverable");
 		}
-
 		);
-
-
 	}
-	
-	translateStaticBits(){
+
+	translateStaticBits() {
 		this.searchString = this.translatedBitsService.translatedBitsMap.get(this.language + "-search");
 		this.placeholderString = this.translatedBitsService.translatedBitsMap.get(this.language + "-searchPlaceholder")!;
 	}
