@@ -63,7 +63,7 @@ export class ListaTrabajosComponent implements OnInit {
 		});
 	}
 
-	public adaptDate(date: string, categoria: number): string | null  {
+	public adaptDate(date: string, categoria: number): string | null {
 		this.datepipe = this.currentLanguage == "es" ? new DatePipe('es-MX') : new DatePipe('en-US');
 		let formattedDate;
 		if (date == 'Actual') {
@@ -160,7 +160,6 @@ export class ListaTrabajosComponent implements OnInit {
 	listTrabajos() {
 		this.getKeyword();
 		this.getCategory();
-		console.log("keyword: " + this.currentSearchingKeywords + " category: " + this.currentCategory);
 		let jobWord = this.currentLanguage == "es" ? "trabajos" : "jobs";
 		let languageWord = this.currentLanguage == "es" ? "idiomas" : "languages";
 		if (this.currentSearchingKeywords === "" && this.currentCategory == 0) {
@@ -189,8 +188,6 @@ export class ListaTrabajosComponent implements OnInit {
 						data => {
 							this.idioma = data;
 							noLanguageResults = this.idioma.length == 0 ? true : false;
-							console.log("listTrabajos " + this.currentLanguage);
-							console.log(noJobResults + " " + noLanguageResults);
 							this.noSearchResults = noJobResults && noLanguageResults ? true : false;
 							if (this.noSearchResults) {
 								this.generateNoResultsElements();
@@ -223,19 +220,15 @@ export class ListaTrabajosComponent implements OnInit {
 
 	generateNoResultsSuggestionButtonsIfNecessary() {
 		let coincidentTerms: string[] = [];
-		console.log("keywords " + this.keywords);
 		this.keywords.forEach(keyword => {
-			console.log("keyword " + keyword);
 			let coincidentTerm = this.determineIfCoincidence(keyword);
 			if (coincidentTerm) {
-				console.log("generateNoResultsSuggestionButtonsIfNecessary " + coincidentTerm);
 				coincidentTerms.push(coincidentTerm);
 			}
 		})
 		let divSuggestedTerms = document.getElementById("suggestedTerms")!;
 		this.removeChildrenIfExist(divSuggestedTerms);
 		if (coincidentTerms.length > 0) {
-			console.log(coincidentTerms);
 			this.generateNoResultsHTMLButtons(coincidentTerms, divSuggestedTerms);
 		}
 	}
@@ -253,7 +246,6 @@ export class ListaTrabajosComponent implements OnInit {
 					}
 				}
 				if (i == keyword.nombre.length - 1) {
-					console.log(keyword.nombre + " es coincidencia");
 					coincidentTerm = keyword.nombre;
 					this.coincidence = true;
 				}
@@ -273,11 +265,11 @@ export class ListaTrabajosComponent implements OnInit {
 	generateNoResultsHTMLButtons(coincidentTerms: string[], divSuggestedTerms: HTMLElement) {
 		coincidentTerms.forEach(element => {
 			let buttonLink = document.createElement("a");
+			buttonLink.setAttribute("class", "routerlink primary-btn");
+			buttonLink.setAttribute("href", "/search/" + element); // Consulta app.component para más info
+			buttonLink.setAttribute("style", "margin-right: " + this.buttonsMargin);
 			buttonLink.innerHTML = element;
 			element = element.replace("#", "%23");
-			buttonLink.setAttribute("href", "http://localhost:4200/search/" + element);
-			buttonLink.setAttribute("class", "primary-btn");
-			buttonLink.setAttribute("style", "margin-right: " + this.buttonsMargin);
 			let bold = document.createElement("b");
 			bold.appendChild(buttonLink);
 			divSuggestedTerms.appendChild(bold);

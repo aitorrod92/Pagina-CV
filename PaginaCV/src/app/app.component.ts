@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faLinkedin, faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { faMailBulk } from '@fortawesome/free-solid-svg-icons';
@@ -21,14 +22,31 @@ export class AppComponent {
 	faLinkedin = faLinkedin;
 
 	language = "";
-	footerString? = "";
+	footerString?= "";
 
-	constructor(private translatedBitsService : TranslatedBitsService,
-				private languageService : LanguageService) {
+	constructor(private translatedBitsService: TranslatedBitsService,
+		private languageService: LanguageService,
+		private router: Router) {
 		languageService.language$.subscribe(data => {
 			this.language = data;
 			this.translateStaticBits();
 		});
+	}
+
+	/* Hace que los href actúen como routers (los href se pueden generar dinámicamente mediante typescript, 
+	pero reinstancian los componentes y esto hace que el componente de búsqueda se reinicie y, con ello, el idioma) */
+	@HostListener('document:click', ['$event'])
+	public handleClick(event: Event): void {
+		if (event.target instanceof HTMLAnchorElement) {
+			const element = event.target as HTMLAnchorElement;
+			if (element.className === 'routerlink primary-btn') {
+				event.preventDefault();
+				const route = element?.getAttribute('href');
+				if (route) {
+					this.router.navigate([`/${route}`]);
+				}
+			}
+		}
 	}
 
 	translateStaticBits() {
