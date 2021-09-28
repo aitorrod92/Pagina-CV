@@ -42,6 +42,10 @@ button {
 	background: 0 0
 }
 
+.btn:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
 
 
 img.list-item {

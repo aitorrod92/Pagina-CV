@@ -42,11 +42,8 @@
 										class="alert alert-danger mt-1">{{commentMinLengthString}} {{comment!.value.length}})</div>
 									<div *ngElse class=""></div>
 								</div>
-
-
 							</div>
-							<button type="submit" class="btn btn-primary"
-								[disabled]="!contactForm.valid">{{buttonString}}</button>
+							<button type="submit" class="btn btn-primary" [disabled]="!contactForm.valid">{{buttonString}}</button>
 						</form>
 					</div>
 				</div>
