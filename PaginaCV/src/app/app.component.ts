@@ -39,7 +39,7 @@ export class AppComponent {
 	public handleClick(event: Event): void {
 		if (event.target instanceof HTMLAnchorElement) {
 			const element = event.target as HTMLAnchorElement;
-			if (element.className === 'routerlink primary-btn') {
+			if (element.className.includes('routerlink')) {
 				event.preventDefault();
 				const route = element?.getAttribute('href');
 				if (route) {
