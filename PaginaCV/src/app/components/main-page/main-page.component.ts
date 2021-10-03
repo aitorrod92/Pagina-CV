@@ -42,11 +42,11 @@ export class MainPageComponent {
 	trabajos: Trabajo[];
 	language: string = "es";
 	jobWord: string;
-	updatedString:string;
+	updatedString: string;
 
 	htmlText?: string;
 	CVupdateDateString: string;
-	
+
 
 	// QR and some properties
 	QRCode: QRCode;
@@ -70,17 +70,17 @@ export class MainPageComponent {
 		}
 		)
 
-		/*trabajoService.getTrabajosListbyKeyword("informatica", this.jobWord).subscribe(data => {
+		trabajoService.getTrabajosListbyKeyword("informatica", this.jobWord).subscribe(data => {
 			this.trabajos = data;
 			//this.defineChartAttributes();
 			this.update();
-		})*/
+		})
 	}
 
 	adaptQR() {
 		this.qrCodesService.getQRCode(this.language).subscribe(data => {
 			this.QRCode = data[0];
-			this.CVupdateDateString = 
+			this.CVupdateDateString =
 				this.QRCode.buttonLink.substring(this.QRCode.buttonLink.lastIndexOf("/") + 7, this.QRCode.buttonLink.length).replace('.pdf', '');
 		});
 	}
@@ -102,9 +102,16 @@ export class MainPageComponent {
 					x: new Date(element.fechaInicio).getTime(),
 					y: new Date(element.fechaFin).getTime()
 				})
+			if (Number.isNaN(nuevoObjeto.y)) {
+				nuevoObjeto.y = new Date().getTime();
+			}
 			arrayObjetosFechas.push(nuevoObjeto);
 		}
 		)
+
+		this.trabajos
+
+
 
 		this.chartOptions = {
 			series: [{
@@ -126,9 +133,8 @@ export class MainPageComponent {
 				{
 					x: arrayNombres[3],
 					y: [arrayObjetosFechas[3].x, arrayObjetosFechas[3].y],
-					fillColor: "#FEB019"
-				},
-				]
+					fillColor: "#00E396"
+				}]
 			}],
 			chart: {
 				height: 350,
@@ -173,16 +179,31 @@ export class MainPageComponent {
 				}
 			}
 		};
-		console.log(arrayNombres.length);
+
+		let array = [];
 		for (let i = 0; i < arrayNombres.length; i++) {
-			console.log("Nombre: " + arrayNombres[0] + " Fechas " + arrayObjetosFechas[0].x + " " + arrayObjetosFechas[0].y);
-			this.chart.updateSeries([{
-				data: [{
-					x: arrayNombres[i],
+			array.push(
+				[{
+					x: "hOLA",
 					y: [arrayObjetosFechas[i].x, arrayObjetosFechas[i].y],
 					fillColor: "#008FFB"
+				}])
+		}
+
+
+
+		
+		console.log(arrayNombres.length);
+		for (let i = 0; i < arrayNombres.length; i++) {
+			console.log("Nombre: " + arrayNombres[i] + " Fechas " + arrayObjetosFechas[i].x + " " + arrayObjetosFechas[i].y);
+			this.chart.updateSeries([{
+				data: [{
+					x: array[i],
+					y: [arrayObjetosFechas[0].x, arrayObjetosFechas[0].y],
+					fillColor: "#008FFB"
 				}]
-			}], true)
+			}], true);
+			console.log(arrayNombres.length);
 		};
 
 
