@@ -23,7 +23,9 @@ export class TrabajoService {
 	}
 
 	getTrabajosListbyCategory(categoryWord: string, categoria: number): Observable<Trabajo[]> {
-		this.searchUrl = `${this.baseUrl}/${categoryWord}/${categoria}/trabajos`
+		
+		this.searchUrl = `${this.baseUrl}/${categoryWord}/${categoria}/trabajos`;
+		console.log(this.searchUrl);
 		return this.getResponseUsingCategory(categoryWord);
 	}
 

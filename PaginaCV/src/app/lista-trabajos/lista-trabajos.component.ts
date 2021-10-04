@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Idioma } from '../common/idioma';
 import { Trabajo } from '../common/trabajo';
@@ -10,7 +10,18 @@ import { TranslatedBitsService } from '../service/translated-bits.service';
 import { Observable } from 'rxjs';
 import { KeywordsService } from '../service/keywords.service';
 import { Keyword } from '../common/keyword';
+import { ChartComponent } from 'ng-apexcharts';
 
+export type ChartOptions = {
+	series: ApexAxisChartSeries;
+	chart: ApexChart;
+	fill: ApexFill;
+	dataLabels: ApexDataLabels;
+	grid: ApexGrid;
+	yaxis: ApexYAxis;
+	xaxis: ApexXAxis;
+	plotOptions: ApexPlotOptions;
+};
 
 @Component({
 	selector: 'app-lista-trabajos',
@@ -40,6 +51,11 @@ export class ListaTrabajosComponent implements OnInit {
 	// es necesario que esté en esta misma clase, porque se ejecuta de manera asíncrona
 	language$: Observable<string>;
 
+	fillColors: string[] = ["#00E396", "#008FFB", "#FEB019", "#FF4560", "#FF4560"];
+
+	@ViewChild("chart") chart: ChartComponent;
+	public chartOptions: Partial<ChartOptions> | any;
+
 	constructor(private trabajoService: TrabajoService,
 		private idiomasService: IdiomasService,
 		private languageService: LanguageService,
@@ -51,7 +67,6 @@ export class ListaTrabajosComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.route.paramMap.subscribe(() => { this.listTrabajos() });
 		this.language$.subscribe(data => {
 			this.currentLanguage = data;
 			this.keywordsService.getKeywords(this.currentLanguage).subscribe(
@@ -184,6 +199,7 @@ export class ListaTrabajosComponent implements OnInit {
 				data => {
 					this.ObtenerYOrdenar(data);
 					noJobResults = this.trabajo.length == 0 ? true : false;
+
 					this.idiomasService.getLanguagesListbyKeyword(languageWord, this.currentSearchingKeywords).subscribe(
 						data => {
 							this.idioma = data;
@@ -194,16 +210,18 @@ export class ListaTrabajosComponent implements OnInit {
 							}
 						});
 				})
-
-
 		}
 	}
 
 	ObtenerYOrdenar(data: Trabajo[]) {
 		this.trabajo = data;
+
 		this.trabajo.sort((a, b) => {
 			return <any>new Date(a.fechaInicioDate) - <any>new Date(b.fechaInicioDate);
 		});
+
+		this.defineChartAttributes();
+		this.update();
 
 	}
 
@@ -283,6 +301,95 @@ export class ListaTrabajosComponent implements OnInit {
 		} else {
 			this.suggestionString = this.translatedBitService.translatedBitsMap.get(this.currentLanguage + "-suggestion")!;
 		}
+	}
+
+	update() {
+		var arrayNombres: string[] = [];
+		var objetoFechas: { x: number; y: number };
+		var arrayObjetosFechas: typeof objetoFechas[] = [];
+		var arrayData = [];
+
+		//@ts-ignore
+		this.trabajo.forEach(element => {
+
+			arrayNombres.push(element.nombre);
+			const nuevoObjeto =
+				({
+					x: new Date(element.fechaInicio).getTime(),
+					y: new Date(element.fechaFin).getTime()
+				})
+			if (Number.isNaN(nuevoObjeto.y)) {
+				nuevoObjeto.y = new Date().getTime();
+			}
+			arrayObjetosFechas.push(nuevoObjeto);
+		})
+
+		for (let i = 0; i < arrayNombres.length; i++) {
+			console.log("BLABLABA " + arrayNombres[i] + " " + arrayObjetosFechas[i].x + " " + arrayObjetosFechas[i].y);
+			arrayData.push
+				({
+					x: arrayNombres[i],
+					y: [arrayObjetosFechas[i].x, arrayObjetosFechas[i].y],
+					fillColor: this.fillColors[i]
+				})
+		}
+
+		this.chartOptions.series = [{
+			data: arrayData
+		}];
+
+		console.log(this.chartOptions.series);
+
+		this.chart.render();
+	}
+
+	defineChartAttributes() {
+		this.chartOptions = {
+			chart: {
+				height: 350,
+				width: 700,
+				type: "rangeBar",
+				background: "black"
+			},
+			plotOptions: {
+				bar: {
+					horizontal: true,
+					distributed: true,
+					dataLabels: {
+						hideOverflowingLabels: true
+					}
+				}
+			},
+			dataLabels: {
+				enabled: true,
+				//@ts-ignore
+				formatter: function(val, opts) {
+					var label = opts.w.globals.labels[opts.dataPointIndex];
+					//@ts-ignore
+					var a = moment(val[0]);
+					//@ts-ignore
+					var b = moment(val[1]);
+					var diff = b.diff(a, "days");
+					return label + ": " + diff + (diff > 1 ? " days" : " day");
+				},
+				style: {
+					colors: ["#f3f4f5", "#fff"]
+				}
+			},
+			xaxis: {
+				type: "datetime"
+			},
+			yaxis: {
+				show: false
+			},
+			grid: {
+				row: {
+					colors: ["#f3f4f5", "#fff"],
+					opacity: 1
+				}
+			}
+		};
+
 	}
 
 
