@@ -60,7 +60,8 @@ export class MainPageComponent {
 	constructor(private trabajoService: TrabajoService,
 		private languageService: LanguageService,
 		private qrCodesService: QRCodesService,
-		private translatedBitsService: TranslatedBitsService) {
+		private translatedBitsService: TranslatedBitsService
+		) {
 		languageService.language$.subscribe(data => {
 			this.language = data;
 			//this.update(); 

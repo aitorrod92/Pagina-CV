@@ -10,7 +10,18 @@ import { TranslatedBitsService } from '../service/translated-bits.service';
 import { Observable } from 'rxjs';
 import { KeywordsService } from '../service/keywords.service';
 import { Keyword } from '../common/keyword';
-import { ChartComponent } from 'ng-apexcharts';
+
+/*import {
+	ChartComponent,
+	ApexAxisChartSeries,
+	ApexChart,
+	ApexPlotOptions,
+	ApexXAxis,
+	ApexFill,
+	ApexDataLabels,
+	ApexYAxis,
+	ApexGrid
+} from "ng-apexcharts";
 
 export type ChartOptions = {
 	series: ApexAxisChartSeries;
@@ -21,7 +32,7 @@ export type ChartOptions = {
 	yaxis: ApexYAxis;
 	xaxis: ApexXAxis;
 	plotOptions: ApexPlotOptions;
-};
+};*/
 
 @Component({
 	selector: 'app-lista-trabajos',
@@ -30,13 +41,14 @@ export type ChartOptions = {
 })
 
 export class ListaTrabajosComponent implements OnInit {
-
-	datepipe: DatePipe = new DatePipe('es-MX');
 	trabajo: Trabajo[];
 	idioma: Idioma[];
+
+	datepipe: DatePipe = new DatePipe('es-MX');
+	currentLanguage: string;
 	currentSearchingKeywords: string;
 	currentCategory: number;
-	currentLanguage: string;
+
 	noSearchResults: boolean;
 	noResultsString?: string = "";
 	searchSuggestionString?: string = "";
@@ -53,8 +65,8 @@ export class ListaTrabajosComponent implements OnInit {
 
 	fillColors: string[] = ["#00E396", "#008FFB", "#FEB019", "#FF4560", "#FF4560"];
 
-	@ViewChild("chart") chart: ChartComponent;
-	public chartOptions: Partial<ChartOptions> | any;
+	/*@ViewChild("chart") chart: ChartComponent;
+	public chartOptions: Partial<ChartOptions> | any;*/
 
 	constructor(private trabajoService: TrabajoService,
 		private idiomasService: IdiomasService,
@@ -62,11 +74,12 @@ export class ListaTrabajosComponent implements OnInit {
 		private translatedBitService: TranslatedBitsService,
 		private keywordsService: KeywordsService,
 		private route: ActivatedRoute) {
-		this.language$ = this.languageService.getLanguage();
-		this.maximumSearchTolerance = this.keywordsService.getMaximumSearchTolerance();
+			this.language$ = this.languageService.getLanguage();
+			this.maximumSearchTolerance = this.keywordsService.getMaximumSearchTolerance();
 	}
 
 	ngOnInit(): void {
+		console.log("iniciado lista trabajos");
 		this.language$.subscribe(data => {
 			this.currentLanguage = data;
 			this.keywordsService.getKeywords(this.currentLanguage).subscribe(
@@ -76,6 +89,7 @@ export class ListaTrabajosComponent implements OnInit {
 			this.listTrabajos();
 			this.translateStaticBits();
 		});
+
 	}
 
 	public adaptDate(date: string, categoria: number): string | null {
@@ -189,6 +203,7 @@ export class ListaTrabajosComponent implements OnInit {
 				let categoryWord = this.currentLanguage == "es" ? "categorias" : "categories";
 				this.trabajoService.getTrabajosListbyCategory(categoryWord, this.currentCategory).subscribe(
 					data => {
+						console.log("categoria " + this.currentCategory);
 						this.ObtenerYOrdenar(data);
 					})
 			}
@@ -220,8 +235,8 @@ export class ListaTrabajosComponent implements OnInit {
 			return <any>new Date(a.fechaInicioDate) - <any>new Date(b.fechaInicioDate);
 		});
 
-		this.defineChartAttributes();
-		this.update();
+		/*this.defineChartAttributes();
+		this.update();*/
 
 	}
 
@@ -303,15 +318,13 @@ export class ListaTrabajosComponent implements OnInit {
 		}
 	}
 
-	update() {
+	/*update() {
 		var arrayNombres: string[] = [];
 		var objetoFechas: { x: number; y: number };
 		var arrayObjetosFechas: typeof objetoFechas[] = [];
 		var arrayData = [];
 
-		//@ts-ignore
 		this.trabajo.forEach(element => {
-
 			arrayNombres.push(element.nombre);
 			const nuevoObjeto =
 				({
@@ -325,7 +338,6 @@ export class ListaTrabajosComponent implements OnInit {
 		})
 
 		for (let i = 0; i < arrayNombres.length; i++) {
-			console.log("BLABLABA " + arrayNombres[i] + " " + arrayObjetosFechas[i].x + " " + arrayObjetosFechas[i].y);
 			arrayData.push
 				({
 					x: arrayNombres[i],
@@ -335,12 +347,38 @@ export class ListaTrabajosComponent implements OnInit {
 		}
 
 		this.chartOptions.series = [{
-			data: arrayData
+			data: [arrayData[0], arrayData[1]]
 		}];
 
-		console.log(this.chartOptions.series);
+/*this.chartOptions = {
+			series: [{
+				data: [{
+					x: arrayNombres[0],
+					y: [arrayObjetosFechas[0].x, arrayObjetosFechas[0].y],
+					fillColor: "#008FFB"
+				},
+				{
+					x: arrayNombres[1],
+					y: [arrayObjetosFechas[1].x, arrayObjetosFechas[1].y],
+					fillColor: "#775DD0"
+				},
+				{
+					x: arrayNombres[2],
+					y: [arrayObjetosFechas[2].x, arrayObjetosFechas[2].y],
+					fillColor: "#00E396"
+				},
+				{
+					x: arrayNombres[3],
+					y: [arrayObjetosFechas[3].x, arrayObjetosFechas[3].y],
+					fillColor: "#00E396"
+				}]
+			}],
 
+
+		console.log(this.chartOptions.series);
+		console.log(this.chartOptions);
 		this.chart.render();
+		console.log("hola");
 	}
 
 	defineChartAttributes() {
@@ -390,7 +428,7 @@ export class ListaTrabajosComponent implements OnInit {
 			}
 		};
 
-	}
+	}*/
 
 
 
