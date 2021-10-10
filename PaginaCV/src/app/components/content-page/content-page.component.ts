@@ -27,6 +27,10 @@ export class ContentPageComponent {
 	spanishLanguage: Idioma;
 	englishLanguage: Idioma;
 
+	jobWord: string;
+	allJobs: Trabajo[];
+	relatedJobsSortedArray: any[];
+
 	categoria: Categoria;
 
 	isLanguagePage: boolean;
@@ -43,6 +47,7 @@ export class ContentPageComponent {
 	descriptionString?: string;
 	descriptionStringHTML: string;
 	returningString?: string;
+	relatedJobsString?: string;
 
 	constructor(private route: ActivatedRoute,
 		private trabajoService: TrabajoService,
@@ -60,12 +65,47 @@ export class ContentPageComponent {
 		});
 	}
 
+
 	getContent() {
 		// @ts-ignore: Object is possibly 'null'.
 		this.contentId = this.route.snapshot.paramMap.get('id');
 		this.isLanguagePage ? this.showLanguagePage() : this.showJobPage();
 		this.translateStaticBits();
 	}
+
+	getRelatedContent() {
+		let currentJobTags = this.trabajo.tags.trim().split(" ");
+		let relatedJobsMap = new Map<Trabajo, number>();
+		this.trabajoService.getAllTrabajos(this.jobWord).subscribe(data => {
+			this.allJobs = data;
+			currentJobTags.forEach(tag =>
+				this.allJobs.forEach(job => {
+					if (job.tags.includes(tag)) {
+						let numberOfCoincidentTags;
+						if (relatedJobsMap.get(job) == null) {
+							relatedJobsMap.set(job, 1);
+							numberOfCoincidentTags = 1;
+						} else {
+							numberOfCoincidentTags = relatedJobsMap.get(job)!;
+							relatedJobsMap.set(job, numberOfCoincidentTags + 1);
+						}
+						if (tag == 'Bases') {
+							relatedJobsMap.set(job, numberOfCoincidentTags - 1);
+						};
+					}
+				})
+			)
+			let relatedJobsSortedMap = new Map([...relatedJobsMap.entries()].sort((a, b) => b[1] - a[1]));
+			this.relatedJobsSortedArray = Array.from(relatedJobsSortedMap).map(([Trabajo, number]) => ({ Trabajo, number }));
+			this.relatedJobsSortedArray.forEach(relatedJob => {
+				if (relatedJob.number < 3) {
+					this.relatedJobsSortedArray.splice(this.relatedJobsSortedArray.indexOf(relatedJob));
+				}
+			})
+			console.log(this.relatedJobsSortedArray);
+		})
+	}
+
 
 	showLanguagePage() {
 		this.isLanguagePage = true;
@@ -84,10 +124,10 @@ export class ContentPageComponent {
 
 	showJobPage() {
 		this.isLanguagePage = false;
-		let jobWord = this.currentLanguage == "es" ? "trabajos" : "jobs";
+		this.jobWord = this.currentLanguage == "es" ? "trabajos" : "jobs";
 
 		if (this.jobInMemory() == undefined) {
-			this.trabajoService.getTrabajo(jobWord, this.contentId).subscribe(data => {
+			this.trabajoService.getTrabajo(this.jobWord, this.contentId).subscribe(data => {
 				this.trabajo = data;
 				if (this.firstLoad) {
 					this.methodToGetMapURL();
@@ -96,11 +136,13 @@ export class ContentPageComponent {
 				}
 				this.assignAndFormatCategory();
 				this.buildDescription();
+				this.getRelatedContent();
 			})
 		} else {
 			this.trabajo = this.currentLanguage == 'es' ? this.spanishJob : this.englishJob;
 			this.assignAndFormatCategory();
 			this.buildDescription();
+			this.getRelatedContent();
 		}
 	}
 
@@ -155,10 +197,11 @@ export class ContentPageComponent {
 	translateStaticBits() {
 		this.returningString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-return');
 		this.descriptionString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-description');
+		this.relatedJobsString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-relatedJobs');
 	}
 
 	jobInMemory(): Trabajo | undefined {
-		return this.currentLanguage == 'es'? this.spanishJob : this.englishJob;
+		return this.currentLanguage == 'es' ? this.spanishJob : this.englishJob;
 
 	}
 
@@ -166,17 +209,17 @@ export class ContentPageComponent {
 		if (this.currentLanguage == 'es') { this.spanishJob = this.trabajo; }
 		else { this.englishJob = this.trabajo; }
 	}
-	
+
 	languageInMemory(): Idioma | undefined {
-		return this.currentLanguage == 'es'? this.spanishLanguage : this.englishLanguage;
+		return this.currentLanguage == 'es' ? this.spanishLanguage : this.englishLanguage;
 	}
-	
-	saveLanguageInMemory(){
+
+	saveLanguageInMemory() {
 		if (this.currentLanguage == 'es') { this.spanishLanguage = this.idioma; }
 		else { this.englishLanguage = this.idioma; }
 	}
-	
-	
+
+
 
 	// VERSIÓN ALTERNATIVA MONTANDO EL PROPIO HTML. NO FUNCIONABA BIEN. REQUIERE USAR LA CLASE QUE SE ESPECIFICA EN EL DIV
 	/*	buildDescription() {

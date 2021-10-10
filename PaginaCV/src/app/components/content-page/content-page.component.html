@@ -24,7 +24,8 @@
 			<p>
 				<!-- {{idioma.descripcion}} -->
 			</p>
-			<a routerLink="/category/4" class="mt-5">{{returningString}} {{categoria.nombre}}</a>
+			<a routerLink="/category/4" class="mt-5">{{returningString}}
+				{{categoria.nombre}}</a>
 
 		</div>
 	</div>
@@ -38,7 +39,8 @@
 				<img class="detail-img animated-beat" src="{{trabajo.imagen}}">
 				<h3>{{trabajo.nombre}}</h3>
 				<div class="price">{{trabajo.empresa}}</div>
-				<div>{{this.adaptDate(trabajo.fechaInicio)}} - {{this.adaptDate(trabajo.fechaFin)}}</div>
+				<div>{{this.adaptDate(trabajo.fechaInicio)}} -
+					{{this.adaptDate(trabajo.fechaFin)}}</div>
 			</div>
 			<div class="col-md">
 				<iframe width="500" height="300" style="border: 0" loading="lazy"
@@ -47,10 +49,26 @@
 		</div>
 		<hr>
 		<div class='row'>
-			<h4>{{descriptionString}}</h4>
-			<div>
-				<div [innerHTML]="descriptionStringHTML"></div>
-				<br> <a [routerLink]="['/category', trabajo.categoria]" class="mt-5">{{returningString}} {{categoria.nombre}}</a>
+			<div class="col-md">
+				<h4>{{descriptionString}}</h4>
+				<div>
+					<div [innerHTML]="descriptionStringHTML"></div>
+					<br> <a [routerLink]="['/category', trabajo.categoria]"
+						class="mt-5">{{returningString}} {{categoria.nombre}}</a>
+				</div>
+			</div>
+			<div class="col-md">
+				<h4>{{relatedJobsString}}</h4>
+				<div>
+					<img class="animated-beat related-jobs"
+						src="{{relatedJobsSortedArray[1].Trabajo.imagen}}"> 
+					<img class="animated-beat related-jobs"
+						src="{{relatedJobsSortedArray[2].Trabajo.imagen}}"> 
+					<img *ngIf="this.relatedJobsSortedArray.length > 3"
+						class="animated-beat related-jobs"
+						src="{{relatedJobsSortedArray[3].Trabajo.imagen}}">
+
+				</div>
 			</div>
 		</div>
 	</div>

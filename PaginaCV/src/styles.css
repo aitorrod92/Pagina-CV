@@ -53,6 +53,12 @@ img.list-item {
 	height: 20%
 }
 
+img.related-jobs{
+	width: 100 px;
+	height: 100px;
+	margin-right: 20px;
+	margin-top: 10px;
+}
 
 .hoverable {
         filter: grayscale(20%);

@@ -59,6 +59,8 @@ export class TranslatedBitsService {
 		this.translatedBitsMap.set("es-current", "actuales");
 		this.translatedBitsMap.set("en-updated", "Updated");
 		this.translatedBitsMap.set("es-updated", "Actualizado");
+		this.translatedBitsMap.set("en-relatedJobs", "Related jobs");
+		this.translatedBitsMap.set("es-relatedJobs", "Empleos relacionados");
 
 
 
