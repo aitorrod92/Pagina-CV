@@ -61,6 +61,8 @@ export class TranslatedBitsService {
 		this.translatedBitsMap.set("es-updated", "Actualizado");
 		this.translatedBitsMap.set("en-relatedJobs", "Related jobs");
 		this.translatedBitsMap.set("es-relatedJobs", "Empleos relacionados");
+		this.translatedBitsMap.set("en-relatedEducation", "Related education");
+		this.translatedBitsMap.set("es-relatedEducation" , "Formaci\xf3n relacionada");
 
 
 

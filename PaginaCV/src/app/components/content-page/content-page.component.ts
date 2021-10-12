@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Idioma } from 'src/app/common/idioma';
 import { Trabajo } from 'src/app/common/trabajo';
 import { IdiomasService } from 'src/app/service/idiomas.service';
@@ -10,6 +10,7 @@ import { CategoriasService } from 'src/app/service/categorias.service';
 import { LanguageService } from 'src/app/service/language.service';
 import { DatePipe } from '@angular/common';
 import { TranslatedBitsService } from 'src/app/service/translated-bits.service';
+import { AbbreviationsService } from 'src/app/service/abbreviations.service';
 
 @Component({
 	selector: 'app-content-page',
@@ -29,7 +30,8 @@ export class ContentPageComponent {
 
 	jobWord: string;
 	allJobs: Trabajo[];
-	relatedJobsSortedArray: any[];
+	public relatedJobsSortedArray: any[];
+	public baseUrl: string = '/content/jobs/';
 
 	categoria: Categoria;
 
@@ -47,7 +49,7 @@ export class ContentPageComponent {
 	descriptionString?: string;
 	descriptionStringHTML: string;
 	returningString?: string;
-	relatedJobsString?: string;
+	relatedJobsOrEducationString?: string;
 
 	constructor(private route: ActivatedRoute,
 		private trabajoService: TrabajoService,
@@ -55,7 +57,9 @@ export class ContentPageComponent {
 		private categoryService: CategoriasService,
 		public domSanitizer: DomSanitizer,
 		private languageService: LanguageService,
-		private translatedBitsService: TranslatedBitsService) {
+		private translatedBitsService: TranslatedBitsService,
+		private abbreviationsService: AbbreviationsService,
+		private router: Router) {
 		this.trabajo = new Trabajo();
 		this.isLanguagePage =
 			this.route.snapshot.paramMap.get('table') == ('languages' || 'idiomas') ? true : false;
@@ -65,12 +69,10 @@ export class ContentPageComponent {
 		});
 	}
 
-
 	getContent() {
 		// @ts-ignore: Object is possibly 'null'.
 		this.contentId = this.route.snapshot.paramMap.get('id');
 		this.isLanguagePage ? this.showLanguagePage() : this.showJobPage();
-		this.translateStaticBits();
 	}
 
 	getRelatedContent() {
@@ -83,13 +85,17 @@ export class ContentPageComponent {
 					if (job.tags.includes(tag)) {
 						let numberOfCoincidentTags;
 						if (relatedJobsMap.get(job) == null) {
+							job = this.abbreviateName(job);
 							relatedJobsMap.set(job, 1);
 							numberOfCoincidentTags = 1;
 						} else {
+							job = this.abbreviateName(job);
 							numberOfCoincidentTags = relatedJobsMap.get(job)!;
+							//@ts-ignore
 							relatedJobsMap.set(job, numberOfCoincidentTags + 1);
 						}
 						if (tag == 'Bases') {
+							job = this.abbreviateName(job);
 							relatedJobsMap.set(job, numberOfCoincidentTags - 1);
 						};
 					}
@@ -106,6 +112,12 @@ export class ContentPageComponent {
 		})
 	}
 
+	abbreviateName(job: Trabajo): Trabajo {
+		if (this.abbreviationsService.abbreviationsMap.has(job.nombre)) {
+			job.nombre = this.abbreviationsService.abbreviationsMap.get(job.nombre)!;
+		}
+		return job;
+	}
 
 	showLanguagePage() {
 		this.isLanguagePage = true;
@@ -135,14 +147,12 @@ export class ContentPageComponent {
 					this.firstLoad = false
 				}
 				this.assignAndFormatCategory();
-				this.buildDescription();
-				this.getRelatedContent();
+				this.translateStaticBits();
 			})
 		} else {
 			this.trabajo = this.currentLanguage == 'es' ? this.spanishJob : this.englishJob;
 			this.assignAndFormatCategory();
-			this.buildDescription();
-			this.getRelatedContent();
+			this.translateStaticBits();
 		}
 	}
 
@@ -197,7 +207,13 @@ export class ContentPageComponent {
 	translateStaticBits() {
 		this.returningString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-return');
 		this.descriptionString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-description');
-		this.relatedJobsString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-relatedJobs');
+		console.log(this.trabajo);
+		console.log(this.trabajo.imagen);
+		this.relatedJobsOrEducationString = this.trabajo.imagen.includes("jobs") ?
+			this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-relatedJobs') :
+			this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-relatedEducation');
+		this.buildDescription();
+		this.getRelatedContent();
 	}
 
 	jobInMemory(): Trabajo | undefined {
@@ -217,6 +233,12 @@ export class ContentPageComponent {
 	saveLanguageInMemory() {
 		if (this.currentLanguage == 'es') { this.spanishLanguage = this.idioma; }
 		else { this.englishLanguage = this.idioma; }
+	}
+
+	// Puesto que los enlaces a la misma página no funcionan, hace que se redireccione de forma falsa y luego vamos a la que queremos realmente
+	redirectTo(uri: string) {
+		this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+			this.router.navigate([uri]));
 	}
 
 

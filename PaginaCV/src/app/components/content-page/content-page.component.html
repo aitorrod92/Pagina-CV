@@ -58,15 +58,32 @@
 				</div>
 			</div>
 			<div class="col-md">
-				<h4>{{relatedJobsString}}</h4>
-				<div>
-					<img class="animated-beat related-jobs"
-						src="{{relatedJobsSortedArray[1].Trabajo.imagen}}"> 
-					<img class="animated-beat related-jobs"
-						src="{{relatedJobsSortedArray[2].Trabajo.imagen}}"> 
-					<img *ngIf="this.relatedJobsSortedArray.length > 3"
-						class="animated-beat related-jobs"
-						src="{{relatedJobsSortedArray[3].Trabajo.imagen}}">
+				<h4>{{relatedJobsOrEducationString}}</h4>
+				<div style="display: -webkit-inline-box">
+					<div class="product-box-related hoverable">
+						<a (click)='redirectTo(baseUrl + this.relatedJobsSortedArray[1].Trabajo.id)'>
+						<img class="img-responsive animated-beat related-jobs"
+						alt="{{ relatedJobsSortedArray[1].Trabajo.nombre}}"
+						src="{{ relatedJobsSortedArray[1].Trabajo.imagen }}" >
+						<h6 style="text-align: center">{{this.relatedJobsSortedArray[1].Trabajo.nombre}}</h6>
+						</a>
+					</div>
+					<div class="product-box-related hoverable">
+						<a (click)='redirectTo(baseUrl + this.relatedJobsSortedArray[2].Trabajo.id)'>
+						<img class="img-responsive animated-beat related-jobs"
+						alt="{{ relatedJobsSortedArray[2].Trabajo.nombre}}"
+						src="{{ relatedJobsSortedArray[2].Trabajo.imagen }}" >
+						</a>
+						<h6 style="text-align: center">{{this.relatedJobsSortedArray[2].Trabajo.nombre}}</h6>
+					</div>
+					<div class="product-box-related hoverable">
+						<a (click)='redirectTo(baseUrl + this.relatedJobsSortedArray[3].Trabajo.id)'>
+						<img class="img-responsive animated-beat related-jobs"
+						alt="{{ relatedJobsSortedArray[3].Trabajo.nombre}}"
+						src="{{ relatedJobsSortedArray[3].Trabajo.imagen }}" >
+						</a>
+						<h6 style="text-align: center">{{this.relatedJobsSortedArray[3].Trabajo.nombre}}</h6>
+					</div>
 
 				</div>
 			</div>

@@ -57,7 +57,6 @@ img.related-jobs{
 	width: 100 px;
 	height: 100px;
 	margin-right: 20px;
-	margin-top: 10px;
 }
 
 .hoverable {
@@ -654,10 +653,13 @@ input.au-input.au-input-xl {
 	background: rgba(0,0,0,0.05);
 }
 
-.price {
-	margin: 15px 0 0;
-	font-weight: 800;
-	color: #0da8e4
+.product-box-related {
+	margin-bottom: 10px;
+	margin-top: 10px;
+	margin-right: 50px;
+	background: rgba(0,0,0,0.05);
+	max-width: 100px;
+	background: transparent;
 }
 
 .product-box h1 {
