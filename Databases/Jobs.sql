@@ -1,3 +1,5 @@
+DROP TABLE `datoscurriculo`.`jobs`;
+
 CREATE TABLE `datoscurriculo`.`jobs` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(100) NOT NULL,
@@ -19,6 +21,8 @@ CREATE TABLE `datoscurriculo`.`jobs` (
 	KEY `fkk_category` (`Categoria`),
   CONSTRAINT `fkk_category` FOREIGN KEY (`Categoria`) REFERENCES `categories` (`id`)
 );
+
+DELETE FROM `datoscurriculo`.`jobs` WHERE ID>0;
 
 INSERT INTO datoscurriculo.jobs 
 VALUES 
@@ -54,13 +58,13 @@ DATE_FORMAT('2015-01-01', '%Y'),DATE_FORMAT('2016-01-01', '%Y'), '12', 'Complute
 'Other', 'Full and partial', ' Sales Deal with customers Job Cooking Cocina  Hospitality Cleaning Carriage Training English ', '2017-7-01', 'ChIJU9ix_gyFdUgR65uaqyyyeRg', 1),
 (8, 'Development of Multiplatform Applications (HNC)', 'assets/images/education/FOC.png'
 ,DATE_FORMAT('2018-01-01', '%Y'),DATE_FORMAT('2020-01-01', '%Y'), '24', 'Fomento Ocupacional Institute', 'Brighton and Hove', 'United Kingdom',
-'', 'IT', null, ' Informatics IT HNC Software development Java C# Databases CSS SQL .NET Programming Coding ',  '2018-01-01', 'ChIJeef454OFdUgRE8_it_x171c', 3),
+'This HNC, which I completed online as I was working during part of my stay in Brighton, allowed me to have a first contact with different languages, whether they were query (SQL), markup (HTML), programming (Java, C#) or style sheets (CSS). However, perhaps the most useful things I learned through studying, testing and creating projects were certain skills that I consider essential, such as teamwork, time management, creating documentation and taking into account the applicable legislation in each situation.', 'IT', null, ' Informatics IT HNC Software development Java C# Databases CSS SQL .NET Programming Coding ',  '2018-01-01', 'ChIJeef454OFdUgRE8_it_x171c', 3),
 (9, 'UI Developer', 'assets/images/jobs/Nubemedia.png',  DATE_FORMAT('2020-9-01','%b %Y'),  DATE_FORMAT('2020-12-31','%b %Y'), DATEDIFF('2020-12-31', '2020-9-01')/30, 'Nubemedia', 'Madrid','Spain',
 '- Site creation, evaluation and migration.
 - Use of WordPress and CSS.
 - Creation of auxiliary programs for company tasks.',
 'IT', null, ' Informatics IT Internship Software development Coding Wordpress CSS Java Programming ', '2018-01-01', 'ChIJ5ftsegovQg0Ro8rRTArZ0Ew', 2),
 (10, '.NET Developer', 'assets/images/jobs/Deloitte.jpg',  DATE_FORMAT('2021-4-01','%b %Y'),  DATE_FORMAT('2021-7-31','%b %Y'), DATEDIFF('2021-7-31', '2021-4-01')/30, 'Deloitte', 'Madrid', 'Spain',
-'', 'IT', "Full", ' Informatics IT Job Consultancy .NET CSS SQL C# Programming Angular Databases Software Development Coding Git ', '2021-4-01', 'ChIJ947Eq2gsQg0RX8Sf25ay0nY', 1),
+'Creation of a web service to automate the organization and bulk send of documentation to the new hires, using C # (.Net) and Typescript (Angular). This first contact with the world of coding in a work environment was important to begin to become comfortable with basic and transversal concepts (how the different phases of development of an application materialize, how changes should be requested by Service Now, etc. ) and settling others, such as using Git.', 'IT', "Full", ' Informatics IT Job Consultancy .NET CSS SQL C# Programming Angular Databases Software Development Coding Git ', '2021-4-01', 'ChIJ947Eq2gsQg0RX8Sf25ay0nY', 1),
 (11, '.NET Developer', 'assets/images/jobs/Sanne.jpg',  DATE_FORMAT('2021-8-01','%b %Y'), "Actual", -1, 'Sanne', 'Madrid', 'Spain',
-'', 'IT', "Full", ' Informatics IT Job .NET C# CSS Databases SQL Programming Software development Coding English Git ', '2021-8-01', NULL, 1);
+'', 'IT', "Full", ' Informatics IT Job .NET C# CSS Databases SQL Programming Software development Coding English Git ', '2021-8-01', 'ChIJ2xNHMZsoQg0R4GwFtsl-KlY', 1);

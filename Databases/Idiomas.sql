@@ -1,3 +1,7 @@
+USE `datoscurriculo` ;
+
+DROP TABLE `datoscurriculo`.`idiomas`;
+
 CREATE TABLE `datoscurriculo`.`idiomas`(
   `id` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(50) NOT NULL,
@@ -7,6 +11,8 @@ CREATE TABLE `datoscurriculo`.`idiomas`(
   `Tags` VARCHAR(70) NOT NULL,
   PRIMARY KEY (`id`)
   );
+
+DELETE FROM `datoscurriculo`.`idiomas` WHERE ID>0;
   
 INSERT INTO datoscurriculo.idiomas
 VALUES 

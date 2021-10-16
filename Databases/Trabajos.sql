@@ -1,3 +1,5 @@
+DROP TABLE `datoscurriculo`.`trabajos`;
+
  CREATE TABLE `datoscurriculo`.`trabajos` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(100) NOT NULL,
@@ -19,6 +21,8 @@
 	KEY `fk_category` (`Categoria`),
   CONSTRAINT `fk_category` FOREIGN KEY (`Categoria`) REFERENCES `categorias` (`id`)
 );
+
+DELETE FROM `datoscurriculo`.`trabajos` WHERE ID>0;
 
 INSERT INTO datoscurriculo.trabajos 
 VALUES 
@@ -54,13 +58,13 @@ DATE_FORMAT('2015-01-01', '%Y'),DATE_FORMAT('2016-01-01', '%Y'), '12', 'Universi
 'Otro', 'Completa y parcial', ' Venta Cara al público Cocina Hostelería Limpieza Porteo Formación Trabajo Idiomas Inglés ', '2017-7-01', 'ChIJU9ix_gyFdUgR65uaqyyyeRg', 1),
 (8, 'Grado Superior en Desarrollo de Aplicaciones Multiplataforma', 'assets/images/education/FOC.png'
 ,DATE_FORMAT('2018-01-01', '%Y'),DATE_FORMAT('2020-01-01', '%Y'), '24', 'Instituto Fomento Ocupacional', 'Brighton and Hove', 'Reino Unido',
-'', 'IT', null, ' Informática IT FP Grado superior Software Programación Bases de Datos Desarrollo Java C# .NET CSS SQL ',  '2018-01-01', 'ChIJeef454OFdUgRE8_it_x171c', 3),
+'Este grado, que realicé de manera online a la par que trabajaba durante parte de mi estancia en Brighton, me permitió tener un primer contacto con distintos lenguajes, ya fueran de consulta (SQL), de marcado (HTML), de programación (Java, C#) u hojas de estilo (CSS). Sin embargo, quizás lo más útil que aprendí a través del estudio, realización de test y creación de proyectos fueron ciertas habilidades que considero imprescindibles, como el trabajo en equipo, la gestión del tiempo, la creación de documentación y la toma en consideración de la legislación aplicable en cada situación.', 'IT', null, ' Informática IT FP Grado superior Software Programación Bases de Datos Desarrollo Java C# .NET CSS SQL ',  '2018-01-01', 'ChIJeef454OFdUgRE8_it_x171c', 3),
 (9, 'Desarrollador web', 'assets/images/jobs/Nubemedia.png',  DATE_FORMAT('2020-9-01','%b %Y'),  DATE_FORMAT('2020-12-31','%b %Y'), DATEDIFF('2020-12-31', '2020-9-01')/30, 'Nubemedia', 'Madrid','España',
 '- Creación, evaluación y migración de páginas web.
 - Utilización de WordPress y CSS.
 - Creación de programas auxiliares para tareas de la empresa.',
 'IT', null, ' Informática IT Prácticas Desarrollo Wordpress CSS Java Programación ', '2018-01-01', 'ChIJ5ftsegovQg0Ro8rRTArZ0Ew', 2),
 (10, 'Programador .NET', 'assets/images/jobs/Deloitte.jpg',  DATE_FORMAT('2021-4-01','%b %Y'),  DATE_FORMAT('2021-7-31','%b %Y'), DATEDIFF('2021-7-31', '2021-4-01')/30, 'Deloitte', 'Madrid', 'España',
-'', 'IT', "Completa", ' Informática IT Trabajo Consultoría .NET CSS SQL C# Programación Angular Bases de datos Software Programación Desarrollo Git ', '2021-4-01', 'ChIJ947Eq2gsQg0RX8Sf25ay0nY', 1),
+'Creación de un servicio web para automatizar la organización y envío masivo de documentación a las nuevas contrataciones, utilizando C # (.Net) y Typecript (Angular). Este primer contacto con el mundo de la programación en un entorno laboral fue importante para empezar a familiarizarme con conceptos básicos y transversales (cómo se materializan las diferentes fases de desarrollo de una aplicación, cómo se deben solicitar los cambios en Service Now, etc.) y asentar otros, como el uso de Git.', 'IT', "Completa", ' Informática IT Trabajo Consultoría .NET CSS SQL C# Programación Angular Bases de datos Software Programación Desarrollo Git ', '2021-4-01', 'ChIJ947Eq2gsQg0RX8Sf25ay0nY', 1),
 (11, 'Programador', 'assets/images/jobs/Sanne.jpg',  DATE_FORMAT('2021-8-01','%b %Y'), 'Actual', -1, 'Sanne', 'Madrid', 'España',
 '', 'IT', "Completa", ' Informática IT Trabajo .NET C# CSS SQL Bases de Datos Programación Desarrollo Software Inglés Git ', '2021-8-01', NULL, 1);
