@@ -50,6 +50,7 @@ export class ContentPageComponent {
 	descriptionStringHTML: string;
 	returningString?: string;
 	relatedJobsOrEducationString?: string;
+	multiWordTags : string [] = ["Bases"];
 
 	constructor(private route: ActivatedRoute,
 		private trabajoService: TrabajoService,
@@ -94,12 +95,18 @@ export class ContentPageComponent {
 							//@ts-ignore
 							relatedJobsMap.set(job, numberOfCoincidentTags + 1);
 						}
-						if (tag == 'Bases' || this.isMasterDegree(tag, job.tags)) {
+						/* "Grado" en inglés se dice "Master Degree" y puede que se asigne coincidencia
+						entre másters y grados normales si no se realiza esta corrección */
+						if (this.isMasterDegree(tag, job.tags)) { 
 							job = this.abbreviateName(job);
 							relatedJobsMap.set(job, numberOfCoincidentTags);
 						};
+
+						if (this.multiWordTags.includes(tag)) {
+							relatedJobsMap = this.FixMultiWordTag(tag, job, relatedJobsMap, numberOfCoincidentTags);
+						}
 					}
-					
+
 				})
 			)
 			let relatedJobsSortedMap = new Map([...relatedJobsMap.entries()].sort((a, b) => b[1] - a[1]));
@@ -111,15 +118,6 @@ export class ContentPageComponent {
 			})
 			console.log(this.relatedJobsSortedArray);
 		})
-	}
-
-	private isMasterDegree(tag: string, jobTags: string): boolean {
-		if (tag == 'Degree') {
-			var master = "master";
-			var degreeIndex = jobTags.indexOf(tag);
-			return jobTags.substring(degreeIndex - master.length-1, degreeIndex-1).trim() == "Master";
-		}
-		return false;
 	}
 
 	abbreviateName(job: Trabajo): Trabajo {
@@ -249,8 +247,22 @@ export class ContentPageComponent {
 			this.router.navigate([uri]));
 	}
 
+	private isMasterDegree(tag: string, jobTags: string): boolean {
+		if (tag == 'Degree') {
+			var master = "master";
+			var degreeIndex = jobTags.indexOf(tag);
+			return jobTags.substring(degreeIndex - master.length - 1, degreeIndex - 1).trim() == "Master";
+		}
+		return false;
+	}
 
-
+	FixMultiWordTag
+		(tag: string, job: Trabajo, relatedJobsMap: Map<Trabajo, number>, numberOfCoincidentTags: number)
+		: Map<Trabajo, number> {
+		job = this.abbreviateName(job);
+		relatedJobsMap.set(job, numberOfCoincidentTags - 1);
+		return relatedJobsMap;
+	}
 	// VERSIÓN ALTERNATIVA MONTANDO EL PROPIO HTML. NO FUNCIONABA BIEN. REQUIERE USAR LA CLASE QUE SE ESPECIFICA EN EL DIV
 	/*	buildDescription() {
 		let descriptionNode = document.getElementsByClassName("trabajoDesc")[0];
