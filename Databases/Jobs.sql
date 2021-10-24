@@ -35,10 +35,10 @@ VALUES
 '- Preparation and delivery of classes, activities and exams.
 - Assessment of students\' knowledge.
 - Carrying out activities and excursions.',
-'Biology', null, ' Biology Teaching Internship Education Master Degree University Science ', '2016-2-1', 'ChIJz_AL16olQg0RGe6bE9sK7aI', 2),
+'Biology', null, ' Biology Teaching Internship Education Master University Science ', '2016-2-1', 'ChIJz_AL16olQg0RGe6bE9sK7aI', 2),
 (4, 'Master\'s Degree in Teacher Training in Secondary Education (Biology)', 'assets/images/education/UCM.png', 
 DATE_FORMAT('2015-01-01', '%Y'),DATE_FORMAT('2016-01-01', '%Y'), '12', 'Complutense University of Madrid', 'Madrid', 'Spain',
-'', 'Biology', null, ' Biology Teaching Master Degree University ', '2016-01-01', 'ChIJ2xfFgEwoQg0Rf4hBIq4WVuY', 3),
+'', 'Biology', null, ' Biology Teaching Master University Science', '2016-01-01', 'ChIJ2xfFgEwoQg0Rf4hBIq4WVuY', 3),
 (5, 'Ticket clerck', 'assets/images/jobs/BrunchPark.jpg', DATE_FORMAT('2016-9-1','%b %Y'), DATE_FORMAT('2016-12-31', '%b %Y'), DATEDIFF('2016/12/31', '2016/09/01')/30, 'Brunch In The Park', 'Madrid', 'Spain',
 '- Ticket sales using POS.
 - Cash balance.',
@@ -55,7 +55,7 @@ DATE_FORMAT('2015-01-01', '%Y'),DATE_FORMAT('2016-01-01', '%Y'), '12', 'Complute
 - Teamwork in situations that demand to be quick during long periods of time.
 - Training and evaluation of new employees.
 - Cleaning (including kitchen machinery), stock and carriage tasks.',
-'Other', 'Full and partial', ' Sales Deal with customers Job Cooking Cocina  Hospitality Cleaning Carriage Training English ', '2017-7-01', 'ChIJU9ix_gyFdUgR65uaqyyyeRg', 1),
+'Other', 'Full and partial', ' Sales Deal with customers Job Cooking Hospitality Cleaning Carriage Training English ', '2017-7-01', 'ChIJU9ix_gyFdUgR65uaqyyyeRg', 1),
 (8, 'Development of Multiplatform Applications (HNC)', 'assets/images/education/FOC.png'
 ,DATE_FORMAT('2018-01-01', '%Y'),DATE_FORMAT('2020-01-01', '%Y'), '24', 'Fomento Ocupacional Institute', 'Brighton and Hove', 'United Kingdom',
 'This HNC, which I completed online as I was working during part of my stay in Brighton, allowed me to have a first contact with different languages, whether they were query (SQL), markup (HTML), programming (Java, C#) or style sheets (CSS). However, perhaps the most useful things I learned through studying, testing and creating projects were certain skills that I consider essential, such as teamwork, time management, creating documentation and taking into account the applicable legislation in each situation.', 'IT', null, ' Informatics IT HNC Software development Java C# Databases CSS SQL .NET Programming Coding ',  '2018-01-01', 'ChIJeef454OFdUgRE8_it_x171c', 3),

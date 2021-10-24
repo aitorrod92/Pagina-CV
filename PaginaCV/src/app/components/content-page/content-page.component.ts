@@ -50,7 +50,7 @@ export class ContentPageComponent {
 	descriptionStringHTML: string;
 	returningString?: string;
 	relatedJobsOrEducationString?: string;
-	multiWordTags : string [] = ["Bases"];
+	multiWordTags: string[] = ["Bases"];
 
 	constructor(private route: ActivatedRoute,
 		private trabajoService: TrabajoService,
@@ -86,21 +86,15 @@ export class ContentPageComponent {
 					if (job.tags.toLowerCase().includes(tag.toLowerCase())) {
 						let numberOfCoincidentTags;
 						if (relatedJobsMap.get(job) == null) {
-							job = this.abbreviateName(job);
+							job = this.abbreviationsService.abbreviateName(job);
 							relatedJobsMap.set(job, 1);
 							numberOfCoincidentTags = 1;
 						} else {
-							job = this.abbreviateName(job);
+							job = this.abbreviationsService.abbreviateName(job);
 							numberOfCoincidentTags = relatedJobsMap.get(job)!;
 							//@ts-ignore
 							relatedJobsMap.set(job, numberOfCoincidentTags + 1);
 						}
-						/* "Grado" en inglés se dice "Master Degree" y puede que se asigne coincidencia
-						entre másters y grados normales si no se realiza esta corrección */
-						if (this.isMasterDegree(tag, job.tags)) { 
-							job = this.abbreviateName(job);
-							relatedJobsMap.set(job, numberOfCoincidentTags);
-						};
 
 						if (this.multiWordTags.includes(tag)) {
 							relatedJobsMap = this.FixMultiWordTag(tag, job, relatedJobsMap, numberOfCoincidentTags);
@@ -118,13 +112,6 @@ export class ContentPageComponent {
 			})
 			console.log(this.relatedJobsSortedArray);
 		})
-	}
-
-	abbreviateName(job: Trabajo): Trabajo {
-		if (this.abbreviationsService.abbreviationsMap.has(job.nombre)) {
-			job.nombre = this.abbreviationsService.abbreviationsMap.get(job.nombre)!;
-		}
-		return job;
 	}
 
 	showLanguagePage() {
@@ -247,19 +234,11 @@ export class ContentPageComponent {
 			this.router.navigate([uri]));
 	}
 
-	private isMasterDegree(tag: string, jobTags: string): boolean {
-		if (tag == 'Degree') {
-			var master = "master";
-			var degreeIndex = jobTags.indexOf(tag);
-			return jobTags.substring(degreeIndex - master.length - 1, degreeIndex - 1).trim() == "Master";
-		}
-		return false;
-	}
 
 	FixMultiWordTag
 		(tag: string, job: Trabajo, relatedJobsMap: Map<Trabajo, number>, numberOfCoincidentTags: number)
 		: Map<Trabajo, number> {
-		job = this.abbreviateName(job);
+		job = this.abbreviationsService.abbreviateName(job);
 		relatedJobsMap.set(job, numberOfCoincidentTags - 1);
 		return relatedJobsMap;
 	}
