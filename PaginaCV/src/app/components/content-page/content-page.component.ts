@@ -82,7 +82,7 @@ export class ContentPageComponent {
 			this.allJobs = data;
 			currentJobTags.forEach(tag =>
 				this.allJobs.forEach(job => {
-					if (job.tags.includes(tag)) {
+					if (job.tags.toLowerCase().includes(tag.toLowerCase())) {
 						let numberOfCoincidentTags;
 						if (relatedJobsMap.get(job) == null) {
 							job = this.abbreviateName(job);
@@ -94,11 +94,12 @@ export class ContentPageComponent {
 							//@ts-ignore
 							relatedJobsMap.set(job, numberOfCoincidentTags + 1);
 						}
-						if (tag == 'Bases') {
+						if (tag == 'Bases' || this.isMasterDegree(tag, job.tags)) {
 							job = this.abbreviateName(job);
-							relatedJobsMap.set(job, numberOfCoincidentTags - 1);
+							relatedJobsMap.set(job, numberOfCoincidentTags);
 						};
 					}
+					
 				})
 			)
 			let relatedJobsSortedMap = new Map([...relatedJobsMap.entries()].sort((a, b) => b[1] - a[1]));
@@ -110,6 +111,15 @@ export class ContentPageComponent {
 			})
 			console.log(this.relatedJobsSortedArray);
 		})
+	}
+
+	private isMasterDegree(tag: string, jobTags: string): boolean {
+		if (tag == 'Degree') {
+			var master = "master";
+			var degreeIndex = jobTags.indexOf(tag);
+			return jobTags.substring(degreeIndex - master.length-1, degreeIndex-1).trim() == "Master";
+		}
+		return false;
 	}
 
 	abbreviateName(job: Trabajo): Trabajo {
@@ -207,8 +217,6 @@ export class ContentPageComponent {
 	translateStaticBits() {
 		this.returningString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-return');
 		this.descriptionString = this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-description');
-		console.log(this.trabajo);
-		console.log(this.trabajo.imagen);
 		this.relatedJobsOrEducationString = this.trabajo.imagen.includes("jobs") ?
 			this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-relatedJobs') :
 			this.translatedBitsService.translatedBitsMap.get(this.currentLanguage + '-relatedEducation');
