@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { EmailService } from './email.service';
 
 
 @Injectable({
@@ -9,8 +10,10 @@ import { Injectable } from '@angular/core';
 export class TranslatedBitsService {
 
 	public translatedBitsMap = new Map<string, string>();
+	minEmailMessageLength : number;
 
-	constructor() {
+	constructor(emailService: EmailService) {
+		this.minEmailMessageLength  = emailService.getMinEmailMessageLength();
 		this.defineTranslatedBitsMap();
 	}
 
@@ -53,16 +56,15 @@ export class TranslatedBitsService {
 		this.translatedBitsMap.set("en-invalidEmail", "Invalid email address");
 		this.translatedBitsMap.set("es-pleaseInputYour", "Por favor, introduce tu ");
 		this.translatedBitsMap.set("en-pleaseInputYour", "Please input your ");
-		this.translatedBitsMap.set("es-minLengthMessage", "El mensaje ha de tener un m\xednimo de 30 caracteres");
-		this.translatedBitsMap.set("en-minLengthMessage", "Message must be at least 30 characters long");
+		this.translatedBitsMap.set("es-minLengthMessage", "El mensaje ha de tener un m\xednimo de " + this.minEmailMessageLength + " caracteres");
+		this.translatedBitsMap.set("en-minLengthMessage", "Message must be at least " + this.minEmailMessageLength + " characters long");
 		this.translatedBitsMap.set("en-current", "current");
 		this.translatedBitsMap.set("es-current", "actuales");
 		this.translatedBitsMap.set("en-updated", "Updated");
 		this.translatedBitsMap.set("es-updated", "Actualizado");
-		this.translatedBitsMap.set("en-relatedJobs", "Related jobs");
 		this.translatedBitsMap.set("es-relatedJobs", "Empleos relacionados");
 		this.translatedBitsMap.set("en-relatedEducation", "Related education");
-		this.translatedBitsMap.set("es-relatedEducation" , "Formaci\xf3n relacionada");
+		this.translatedBitsMap.set("es-relatedEducation", "Formaci\xf3n relacionada");
 
 
 

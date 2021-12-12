@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Email } from '../common/email';
 
@@ -9,24 +9,23 @@ import { Email } from '../common/email';
 })
 export class EmailService {
 	private baseUrl = 'http://localhost:8181/email/send';
-	minEmailMessageLength: number;
-	
+	public minEmailMessageLength: number;
+
+
 	constructor(private httpClient: HttpClient) { }
 
 	sendEmail(email: Email): Observable<any> {
 		return this.httpClient.post<Email>(this.baseUrl, email);
 	}
 
-	setMinEmailMessageLength(length: number) {
-		this.minEmailMessageLength = length;
+
+	public setInitialMinEmailMessageLength(length: number) {
+		this.minEmailMessageLength =(length);
 	}
-	
-	getMinEmailMessageLength(): number{
+
+	public getMinEmailMessageLength(){
 		return this.minEmailMessageLength;
-	}
-
-
-
+	}
 
 }
 

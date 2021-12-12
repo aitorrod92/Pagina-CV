@@ -59,7 +59,7 @@ const routes: Routes =
 	imports: [
 		BrowserModule,
 		HttpClientModule,
-		RouterModule.forRoot(routes), 
+		RouterModule.forRoot(routes),
 		FontAwesomeModule,
 		AutocompleteLibModule,
 		NgApexchartsModule,
@@ -81,6 +81,18 @@ const routes: Routes =
 				useFactory: searchProviderFactory,
 				deps: [KeywordsService],
 				multi: true
+			},
+						{
+				provide: APP_INITIALIZER,
+				useFactory: jobsProviderFactory,
+				deps: [TrabajoService],
+				multi: true
+			},
+			{
+				provide: APP_INITIALIZER,
+				useFactory: emailMessageProviderFactory,
+				deps: [EmailService],
+				multi: true
 			}
 		],
 	bootstrap: [AppComponent],
@@ -98,7 +110,13 @@ export function searchProviderFactory(provider: KeywordsService) {
 	return () => provider.setMaximumSearchTolerance(json['maximumSearchTolerance']);
 }
 
-/*export function minimumEmailMessageLengthFactory(provider: EmailService) {
+export function jobsProviderFactory(provider: TrabajoService) {
 	let json = config;
-	return () => provider.setMinEmailMessageLength(json['minimumEmailMessageLength']);
-}*/
+	return () => provider.setMinimumTagCoincidenceRelatedJobs(json['minimumTagCoincidenceRelatedJobs']);
+}
+
+
+export function emailMessageProviderFactory(provider: EmailService) {
+	let json = config;
+	return () => provider.setInitialMinEmailMessageLength(json['minimumEmailMessageLength']);
+}

@@ -39,7 +39,7 @@ export class ContactFormComponent implements OnInit {
 	fullNameRequiredString: string;
 	commentRequiredString: string;
 	commentMinLengthString: string;
-	//minEmailMessageLength: number;
+	minEmailMessageLength: number;
 
 	emailRegexPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
@@ -56,10 +56,8 @@ export class ContactFormComponent implements OnInit {
 			this.currentLanguage = data;
 			this.translateStaticBits();
 		});
-		/*this.minEmailMessageLength = this.emailService.getMinEmailMessageLength();
-		console.log("minimo " + this.minEmailMessageLength);*/
+		this.minEmailMessageLength = emailService.getMinEmailMessageLength();
 	}
-
 
 
 	translateStaticBits() {
@@ -100,7 +98,7 @@ export class ContactFormComponent implements OnInit {
 				'Email': new FormControl('',
 					{ validators: [Validators.pattern(this.emailRegexPattern), Validators.required], updateOn: 'blur' }),
 				'Comment': new FormControl('',
-					{ validators: [Validators.required, Validators.minLength(30)], updateOn: 'blur' })
+					{ validators: [Validators.required, Validators.minLength(this.minEmailMessageLength)], updateOn: 'blur' })
 			})
 
 		})

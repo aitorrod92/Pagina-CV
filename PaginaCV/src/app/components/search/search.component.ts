@@ -84,7 +84,6 @@ export class SearchComponent implements OnInit {
 	}
 
 	changeLanguage(language: string) {
-		console.log("changing language to " + language);
 		this.languageService.setLanguage(language);
 		let childrenNodes = this.languagesSection.children;
 		let arrayChildrenNodes = Array.from(childrenNodes);

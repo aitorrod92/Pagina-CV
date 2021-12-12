@@ -50,6 +50,7 @@ export class ContentPageComponent {
 	descriptionStringHTML: string;
 	returningString?: string;
 	relatedJobsOrEducationString?: string;
+	minimumTagCoincidenceRelatedJobs : number;
 	multiWordTags: string[] = ["Bases"];
 
 	constructor(private route: ActivatedRoute,
@@ -68,6 +69,7 @@ export class ContentPageComponent {
 			this.currentLanguage = data;
 			this.getContent();
 		});
+		this.minimumTagCoincidenceRelatedJobs = trabajoService.getMinimumTagCoincidenceRelatedJobs();		
 	}
 
 	getContent() {
@@ -106,7 +108,7 @@ export class ContentPageComponent {
 			let relatedJobsSortedMap = new Map([...relatedJobsMap.entries()].sort((a, b) => b[1] - a[1]));
 			this.relatedJobsSortedArray = Array.from(relatedJobsSortedMap).map(([Trabajo, number]) => ({ Trabajo, number }));
 			this.relatedJobsSortedArray.forEach(relatedJob => {
-				if (relatedJob.number < 3) {
+				if (relatedJob.number < this.minimumTagCoincidenceRelatedJobs) {
 					this.relatedJobsSortedArray.splice(this.relatedJobsSortedArray.indexOf(relatedJob));
 				}
 			})

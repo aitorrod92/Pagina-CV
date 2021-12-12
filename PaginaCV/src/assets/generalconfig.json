@@ -1,5 +1,6 @@
     {
         "initialLanguage" : "es",
         "maximumSearchTolerance" : 1,
-        "minimumEmailMessageLength": 30
+        "minimumEmailMessageLength": 20,
+        "minimumTagCoincidenceRelatedJobs": 3
     }

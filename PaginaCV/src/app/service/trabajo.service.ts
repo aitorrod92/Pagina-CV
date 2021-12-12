@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Trabajo } from '../common/trabajo';
 
@@ -9,15 +9,17 @@ import { Trabajo } from '../common/trabajo';
 })
 export class TrabajoService {
 
-
 	private baseUrl = 'http://localhost:8181/api';
 	private searchUrl = '';
+
+	public minimumTagCoincidenceRelatedJobs: number;
+
 
 	constructor(private httpClient: HttpClient) { }
 
 	// Devuelve un observable tras mapear el JSON devuelto por Spring Data Rest a un array de productos
 	getTrabajosListbyKeyword(tags: String, jobWord: string): Observable<Trabajo[]> {
-		tags = tags.replace('#','%23');		
+		tags = tags.replace('#', '%23');
 		this.searchUrl = `${this.baseUrl}/${jobWord}/search/findByTagsContaining?tags=%20${tags}%20`;
 		return this.getResponse(jobWord);
 	}
@@ -62,8 +64,15 @@ export class TrabajoService {
 		return this.httpClient.get<GetResponseJob>(this.searchUrl).
 			pipe(map(response => response._embedded.job));
 	}
-}
 
+	setMinimumTagCoincidenceRelatedJobs(length : number) {
+		this.minimumTagCoincidenceRelatedJobs = length;
+	}
+
+	getMinimumTagCoincidenceRelatedJobs() {
+		return this.minimumTagCoincidenceRelatedJobs;
+	}
+}
 
 // Desempaqueta el JSON de la entrada "_embedded" de Spring Data Rest
 interface GetResponse {
